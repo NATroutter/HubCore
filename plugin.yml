@@ -1,0 +1,8 @@
+main: net.natroutter.hubcore.HubCore
+name: HubCore
+version: 1.0
+author: NATroutter
+description: Core plugin for all hub servers
+api-version: 1.16
+depend: [NATLibs, Vault]
+softdepend: [PlaceholderAPI]

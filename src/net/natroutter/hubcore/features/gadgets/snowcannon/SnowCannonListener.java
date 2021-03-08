@@ -1,0 +1,106 @@
+package net.natroutter.hubcore.features.gadgets.snowcannon;
+
+import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Snowball;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
+
+import net.natroutter.hubcore.handlers.AdminModeHandler;
+import net.natroutter.natlibs.NATLibs;
+import net.natroutter.natlibs.events.PlayerJumpEvent;
+import net.natroutter.natlibs.objects.BasePlayer;
+import net.natroutter.natlibs.utilities.Utilities;
+
+public class SnowCannonListener implements Listener {
+	
+	private static final Utilities utils = NATLibs.getUtilities();
+	
+	@EventHandler
+	public void onProjectileHit(ProjectileHitEvent e) {
+		Projectile proj = e.getEntity();
+
+		if (proj.getCustomName() == null) {return;}
+
+		if (proj.getCustomName().equals(SnowCannonHandler.ProjectileName)) {
+			Entity ent = e.getHitEntity();
+			
+			if (ent instanceof Player) {
+				BasePlayer p = BasePlayer.from(ent);
+				p.playSound(Sound.BLOCK_SNOW_HIT, 1f, 0.5f);
+				
+				if (AdminModeHandler.isAdmin(p) || AdminModeHandler.isVip(p)) {return;}
+				
+				if (p.getActivePotionEffects().size() > 0) {
+					for (PotionEffect pot : p.getActivePotionEffects()) {
+						Integer dura = SnowCannonHandler.newDuration(pot.getDuration());
+						
+						if (pot.getType().equals(PotionEffectType.SLOW)) {
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, dura, 2), false);
+							
+						} else if (pot.getType().equals(PotionEffectType.SLOW_FALLING)) {
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, dura, 2), false);
+							
+						} else if (pot.getType().equals(PotionEffectType.SLOW_DIGGING)) {
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, dura, 2), false);
+							
+						} else if (pot.getType().equals(PotionEffectType.GLOWING)) {
+							p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, dura, 2), false);
+							
+						}
+					}
+				} else {
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2), false);
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 2), false);
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2), false);
+					p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 2), false);
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onDamage(EntityDamageByEntityEvent e) {
+		if (e.getDamager() instanceof Snowball) {
+			Snowball ball = (Snowball)e.getDamager();
+			if (ball.getCustomName() == null) { return; }
+			if (ball.getCustomName().equals(SnowCannonHandler.ProjectileName)) {
+				e.setCancelled(true);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onJoin(PlayerJumpEvent e) {
+		BasePlayer p = e.getPlayer();
+		if (p.hasPotionEffect(PotionEffectType.SLOW) && p.hasPotionEffect(PotionEffectType.SLOW_FALLING) && p.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
+			
+			Integer toGround = utils.ToGround(p.getLocation());
+			
+			p.setVelocity(p.getVelocity().add(new Vector(0, -Math.abs((toGround*2) + 5), 0)));
+		}
+		
+	}
+	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
