@@ -38,6 +38,10 @@ public class CommonHandler {
 			world.setGameRuleValue("spawnRadius", "0");
 			world.setGameRuleValue("showDeathMessages", "false");
 			world.setGameRuleValue("keepInventory", "true");
+			world.setGameRuleValue("doInsomnia", "false");
+			world.setGameRuleValue("doMobLoot", "false");
+			world.setGameRuleValue("doPatrolSpawning", "false");
+
 		}
 		
 	}

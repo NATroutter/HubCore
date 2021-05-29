@@ -1,16 +1,19 @@
 package net.natroutter.hubcore.features.SelectorItems;
 
+import net.natroutter.hubcore.HubCore;
+import net.natroutter.hubcore.features.particles.ParticleGUI;
+import net.natroutter.hubcore.handlers.Database.PlayerData;
+import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
+import net.natroutter.hubcore.utilities.Lang;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.*;
 
 import net.natroutter.hubcore.features.ServerSelector;
 import net.natroutter.hubcore.features.gadgets.Gadget;
@@ -20,19 +23,35 @@ import net.natroutter.hubcore.handlers.AdminModeHandler;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
 import net.natroutter.natlibs.objects.BaseItem;
-import net.natroutter.natlibs.objects.BasePlayer;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class SelectorItemListener implements Listener {
 
+	private static final Lang lang = HubCore.getLang();
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		BasePlayer p = BasePlayer.from(e.getPlayer());
+		e.setJoinMessage(null);
+		Player p = e.getPlayer();
 		SelectorItemHandler.update(p);
+		for (int i = 0; i<255; i++) {
+			p.sendMessage(" ");
+		}
+		for (String line : lang.welcommotd) {
+			p.sendMessage(line);
+		}
 	}
-	
+
+	@EventHandler
+	public void onJoin(PlayerQuitEvent e) {
+		e.setQuitMessage(null);
+	}
+
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent e) {
-		BasePlayer p = BasePlayer.from(e.getPlayer());
+		Player p = e.getPlayer();
 		if (AdminModeHandler.isAdmin(p)) {return;}
 		
 		Item item = e.getItemDrop();
@@ -53,7 +72,7 @@ public class SelectorItemListener implements Listener {
 	public void onInventoryclick(InventoryClickEvent e) {
 		GUIWindow window = GUIWindow.getWindow(e.getView());
 		if (window == null) {
-			BasePlayer p = BasePlayer.from(e.getWhoClicked());
+			Player p = (Player)e.getWhoClicked();
 			
 			if (AdminModeHandler.isAdmin(p)) {return;}
 			e.setCancelled(true);
@@ -63,12 +82,24 @@ public class SelectorItemListener implements Listener {
 			}
 		}
 	}
-	
+
+	public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
+	private static int cooldownTime = 1;
+	public boolean onCooldown(Player p) {
+		if(cooldown.containsKey(p.getUniqueId())) {
+			long cooldownLeft = ((cooldown.get(p.getUniqueId())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
+			if(cooldownLeft>0) {
+				return true;
+			}
+		}
+		cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+		return false;
+	}
 	
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
 		//if (1 == 1) {return;}
-		BasePlayer p = BasePlayer.from(e.getPlayer());
+		Player p = e.getPlayer();
 		if (e.hasItem() && (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
 			BaseItem item = BaseItem.from(e.getItem());
 			
@@ -80,6 +111,17 @@ public class SelectorItemListener implements Listener {
 				e.setCancelled(true);
 				GadgetGUI.show(p);
 				
+			} else if (item.matches(Items.JoinItems.particleSelector())) {
+				e.setCancelled(true);
+				PlayerData data = PlayerDataHandler.queryForID(p.getUniqueId());
+				ParticleGUI.show(p, data);
+
+			} else if (item.matches(Items.JoinItems.Info())) {
+				if (onCooldown(p)){return;}
+				for (String line : lang.info) {
+					p.sendMessage(line);
+				}
+
 			}
 				
 		}
@@ -87,7 +129,7 @@ public class SelectorItemListener implements Listener {
 	
 	@EventHandler
 	public void onHandSwap(PlayerSwapHandItemsEvent e) {
-		BasePlayer p = BasePlayer.from(e.getPlayer());
+		Player p = e.getPlayer();
 		if (AdminModeHandler.isAdmin(p)) {return;}
 		e.setCancelled(true);
 	}

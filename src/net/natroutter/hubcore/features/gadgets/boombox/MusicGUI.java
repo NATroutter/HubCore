@@ -11,13 +11,13 @@ import net.natroutter.natlibs.handlers.gui.GUIItem;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
 import net.natroutter.natlibs.handlers.gui.GUIWindow.Rows;
 import net.natroutter.natlibs.objects.BaseItem;
-import net.natroutter.natlibs.objects.BasePlayer;
 import net.natroutter.natlibs.utilities.Utilities;
+import org.bukkit.entity.Player;
 
 public class MusicGUI {
 	
 	private static final Lang lang = HubCore.getLang();
-	private static final Utilities utils = NATLibs.getUtilities();
+	private static final Utilities utils = HubCore.getUtilities();
 	private static final GUIWindow gui = new GUIWindow(lang.Guis.Gadgets.boomBox.Title, Rows.row5, true);
 
     //Notes
@@ -25,7 +25,7 @@ public class MusicGUI {
 			new Note(10, Sound.BLOCK_NOTE_BLOCK_BASS, lang.Guis.Gadgets.boomBox.Bass),
 		    new Note(11, Sound.BLOCK_NOTE_BLOCK_SNARE, lang.Guis.Gadgets.boomBox.SnareDrum),
 		    new Note(12, Sound.BLOCK_NOTE_BLOCK_HAT, lang.Guis.Gadgets.boomBox.Hat),
-		    new Note(13, Sound.BLOCK_NOTE_BLOCK_BASEDRUM, lang.Guis.Gadgets.boomBox.Bass),
+		    new Note(13, Sound.BLOCK_NOTE_BLOCK_BASEDRUM, lang.Guis.Gadgets.boomBox.BassDrum),
 		    new Note(14, Sound.BLOCK_NOTE_BLOCK_BELL, lang.Guis.Gadgets.boomBox.Bells),
 		    new Note(15, Sound.BLOCK_NOTE_BLOCK_FLUTE, lang.Guis.Gadgets.boomBox.Flute),
 		    new Note(16, Sound.BLOCK_NOTE_BLOCK_CHIME, lang.Guis.Gadgets.boomBox.Chimes),
@@ -40,15 +40,14 @@ public class MusicGUI {
 		    new Note(32, Sound.BLOCK_NOTE_BLOCK_HARP, lang.Guis.Gadgets.boomBox.Harp)
 	};
 	
+
     
-	
-    
-	public static void show(BasePlayer p) {
+	public static void show(Player p) {
 		NoteSelector(p).show(p);
 	}
 		
 	
-	private static GUIWindow NoteSelector(BasePlayer p) {
+	private static GUIWindow NoteSelector(Player p) {
 		for (Note note : Notes) {
 			
 			BaseItem item = Items.ServerIcon(Material.NOTE_BLOCK, note.getName());
@@ -63,7 +62,7 @@ public class MusicGUI {
 			
 			
 			gui.setItem(new GUIItem(item, (e)-> {
-				BasePlayer bp = BasePlayer.from(e.getWhoClicked());
+				Player bp = (Player)e.getWhoClicked();
 				MusicPlayer.selectedSound.put(bp.getUniqueId(), note.getSound());
 				MusicPlayer.selectedSlot.put(bp.getUniqueId(), note.getSlot());
 				bp.closeInventory();

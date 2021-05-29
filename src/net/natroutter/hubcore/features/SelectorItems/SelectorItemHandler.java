@@ -4,27 +4,26 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import net.natroutter.hubcore.features.gadgets.Gadget;
 import net.natroutter.hubcore.features.gadgets.GadgetHandler;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.natlibs.objects.BaseItem;
-import net.natroutter.natlibs.objects.BasePlayer;
 
 public class SelectorItemHandler {
 	
-	private static List<HubItem> getHubItems(BasePlayer p) {
+	private static List<HubItem> getHubItems(Player p) {
 		return Arrays.asList(
 			new HubItem("ParticleSelector", 0, Items.JoinItems.particleSelector()),
 			new HubItem("GadgetSelector", 1, Items.JoinItems.gadgetSelector()),
 			new HubItem("ServerSelector", 4, Items.JoinItems.serverSelector(p)),
-			new HubItem("InfoBook", 7, Items.JoinItems.InfoBook()),
-			new HubItem("Profile", 8, Items.JoinItems.Profile(p))
+			new HubItem("InfoBook", 8, Items.JoinItems.Info())
 		);
 	}
 	
-	private static Boolean isHubItem(BasePlayer p, BaseItem item) {
+	private static Boolean isHubItem(Player p, BaseItem item) {
 		for(HubItem hubitem : getHubItems(p)) {
 			if (item.matches(hubitem.getItem())) {
 				return true;
@@ -48,7 +47,7 @@ public class SelectorItemHandler {
 	}
 	
 	
-	public static void update(BasePlayer p) {
+	public static void update(Player p) {
 		Inventory inv = p.getInventory();
 		ClearInvalidItems(p);
 		
@@ -76,7 +75,7 @@ public class SelectorItemHandler {
 		p.updateInventory();
 	}
 	
-	private static void ClearInvalidItems(BasePlayer p) {
+	private static void ClearInvalidItems(Player p) {
 		Inventory inv = p.getInventory();
 		Gadget selectedGad = GadgetHandler.getGadget(p);
 		

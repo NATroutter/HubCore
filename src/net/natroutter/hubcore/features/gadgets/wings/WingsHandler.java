@@ -1,20 +1,20 @@
 package net.natroutter.hubcore.features.gadgets.wings;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.Vector;
 
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.objects.BasePlayer;
 
 public class WingsHandler {
 
 	
-	public static void Active(BasePlayer p) {
+	public static void Active(Player p) {
 		PlayerInventory inv = p.getInventory();
 		inv.setChestplate(Items.Gadgets.Wings.Wing());
 	}
 	
-	public static void Boost(BasePlayer p) {
+	public static void boost(Player p) {
 		
 		if (p.isGliding()) {
 			 Vector vector = p.getEyeLocation().getDirection().normalize();

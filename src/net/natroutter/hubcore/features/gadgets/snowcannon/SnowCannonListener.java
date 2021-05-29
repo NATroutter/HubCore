@@ -1,5 +1,6 @@
 package net.natroutter.hubcore.features.gadgets.snowcannon;
 
+import net.natroutter.hubcore.HubCore;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -14,14 +15,12 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import net.natroutter.hubcore.handlers.AdminModeHandler;
-import net.natroutter.natlibs.NATLibs;
 import net.natroutter.natlibs.events.PlayerJumpEvent;
-import net.natroutter.natlibs.objects.BasePlayer;
 import net.natroutter.natlibs.utilities.Utilities;
 
 public class SnowCannonListener implements Listener {
 	
-	private static final Utilities utils = NATLibs.getUtilities();
+	private static final Utilities utils = HubCore.getUtilities();
 	
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent e) {
@@ -33,8 +32,8 @@ public class SnowCannonListener implements Listener {
 			Entity ent = e.getHitEntity();
 			
 			if (ent instanceof Player) {
-				BasePlayer p = BasePlayer.from(ent);
-				p.playSound(Sound.BLOCK_SNOW_HIT, 1f, 0.5f);
+				Player p = (Player)ent;
+				p.playSound(p.getLocation(), Sound.BLOCK_SNOW_HIT, 1f, 0.5f);
 				
 				if (AdminModeHandler.isAdmin(p) || AdminModeHandler.isVip(p)) {return;}
 				
@@ -79,10 +78,10 @@ public class SnowCannonListener implements Listener {
 	
 	@EventHandler
 	public void onJoin(PlayerJumpEvent e) {
-		BasePlayer p = e.getPlayer();
+		Player p = e.getPlayer();
 		if (p.hasPotionEffect(PotionEffectType.SLOW) && p.hasPotionEffect(PotionEffectType.SLOW_FALLING) && p.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
 			
-			Integer toGround = utils.ToGround(p.getLocation());
+			Integer toGround = utils.distanceToGround(p.getLocation());
 			
 			p.setVelocity(p.getVelocity().add(new Vector(0, -Math.abs((toGround*2) + 5), 0)));
 		}

@@ -1,0 +1,95 @@
+package net.natroutter.hubcore.features.particles;
+
+import net.natroutter.hubcore.handlers.Database.PlayerData;
+import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
+import net.natroutter.natlibs.objects.ParticleSettings;
+import net.natroutter.natlibs.utilities.Utilities;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+
+public class ParticleScheduler {
+
+    private JavaPlugin plugin;
+    private Utilities utils;
+    private int task;
+
+    private int red = 255;
+    private int green = 0;
+    private int blue = 0;
+
+    public ParticleScheduler(JavaPlugin plugin, Utilities utils) {
+        this.plugin = plugin;
+        this.utils = utils;
+        init();
+    }
+
+    private ParticleSettings cloud(Location loc, Particle particle) {
+        return new ParticleSettings(particle, loc, 20, 0.3, 0.5, 0.3, 0);
+    }
+
+    private ParticleSettings tail(Location loc, Particle particle) {
+        return new ParticleSettings(particle, loc, 20, 0, 0, 0, 0);
+    }
+
+    private void init() {
+        task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ()-> {
+            if(red > 0 && blue == 0){
+                red--;
+                green++;
+            }
+            if(green > 0 && red == 0){
+                green--;
+                blue++;
+            }
+            if(blue > 0 && green == 0){
+                red++;
+                blue--;
+            }
+
+            for (Player p : Bukkit.getOnlinePlayers()) {
+
+                PlayerData data = PlayerDataHandler.queryForID(p.getUniqueId());
+                particleTypes type = particleTypes.fromString(data.getParticle());
+                ParticleMode mode = ParticleMode.fromString(data.getParticlemode());
+                if (type == null || mode == null) {continue;}
+                if (type == particleTypes.DISABLED) {continue;}
+
+                ParticleSettings set = null;
+                Location partLoc = p.getLocation().add(0, 0.6, 0);
+                if (mode.equals(ParticleMode.CLOUD)) {
+                    set = cloud(partLoc, type.getParticle());
+                } else if (mode.equals(ParticleMode.TAIL)) {
+                    set = tail(partLoc, type.getParticle());
+                }
+
+                if (type.equals(particleTypes.LAVA)) {
+                    set.setCount(1);
+                }
+
+                if (type.equals(particleTypes.RAINBOWDUST)) {
+                    spawnDust(p, set);
+                } else {
+                    utils.spawnParticleInRadius(set, 50);
+                }
+            }
+        }, 0, 1);
+
+    }
+
+    public void spawnDust(Player p, ParticleSettings set) {
+        Particle.DustOptions opt = new Particle.DustOptions(Color.fromRGB(red, green, blue), 1);
+        for (Entity nearEnt : p.getNearbyEntities(50,50,50)) {
+            if (!(nearEnt instanceof Player)) {continue;}
+            Player nearp = (Player)nearEnt;
+            nearp.spawnParticle(set.getParticle(), set.getLoc(), set.getCount(), set.getOffsetX(), set.getOffsetY(), set.getOffsetY(), set.getSpeed(), opt);
+        }
+        p.spawnParticle(set.getParticle(), set.getLoc(), set.getCount(), set.getOffsetX(), set.getOffsetY(), set.getOffsetY(), set.getSpeed(), opt);
+    }
+
+}

@@ -1,35 +1,24 @@
 package net.natroutter.hubcore.utilities;
 
 import net.natroutter.hubcore.HubCore;
-import net.natroutter.natlibs.objects.BasePlayer;
 import net.natroutter.natlibs.utilities.StringHandler;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
 public class Utils {
 
 	private static Lang lang = HubCore.getLang();
-	
-	public static enum CET {
-		TooMany(lang.TooManyArguments),
-		Invalid(lang.InvalidArguments),
-		NoPerm(lang.NoPerm),
-		InvalidPlayer(lang.InvalidPlayer);
-		
-		private String message;
-		private CET(String str) {
-			this.message = str;	
+
+	public static void soundInRadius(Location loc, Sound sound, int radius) {
+		if (loc.getWorld() == null) {return;}
+		for (Entity ent : loc.getWorld().getNearbyEntities(loc, radius, radius, radius)) {
+			if (ent instanceof Player) {
+				((Player) ent).playSound(loc, sound, SoundCategory.MASTER, 100, 1);
+			}
 		}
-		public String getMessage() {
-			return message;
-		}
-	}
-	public static void CommandError(BasePlayer p, CET type) {CommandError(p, type, null);}
-	public static void CommandError(BasePlayer p, CET type, String usage) {
-		StringHandler message = new StringHandler(type.getMessage());
-		message.setPrefix(lang.Prefix);
-		if (usage != null) {
-			message.replaceAll("{Usage}", usage);
-		}
-		message.send(p);
 	}
 	
 }

@@ -1,24 +1,56 @@
 package net.natroutter.hubcore.features;
 
+import net.natroutter.hubcore.HubCore;
+import net.natroutter.hubcore.utilities.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.natroutter.hubcore.handlers.AdminModeHandler;
-import net.natroutter.natlibs.objects.BasePlayer;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 public class Protection implements Listener {
 
-	
+private final Config config = HubCore.getCfg();
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onRedstoneActive(BlockRedstoneEvent e) {
+		if (config.DisableRedstone) {
+			e.setNewCurrent(0);
+		}
+	}
+
+	@EventHandler
+	public void onConsume(PlayerItemConsumeEvent e) {
+		Player p = e.getPlayer();
+		if (!AdminModeHandler.isAdmin(p)) {
+			e.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onPistonRetract(BlockPistonRetractEvent e) {
+		if (config.DisableRedstone) {
+			e.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onPistonExtend(BlockPistonExtendEvent e) {
+		if (config.DisableRedstone) {
+			e.setCancelled(true);
+		}
+	}
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
-		BasePlayer p = BasePlayer.from(e.getPlayer());
+		Player p = (Player)e.getPlayer();
 		if (!AdminModeHandler.isAdmin(p)) {
 			e.setCancelled(true);
 		}
@@ -26,7 +58,7 @@ public class Protection implements Listener {
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
-		BasePlayer p = BasePlayer.from(e.getPlayer());
+		Player p = e.getPlayer();
 		if (!AdminModeHandler.isAdmin(p)) {
 			e.setCancelled(true);
 		}
@@ -35,7 +67,7 @@ public class Protection implements Listener {
 	@EventHandler
 	public void onDamageEntity(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player) {
-			BasePlayer p = BasePlayer.from(e.getEntity());
+			Player p = (Player)e.getEntity();
 			if (!AdminModeHandler.isAdmin(p)) {
 				e.setCancelled(true);
 			}
@@ -46,7 +78,7 @@ public class Protection implements Listener {
 	public void onInteract(PlayerInteractEvent e) {
 		//if (1 == 1) {return;}
 		if (e.hasBlock()) {
-			BasePlayer p = BasePlayer.from(e.getPlayer());
+			Player p = e.getPlayer();
 			Block block = e.getClickedBlock();
 			String type = block.getType().name();
 			

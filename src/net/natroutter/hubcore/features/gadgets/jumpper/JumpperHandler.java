@@ -1,12 +1,12 @@
 package net.natroutter.hubcore.features.gadgets.jumpper;
 
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import net.natroutter.natlibs.objects.BasePlayer;
 
 public class JumpperHandler {
 
-	public static void Jump(BasePlayer p) {
+	public static void jump(Player p) {
 		
 		if (p.isOnGround()) {
 			Vector ogVec = p.getLocation().getDirection();

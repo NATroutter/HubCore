@@ -1,6 +1,6 @@
 package net.natroutter.hubcore.commands;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,9 +9,6 @@ import org.bukkit.entity.Player;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.AdminModeHandler;
 import net.natroutter.hubcore.utilities.Lang;
-import net.natroutter.hubcore.utilities.Utils;
-import net.natroutter.hubcore.utilities.Utils.CET;
-import net.natroutter.natlibs.objects.BasePlayer;
 
 public class Adminmode extends Command {
 
@@ -21,7 +18,7 @@ public class Adminmode extends Command {
 		super("");
 		this.setPermission("hubcore.admin");
 		this.setPermissionMessage(lang.Prefix + lang.NoPerm);
-		this.setAliases(Arrays.asList("am"));
+		this.setAliases(Collections.singletonList("am"));
 	}
 
 	@Override
@@ -30,14 +27,13 @@ public class Adminmode extends Command {
 			sender.sendMessage(lang.OnlyIngame);
 			return false;
 		}
-		BasePlayer p = BasePlayer.from(sender);
+		Player p = (Player)sender;
 		
 		if (args.length == 0) {
 			AdminModeHandler.ToggleAdmin(p);
 		} else {
-			Utils.CommandError(p, CET.TooMany, "/Adminmode");
+			p.sendMessage(lang.Prefix + lang.TooManyArguments);
 		}
-	
 		return false;
 	}
 

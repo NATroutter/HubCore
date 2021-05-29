@@ -11,12 +11,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 @SuppressWarnings({"unused"})
 public class Hooks {
 
-	public natcore_Hook natcore;
 	public vault_Hook vault;
 	public GeneralHook PlaceHolderApi;
 	
 	public Hooks(JavaPlugin pl) {
-		natcore = new natcore_Hook(new Hook("NATLibs"));
 		vault = new vault_Hook(pl, new Hook("Vault"));
 		PlaceHolderApi = new GeneralHook(new Hook("PlaceholderAPI"));
 		
@@ -29,15 +27,7 @@ public class Hooks {
 		public boolean isHooked() { return hook.Hooked; }
 		public Plugin getPlugin() { return hook.plugin; }
 	}
-	
-	
-	public static class natcore_Hook {
-		public natcore_Hook(Hook hook) {this.hook = hook;}
-		private final Hook hook;
-		
-		public boolean isHooked() { return hook.Hooked; }
-		public NATLibs getPlugin() { return (NATLibs)hook.plugin; }
-	}
+
 	
 	public static class vault_Hook {
 		private final Hook hook;
