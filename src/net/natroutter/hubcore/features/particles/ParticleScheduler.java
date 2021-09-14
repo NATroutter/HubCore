@@ -1,5 +1,6 @@
 package net.natroutter.hubcore.features.particles;
 
+import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.natlibs.objects.ParticleSettings;
@@ -12,8 +13,13 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 
 public class ParticleScheduler {
+
+    private static final PlayerDataHandler pdh = HubCore.getDataHandler();
 
     private JavaPlugin plugin;
     private Utilities utils;
@@ -27,6 +33,17 @@ public class ParticleScheduler {
         this.plugin = plugin;
         this.utils = utils;
         init();
+    }
+
+    protected static ArrayList<UUID> disableParticle = new ArrayList<>();
+    public static void disableParticle(Player p, boolean status) {
+        if (status) {
+            if (!disableParticle.contains(p.getUniqueId())) {
+                disableParticle.add(p.getUniqueId());
+            }
+        } else {
+            disableParticle.remove(p.getUniqueId());
+        }
     }
 
     private ParticleSettings cloud(Location loc, Particle particle) {
@@ -53,8 +70,12 @@ public class ParticleScheduler {
             }
 
             for (Player p : Bukkit.getOnlinePlayers()) {
+                if (disableParticle.contains(p.getUniqueId())){
+                    continue;
+                }
 
-                PlayerData data = PlayerDataHandler.queryForID(p.getUniqueId());
+                PlayerData data = pdh.get(p.getUniqueId());
+                if (data == null) {return;}
                 particleTypes type = particleTypes.fromString(data.getParticle());
                 ParticleMode mode = ParticleMode.fromString(data.getParticlemode());
                 if (type == null || mode == null) {continue;}
@@ -78,7 +99,7 @@ public class ParticleScheduler {
                     utils.spawnParticleInRadius(set, 50);
                 }
             }
-        }, 0, 1);
+        }, 0, 2);
 
     }
 

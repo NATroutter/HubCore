@@ -12,7 +12,7 @@ public class SlapperListener implements Listener {
 	@EventHandler
 	public void onConsume(PlayerItemConsumeEvent e) {
 		BaseItem item = BaseItem.from(e.getItem());
-		if (item.matches(Items.Gadgets.Slapper())) {
+		if (item.isSimilar(Items.Gadgets.Slapper())) {
 			e.setCancelled(true);
 		}
 	}

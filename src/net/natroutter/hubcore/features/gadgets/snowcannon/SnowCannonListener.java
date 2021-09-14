@@ -1,6 +1,10 @@
 package net.natroutter.hubcore.features.gadgets.snowcannon;
 
+import net.citizensnpcs.api.CitizensAPI;
 import net.natroutter.hubcore.HubCore;
+import net.natroutter.hubcore.handlers.Database.PlayerData;
+import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
+import net.natroutter.hubcore.handlers.Hooks;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -21,10 +25,16 @@ import net.natroutter.natlibs.utilities.Utilities;
 public class SnowCannonListener implements Listener {
 	
 	private static final Utilities utils = HubCore.getUtilities();
-	
+	private PlayerDataHandler pdh = HubCore.getDataHandler();
+	private Hooks hooks = HubCore.getHooks();
+
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent e) {
 		Projectile proj = e.getEntity();
+
+		if (hooks != null && hooks.getCitizens().isHooked()) {
+			if (CitizensAPI.getNPCRegistry().isNPC(e.getHitEntity())) {return;}
+		}
 
 		if (proj.getCustomName() == null) {return;}
 
@@ -35,8 +45,18 @@ public class SnowCannonListener implements Listener {
 				Player p = (Player)ent;
 				p.playSound(p.getLocation(), Sound.BLOCK_SNOW_HIT, 1f, 0.5f);
 				
-				if (AdminModeHandler.isAdmin(p) || AdminModeHandler.isVip(p)) {return;}
-				
+				if (AdminModeHandler.isAdmin(p)) {return;}
+
+				if (proj.getShooter() instanceof Player) {
+					Player shooter = (Player)proj.getShooter();
+					if (shooter.getUniqueId().equals(p.getUniqueId())) {
+						return;
+					}
+				}
+
+				PlayerData data = pdh.get(p.getUniqueId());
+				if (data.getNoEffect()) {return;}
+
 				if (p.getActivePotionEffects().size() > 0) {
 					for (PotionEffect pot : p.getActivePotionEffects()) {
 						Integer dura = SnowCannonHandler.newDuration(pot.getDuration());
@@ -60,6 +80,10 @@ public class SnowCannonListener implements Listener {
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 2), false);
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2), false);
 					p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 2), false);
+				}
+
+				if (p.getFreezeTicks() < p.getMaxFreezeTicks()) {
+					p.setFreezeTicks(p.getFreezeTicks() + 1);
 				}
 			}
 		}

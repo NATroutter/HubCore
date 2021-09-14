@@ -1,6 +1,8 @@
 package net.natroutter.hubcore.features.gadgets.snowcannon;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -19,12 +21,31 @@ public class SnowCannonHandler {
 
 	private static final Utilities utils = HubCore.getUtilities();
 
-	public static final HashMap<UUID, Integer> particleTasks = new HashMap<>();
+	public static ArrayList<Projectile> sonwCannonBullets = new ArrayList<>();
 	
 	public static String ProjectileName = "SnowCannon-Projectile";
 	
 	private static ParticleSettings getPartSet(Location loc) {
 		return new ParticleSettings(Particle.END_ROD, loc, 1, 0.1, 0.1, 0.1, 0.02);
+	}
+
+	public static void Initialize() {
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(HubCore.getPlugin(), () -> {
+			for (int i = 0; i < sonwCannonBullets.size(); i++) {
+				Projectile bullet = sonwCannonBullets.get(i);
+				if (bullet.isDead()) {
+					sonwCannonBullets.remove(i);
+					return;
+				}
+				int secs = bullet.getTicksLived() / 20;
+				if (secs > 1) {
+					sonwCannonBullets.remove(i);
+					bullet.remove();
+					return;
+				}
+				utils.spawnParticleInRadius(getPartSet(bullet.getLocation()), 50);
+			}
+		}, 0, 2);
 	}
 	
 	public static void shoot(Player p) {
@@ -33,14 +54,8 @@ public class SnowCannonHandler {
 		
 		proj.setCustomName(ProjectileName);
 		proj.setGlowing(true);
-		
-		particleTasks.put(proj.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(HubCore.getPlugin(), () -> {
-			if (proj.isDead()) {
-				Bukkit.getScheduler().cancelTask(particleTasks.get(proj.getUniqueId()));
-				return;
-			}
-			utils.spawnParticleInRadius(getPartSet(proj.getLocation()), 40);
-		}, 0, 1));
+
+		sonwCannonBullets.add(proj);
 	}
 	
 	public static Integer newDuration(Integer dura) {

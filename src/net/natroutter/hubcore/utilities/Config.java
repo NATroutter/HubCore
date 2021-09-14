@@ -11,6 +11,7 @@ public class Config {
 
 
 	public boolean DisableRedstone = true;
+	public boolean DisablePhysics = true;
 
 	public gadgets gadgets = new gadgets();
 	public static class gadgets {

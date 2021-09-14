@@ -1,6 +1,9 @@
 package net.natroutter.hubcore.features.gadgets;
 
+import net.citizensnpcs.api.CitizensAPI;
+import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.FWSHandler;
+import net.natroutter.hubcore.handlers.Hooks;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,12 +21,15 @@ import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.natlibs.objects.BaseItem;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class GadgetListener implements Listener {
 
 	public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
+
+	private Hooks hooks = HubCore.getHooks();
 
 	public boolean onCooldown(Player p , int time) {
 		if(cooldown.containsKey(p.getUniqueId())) {
@@ -36,6 +42,7 @@ public class GadgetListener implements Listener {
 		return false;
 	}
 
+
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
 		if (!e.hasItem()) {return;}
@@ -44,33 +51,35 @@ public class GadgetListener implements Listener {
 		BaseItem item = BaseItem.from(e.getItem());
 		Action act = e.getAction();
 
+		if (GadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
+
 		if (act.equals(Action.RIGHT_CLICK_AIR) || act.equals(Action.RIGHT_CLICK_BLOCK)) {
 
-			if (item.matches(Items.Gadgets.BoomBox()) && p.isSneaking()) {
+			if (item.isSimilar(Items.Gadgets.BoomBox()) && p.isSneaking()) {
 				if (onCooldown(p, 1)) {return;}
 				e.setCancelled(true);
 				MusicGUI.show(p);
 				
-			} else if (item.matches(Items.Gadgets.Wings.Booster())) {
+			} else if (item.isSimilar(Items.Gadgets.Wings.Booster())) {
 				e.setCancelled(true);
 				WingsHandler.boost(p);
 				
-			} else if (item.matches(Items.Gadgets.SnowCannon())) {
+			} else if (item.isSimilar(Items.Gadgets.SnowCannon())) {
 				e.setCancelled(true);
 				SnowCannonHandler.shoot(p);
 
-			} else if (item.matches(Items.Gadgets.Jumpper())) {
+			} else if (item.isSimilar(Items.Gadgets.Jumpper())) {
 				e.setCancelled(true);
 				JumpperHandler.jump(p);
 				
-			} else if (item.matches(Items.Gadgets.FireworkShooter())) {
+			} else if (item.isSimilar(Items.Gadgets.FireworkShooter())) {
 				if (onCooldown(p, 1)) {return;}
 				e.setCancelled(true);
 				FWSHandler.shoot(p);
 
 			}
 		} else if (act.equals(Action.LEFT_CLICK_AIR) || act.equals(Action.LEFT_CLICK_BLOCK)) {
-			if (item.matches(Items.Gadgets.FireworkShooter())) {
+			if (item.isSimilar(Items.Gadgets.FireworkShooter())) {
 				e.setCancelled(true);
 				FWSHandler.showGUI(p);
 
@@ -81,13 +90,19 @@ public class GadgetListener implements Listener {
 	@EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent e) {
 		Player p = e.getPlayer();
-		
+
+		if (GadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
+
         if (e.getRightClicked() instanceof Player) {
+			if (hooks != null && hooks.getCitizens().isHooked()) {
+				if (CitizensAPI.getNPCRegistry().isNPC(e.getRightClicked())) {return;}
+			}
+
 			Player target = (Player)e.getRightClicked();
         	BaseItem item = BaseItem.from(p.getInventory().getItemInMainHand());
         	
         	if (!item.getType().equals(Material.AIR)) {
-        		if (item.matches(Items.Gadgets.Slapper())) {
+        		if (item.isSimilar(Items.Gadgets.Slapper())) {
         			e.setCancelled(true);
 					if (onCooldown(p, 5)) {return;}
         			SlapperHandler.slap(p, target);

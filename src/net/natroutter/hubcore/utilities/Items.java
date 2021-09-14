@@ -33,6 +33,8 @@ public class Items {
 		return item;
 	}
 
+
+
 	public static BaseItem back() {
 		BaseItem item = new SkullCreator().Create(lang.Guis.Gadgets.fireworks.Back, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTQyZmRlOGI4MmU4YzFiOGMyMmIyMjY3OTk4M2ZlMzVjYjc2YTc5Nzc4NDI5YmRhZGFiYzM5N2ZkMTUwNjEifX19");
 		item.addItemFlags(ItemFlag.values());
@@ -283,6 +285,7 @@ public class Items {
 		        BaseItem item = new BaseItem(Material.ELYTRA);
 		        item.setDisplayName(lang.Items.gadgets.wings.Wings);
 		        item.addItemFlags(ItemFlag.values());
+		        item.setUnbreakable(true);
 		        item.setLore(lang.Items.gadgets.wings.Wings_Lore);
 		        return item;
 		    }
@@ -300,7 +303,7 @@ public class Items {
 	}
 	
 	public static class JoinItems {
-		
+
 		public static BaseItem particleSelector() {
 			BaseItem item = new BaseItem(Material.BLAZE_POWDER);
 			item.addItemFlags(ItemFlag.values());

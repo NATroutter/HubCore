@@ -3,8 +3,10 @@ package net.natroutter.hubcore;
 import net.natroutter.hubcore.commands.*;
 import net.natroutter.hubcore.features.PlayerCarry;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.FWSListener;
+import net.natroutter.hubcore.features.gadgets.snowcannon.SnowCannonHandler;
 import net.natroutter.hubcore.features.particles.ParticleScheduler;
 import net.natroutter.hubcore.handlers.Database.Database;
+import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.natlibs.handlers.Database.YamlDatabase;
 import net.natroutter.natlibs.handlers.FileManager;
 import net.natroutter.natlibs.objects.ConfType;
@@ -18,6 +20,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.natroutter.hubcore.features.Protection;
@@ -46,24 +49,22 @@ public class HubCore extends JavaPlugin {
     //ESTÖ PELAAJAN LYÖNTI ÄÄNI SAATANA!
 
     private static JavaPlugin instance;
-    private static Hooks hooks;
     private static Lang lang;
     private static Config config;
     private static YamlDatabase yamlDatabase;
     private static Utilities utilities;
-    private static SkullCreator skullCreator;
     private static BungeeHandler bungee;
-    private static Database database;
+    private static Hooks hooks;
+    private static PlayerDataHandler dataHandler;
 
     public static JavaPlugin getPlugin() {return instance;}
-    public static Hooks getHooks() { return hooks; }
     public static Lang getLang() {return lang;}
     public static Config getCfg() {return config;}
     public static YamlDatabase getYamlDatabase() {return yamlDatabase;}
     public static Utilities getUtilities() {return utilities;}
-    public static SkullCreator getSkullCreator() {return skullCreator;}
     public static BungeeHandler getBungee() {return bungee;}
-    public static Database getDatabase() {return database;}
+    public static Hooks getHooks() {return hooks;}
+    public static PlayerDataHandler getDataHandler() {return dataHandler;}
 
     @Override
     public void onEnable() {
@@ -74,24 +75,16 @@ public class HubCore extends JavaPlugin {
 
         yamlDatabase = new YamlDatabase(this);
         utilities = new Utilities(this);
-        skullCreator = new SkullCreator();
         config = new FileManager(this, ConfType.Config).load(Config.class);
         lang = new FileManager(this, ConfType.Lang).load(Lang.class);
-        database = new Database(this);
+        dataHandler = new PlayerDataHandler(this, new Database(this), 30 * 60);
 
         //Initialize Common handler!
         new CommonHandler(this);
 
+        SnowCannonHandler.Initialize();
 
-        //Print sexy banner and hook other plugins!
-        utilities.consoleMessage("§8─────────────────────────────────────────");
-        utilities.consoleMessage("§8┌[ §cHubCore §4v1.0 §cEnabled §8]");
-        utilities.consoleMessage("§8├ §7Plugin by: §4NATroutter");
-        utilities.consoleMessage("§8├ §7Website: §4NATroutter.net");
-        utilities.consoleMessage("§8└ §7Hooks:");
-        hooks = new Hooks(this);
-        utilities.consoleMessage("§8─────────────────────────────────────────");
-
+        PluginDescriptionFile pdf = getDescription();
 
         EventManager evm = new EventManager(this);
 
@@ -104,7 +97,7 @@ public class HubCore extends JavaPlugin {
 
         //Register all commands
         evm.RegisterCommands(
-                Adminmode.class, Hubitems.class
+                Adminmode.class, Hubitems.class, noeffect.class, nocarry.class
         );
 
 
@@ -116,10 +109,20 @@ public class HubCore extends JavaPlugin {
 
         ParticleScheduler particleScheduler = new ParticleScheduler(this, utilities);
 
+        //Print sexy banner and hook other plugins!
+        utilities.consoleMessage("§8─────────────────────────────────────────");
+        utilities.consoleMessage("§8┌[ §cHubCore §4v"+pdf.getVersion()+" §cEnabled §8]");
+        utilities.consoleMessage("§8├ §7Plugin by: §4NATroutter");
+        utilities.consoleMessage("§8├ §7Website: §4NATroutter.net");
+        utilities.consoleMessage("§8└ §7Hooks:");
+        hooks = new Hooks(this);
+        utilities.consoleMessage("§8─────────────────────────────────────────");
+
     }
 
     @Override
     public void onDisable() {
+        dataHandler.save();
         instance = null;
     }
 

@@ -1,5 +1,10 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
+import net.citizensnpcs.api.CitizensAPI;
+import net.natroutter.hubcore.HubCore;
+import net.natroutter.hubcore.handlers.Database.PlayerData;
+import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
+import net.natroutter.hubcore.handlers.Hooks;
 import org.bukkit.Sound;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -10,6 +15,8 @@ import org.bukkit.util.Vector;
 
 public class FWSListener implements Listener {
 
+    private PlayerDataHandler pdh = HubCore.getDataHandler();
+    private Hooks hooks = HubCore.getHooks();
 
     @EventHandler
     public void noHit(ProjectileHitEvent e) {
@@ -17,9 +24,16 @@ public class FWSListener implements Listener {
         if (!(e.getHitEntity() instanceof Player)) {return;}
         if (!(e.getEntity().getShooter() instanceof Player)) {return;}
 
+        if (hooks != null && hooks.getCitizens().isHooked()) {
+            if (CitizensAPI.getNPCRegistry().isNPC(e.getHitEntity())) {return;}
+        }
+
         Player victim = (Player)e.getHitEntity();
         Player shooter = (Player)e.getEntity().getShooter();
         Firework firework = (Firework)e.getEntity();
+
+        PlayerData data = pdh.get(victim.getUniqueId());
+        if (data.getNoEffect()) {return;}
 
         if (firework.getCustomName() == null) {return;}
 

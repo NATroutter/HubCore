@@ -19,6 +19,7 @@ public class SettingsGUI {
 
     public static HashMap<UUID, GUIWindow> GUIS = new HashMap<>();
     private static final Lang lang = HubCore.getLang();
+    private static final PlayerDataHandler pdh = HubCore.getDataHandler();
 
     private static GUIWindow getGUI(Player p) {
         if (!GUIS.containsKey(p.getUniqueId())) {
@@ -27,69 +28,98 @@ public class SettingsGUI {
         return GUIS.get(p.getUniqueId());
     }
 
-    public static void show(Player p, PlayerData data) {
-        guiBuilder(p, data).show(p, true);
+    public static void show(Player p) {
+        guiBuilder(p).show(p, true);
     }
 
-    private static GUIWindow guiBuilder(Player p, PlayerData data) {
+    private static GUIWindow guiBuilder(Player p) {
         GUIWindow gui = getGUI(p);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.SmallBall(), (e)->{
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.SMALLBALL.name());
-            guiBuilder(p, data);
+            pdh.set(data);
+            guiBuilder(t);
         }), GUIWindow.Rows.row2, 2);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.LargeBall(), (e)->{
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.LARGEBALL.name());
-            guiBuilder(p, data);
+            pdh.set(data);
+            guiBuilder(t);
         }), GUIWindow.Rows.row2, 3);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.Star(), (e)->{
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.STAR.name());
-            guiBuilder(p, data);
+            pdh.set(data);
+            guiBuilder(t);
         }), GUIWindow.Rows.row2, 4);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.Creeper(), (e)->{
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.CREEPER.name());
-            guiBuilder(p, data);
+            pdh.set(data);
+            guiBuilder(t);
         }), GUIWindow.Rows.row2, 5);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.Burst(), (e)->{
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.BURST.name());
-            guiBuilder(p, data);
+            pdh.set(data);
+            guiBuilder(t);
         }), GUIWindow.Rows.row2, 6);
 
         //Additives
         gui.setItem(new GUIItem(Items.Gadgets.Firework.additives.Twinkle(), (e)->{
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
             data.setTwinkle(!data.getTwinkle());
-            guiBuilder(p, data);
+            pdh.set(data);
+            guiBuilder(t);
         }), GUIWindow.Rows.row4, 2);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.additives.Trail(), (e)->{
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
             data.setTrail(!data.getTrail());
-            guiBuilder(p, data);
+            pdh.set(data);
+            guiBuilder(t);
         }), GUIWindow.Rows.row5, 2);
 
-        //settings
-        gui.setItem(new GUIItem(Items.Gadgets.Firework.save(), (e)->{
-            PlayerDataHandler.updateForID(data);
-            p.closeInventory();
-        }), GUIWindow.Rows.row4, 4);
-
-        gui.setItem(new GUIItem(Items.Gadgets.Firework.CurrentSettings(data), (e)->{
+        PlayerData dd = pdh.get(p.getUniqueId());
+        gui.setItem(new GUIItem(Items.Gadgets.Firework.CurrentSettings(dd), (e)->{
         }), GUIWindow.Rows.row5, 4);
 
         //colors
-        FColor color = FColor.fromRGB(data.getColor_r(), data.getColor_g(), data.getColor_b());
+        FColor color = FColor.fromRGB(dd.getColor_r(), dd.getColor_g(), dd.getColor_b());
         gui.setItem(new GUIItem(Items.Gadgets.Firework.colorDisplay(color), (e)->{
-            p.closeInventory();
-            ColorGUI.show(p, data, FColorType.MAIN);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            t.closeInventory();
+            ColorGUI.colortype.put(t.getUniqueId(), FColorType.MAIN);
+            ColorGUI.show(t);
         }), GUIWindow.Rows.row4, 6);
 
-        FColor fadecolor = FColor.fromRGB(data.getFade_r(), data.getFade_g(), data.getFade_b());
+        FColor fadecolor = FColor.fromRGB(dd.getFade_r(), dd.getFade_g(), dd.getFade_b());
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fadeColor(fadecolor), (e)->{
-            p.closeInventory();
-            ColorGUI.show(p, data, FColorType.FADE);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            t.closeInventory();
+            ColorGUI.colortype.put(t.getUniqueId(), FColorType.FADE);
+            ColorGUI.show(t);
         }), GUIWindow.Rows.row5, 6);
 
 

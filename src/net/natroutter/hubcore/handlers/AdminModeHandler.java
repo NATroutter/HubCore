@@ -17,10 +17,6 @@ public class AdminModeHandler {
 		return database.getBoolean(p, "Adminmode");
 	}
 	
-	public static boolean isVip(Player p) {
-		return p.hasPermission("hubcore.vip");
-	}
-	
 	public static void ToggleAdmin(Player p) {
 		ToggleAdmin(p, false);
 	}
@@ -33,11 +29,11 @@ public class AdminModeHandler {
 
 		if (state) {
 			database.save(p, "Adminmode", false);
-			message.replaceAll("{State}", lang.ToggleStates.off);
+			message.replaceAll("{state}", lang.ToggleStates.off);
 			SelectorItemHandler.update(p);
 		} else {
 			database.save(p, "Adminmode", true);
-			message.replaceAll("{State}", lang.ToggleStates.on);
+			message.replaceAll("{state}", lang.ToggleStates.on);
 		}
 		if (!silent) {
 			message.send(p);

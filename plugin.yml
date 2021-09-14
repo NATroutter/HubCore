@@ -1,8 +1,10 @@
 main: net.natroutter.hubcore.HubCore
 name: HubCore
-version: 1.0
+version: ${project.version}
 author: NATroutter
-description: Core plugin for all hub servers
-api-version: 1.16
-depend: [Vault]
-softdepend: [PlaceholderAPI]
+description: ${project.description}
+api-version: 1.17
+website: ${project.url}
+softdepend:
+  - PlaceholderAPI
+  - Citizens

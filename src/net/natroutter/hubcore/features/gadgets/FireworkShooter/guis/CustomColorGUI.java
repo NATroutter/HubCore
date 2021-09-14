@@ -5,6 +5,7 @@ import net.natroutter.hubcore.features.gadgets.FireworkShooter.FColor;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.FColorType;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.RGB;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
+import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.hubcore.utilities.Lang;
 import net.natroutter.natlibs.handlers.gui.GUIItem;
@@ -18,6 +19,7 @@ public class CustomColorGUI {
 
     public static HashMap<UUID, GUIWindow> GUIS = new HashMap<>();
     private static final Lang lang = HubCore.getLang();
+    private static final PlayerDataHandler pdh = HubCore.getDataHandler();
 
     private static GUIWindow getGUI(Player p) {
         if (!GUIS.containsKey(p.getUniqueId())) {
@@ -96,91 +98,163 @@ public class CustomColorGUI {
         return data;
     }
 
-    protected static void show(Player p, PlayerData data, FColorType type) {
+    protected static void show(Player p) {
         if (p.hasPermission("hubcore.gadgets.fireworkshooter.customcolor")) {
-            guiBuilder(p, data, type).show(p, true);
+            GUIS.remove(p.getUniqueId());
+            guiBuilder(p).show(p, true);
         } else {
             p.sendMessage(lang.Prefix + lang.NoPerm);
         }
     }
 
-    private static GUIWindow guiBuilder(Player p, PlayerData data, FColorType type) {
+    public static void updateDisplay(Player p) {
+        GUIWindow gui = getGUI(p);
+
+        FColorType type = ColorGUI.colortype.getOrDefault(p.getUniqueId(), FColorType.MAIN);
+        PlayerData dd = pdh.get(p.getUniqueId());
+        if (type.equals(FColorType.MAIN)) {
+            //current red
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.red(dd.getColor_r()), (e)->{
+            }), GUIWindow.Rows.row2, 3);
+
+            //current green
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.green(dd.getColor_g()), (e)->{
+            }), GUIWindow.Rows.row2, 4);
+
+            //current blue
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.blue(dd.getColor_b()), (e)->{
+            }), GUIWindow.Rows.row2, 5);
+        } else if (type.equals(FColorType.FADE)) {
+            //current red
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.red(dd.getFade_r()), (e)->{
+            }), GUIWindow.Rows.row2, 3);
+
+            //current green
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.green(dd.getFade_g()), (e)->{
+            }), GUIWindow.Rows.row2, 4);
+
+            //current blue
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.blue(dd.getFade_b()), (e)->{
+            }), GUIWindow.Rows.row2, 5);
+        }
+
+        FColor cc = FColor.Black;
+        if (type.equals(FColorType.MAIN)) {
+            cc = FColor.fromRGB(dd.getColor_r(), dd.getColor_g(), dd.getColor_b());
+        } else if (type.equals(FColorType.FADE)) {
+            cc = FColor.fromRGB(dd.getFade_r(), dd.getFade_g(), dd.getFade_b());
+        }
+        gui.setItem(new GUIItem(Items.Gadgets.Firework.colorDisplay(cc), (e)->{
+        }), GUIWindow.Rows.row2, 7);
+    }
+
+    private static GUIWindow guiBuilder(Player p) {
         GUIWindow gui = getGUI(p);
 
         //back
         gui.setItem(new GUIItem(Items.back(), (e)->{
-            p.closeInventory();
-            ColorGUI.show(p, data, type);
-            guiBuilder(p, data, type);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            t.closeInventory();
+            ColorGUI.show(t);
         }), GUIWindow.Rows.row2, 1);
 
         //red up
         gui.setItem(new GUIItem(Items.arrowUP(), (e)->{
-            guiBuilder(p, colorUp(data, RGB.RED, type), type);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
+            pdh.set(colorUp(data, RGB.RED, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
+            updateDisplay(t);
         }), GUIWindow.Rows.row1, 3);
 
         //green up
         gui.setItem(new GUIItem(Items.arrowUP(), (e)->{
-            guiBuilder(p, colorUp(data, RGB.GREEN, type), type);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
+            pdh.set(colorUp(data, RGB.GREEN, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
+            updateDisplay(t);
         }), GUIWindow.Rows.row1, 4);
 
         //blue up
         gui.setItem(new GUIItem(Items.arrowUP(), (e)->{
-            guiBuilder(p, colorUp(data, RGB.BLUE, type), type);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
+            pdh.set(colorUp(data, RGB.BLUE, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
+            updateDisplay(t);
         }), GUIWindow.Rows.row1, 5);
 
+
+        FColorType type = ColorGUI.colortype.getOrDefault(p.getUniqueId(), FColorType.MAIN);
+        PlayerData dd = pdh.get(p.getUniqueId());
         if (type.equals(FColorType.MAIN)) {
             //current red
-            gui.setItem(new GUIItem(Items.Gadgets.Firework.red(data.getColor_r()), (e)->{
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.red(dd.getColor_r()), (e)->{
             }), GUIWindow.Rows.row2, 3);
 
             //current green
-            gui.setItem(new GUIItem(Items.Gadgets.Firework.green(data.getColor_g()), (e)->{
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.green(dd.getColor_g()), (e)->{
             }), GUIWindow.Rows.row2, 4);
 
             //current blue
-            gui.setItem(new GUIItem(Items.Gadgets.Firework.blue(data.getColor_b()), (e)->{
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.blue(dd.getColor_b()), (e)->{
             }), GUIWindow.Rows.row2, 5);
         } else if (type.equals(FColorType.FADE)) {
             //current red
-            gui.setItem(new GUIItem(Items.Gadgets.Firework.red(data.getFade_r()), (e)->{
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.red(dd.getFade_r()), (e)->{
             }), GUIWindow.Rows.row2, 3);
 
             //current green
-            gui.setItem(new GUIItem(Items.Gadgets.Firework.green(data.getFade_g()), (e)->{
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.green(dd.getFade_g()), (e)->{
             }), GUIWindow.Rows.row2, 4);
 
             //current blue
-            gui.setItem(new GUIItem(Items.Gadgets.Firework.blue(data.getFade_b()), (e)->{
+            gui.setItem(new GUIItem(Items.Gadgets.Firework.blue(dd.getFade_b()), (e)->{
             }), GUIWindow.Rows.row2, 5);
         }
 
+
+        FColor cc = FColor.Black;
+        if (type.equals(FColorType.MAIN)) {
+            cc = FColor.fromRGB(dd.getColor_r(), dd.getColor_g(), dd.getColor_b());
+        } else if (type.equals(FColorType.FADE)) {
+            cc = FColor.fromRGB(dd.getFade_r(), dd.getFade_g(), dd.getFade_b());
+        }
+        gui.setItem(new GUIItem(Items.Gadgets.Firework.colorDisplay(cc), (e)->{
+        }), GUIWindow.Rows.row2, 7);
+
+
         //red down
         gui.setItem(new GUIItem(Items.arrowDOWN(), (e)->{
-            guiBuilder(p, colorDown(data, RGB.RED, type), type);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
+            pdh.set(colorDown(data, RGB.RED, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
+            updateDisplay(t);
         }), GUIWindow.Rows.row3, 3);
 
         //green down
         gui.setItem(new GUIItem(Items.arrowDOWN(), (e)->{
-            guiBuilder(p, colorDown(data, RGB.GREEN, type), type);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
+            pdh.set(colorDown(data, RGB.GREEN, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
+            updateDisplay(t);
         }), GUIWindow.Rows.row3, 4);
 
         //blue down
         gui.setItem(new GUIItem(Items.arrowDOWN(), (e)->{
-            guiBuilder(p, colorDown(data, RGB.BLUE, type), type);
+            if (!(e.getWhoClicked() instanceof Player)) {return;}
+            Player t = (Player)e.getWhoClicked();
+            PlayerData data = pdh.get(t.getUniqueId());
+            pdh.set(colorDown(data, RGB.BLUE, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
+            updateDisplay(t);
         }), GUIWindow.Rows.row3, 5);
 
-        //color dispaly
-        FColor color = null;
-        if (type.equals(FColorType.MAIN)) {
-            color = FColor.fromRGB(data.getColor_r(), data.getColor_g(), data.getColor_b());
-        } else if (type.equals(FColorType.FADE)) {
-            color = FColor.fromRGB(data.getFade_r(), data.getFade_g(), data.getFade_b());
-        }
-        if (color != null) {
-            gui.setItem(new GUIItem(Items.Gadgets.Firework.colorDisplay(color), (e)->{
-            }), GUIWindow.Rows.row2, 7);
-        }
+
+
 
         return gui;
     }

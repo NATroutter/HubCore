@@ -2,8 +2,6 @@ package net.natroutter.hubcore.features.SelectorItems;
 
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.particles.ParticleGUI;
-import net.natroutter.hubcore.handlers.Database.PlayerData;
-import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.utilities.Lang;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -31,11 +29,15 @@ public class SelectorItemListener implements Listener {
 
 	private static final Lang lang = HubCore.getLang();
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent e) {
 		e.setJoinMessage(null);
 		Player p = e.getPlayer();
+		p.getInventory().clear();
+
+		SelectorItemHandler.InitializeItems(p);
 		SelectorItemHandler.update(p);
+
 		for (int i = 0; i<255; i++) {
 			p.sendMessage(" ");
 		}
@@ -58,7 +60,7 @@ public class SelectorItemListener implements Listener {
 		BaseItem item2 = BaseItem.from(item.getItemStack());
 		
 		for(Gadget gad : GadgetHandler.Gadgets) {
-			if (item2.matches(gad.getItem())) {
+			if (item2.isSimilar(gad.getItem())) {
 				item.remove();
 				GadgetHandler.setGadget(p, null);
 				return;
@@ -75,6 +77,8 @@ public class SelectorItemListener implements Listener {
 			Player p = (Player)e.getWhoClicked();
 			
 			if (AdminModeHandler.isAdmin(p)) {return;}
+			if (SelectorItemHandler.bypassHubItems.contains(p.getUniqueId())) {return;}
+
 			e.setCancelled(true);
 			
 			if (e.getInventory().getType().equals(InventoryType.PLAYER)) {
@@ -100,23 +104,24 @@ public class SelectorItemListener implements Listener {
 	public void onInteract(PlayerInteractEvent e) {
 		//if (1 == 1) {return;}
 		Player p = e.getPlayer();
+		if (SelectorItemHandler.bypassHubItems.contains(p.getUniqueId())) {return;}
+
 		if (e.hasItem() && (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
 			BaseItem item = BaseItem.from(e.getItem());
 			
-			if (item.matches(Items.JoinItems.serverSelector(p))) {
+			if (item.isSimilar(Items.JoinItems.serverSelector(p))) {
 				e.setCancelled(true);
 				ServerSelector.show(p);
 				
-			} else if (item.matches(Items.JoinItems.gadgetSelector())) {
+			} else if (item.isSimilar(Items.JoinItems.gadgetSelector())) {
 				e.setCancelled(true);
 				GadgetGUI.show(p);
 				
-			} else if (item.matches(Items.JoinItems.particleSelector())) {
+			} else if (item.isSimilar(Items.JoinItems.particleSelector())) {
 				e.setCancelled(true);
-				PlayerData data = PlayerDataHandler.queryForID(p.getUniqueId());
-				ParticleGUI.show(p, data);
+				ParticleGUI.show(p);
 
-			} else if (item.matches(Items.JoinItems.Info())) {
+			} else if (item.isSimilar(Items.JoinItems.Info())) {
 				if (onCooldown(p)){return;}
 				for (String line : lang.info) {
 					p.sendMessage(line);

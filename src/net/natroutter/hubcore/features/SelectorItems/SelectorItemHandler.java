@@ -1,8 +1,8 @@
 package net.natroutter.hubcore.features.SelectorItems;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
+import net.natroutter.natlibs.utilities.SkullCreator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -11,43 +11,74 @@ import net.natroutter.hubcore.features.gadgets.Gadget;
 import net.natroutter.hubcore.features.gadgets.GadgetHandler;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.natlibs.objects.BaseItem;
+import org.bukkit.inventory.ItemFlag;
 
 public class SelectorItemHandler {
-	
-	private static List<HubItem> getHubItems(Player p) {
-		return Arrays.asList(
-			new HubItem("ParticleSelector", 0, Items.JoinItems.particleSelector()),
-			new HubItem("GadgetSelector", 1, Items.JoinItems.gadgetSelector()),
-			new HubItem("ServerSelector", 4, Items.JoinItems.serverSelector(p)),
-			new HubItem("InfoBook", 8, Items.JoinItems.Info())
-		);
+
+	public static HashMap<UUID, List<HubItem>> hubItemMap = new HashMap<>();
+
+	public static void InitializeItems(Player p) {
+		if (!hubItemMap.containsKey(p.getUniqueId())) {
+			hubItemMap.put(p.getUniqueId(), new LinkedList<>(Arrays.asList(
+					new HubItem("ParticleSelector", 0, Items.JoinItems.particleSelector()),
+					new HubItem("GadgetSelector", 1, Items.JoinItems.gadgetSelector()),
+					new HubItem("ServerSelector", 4, Items.JoinItems.serverSelector(p)),
+					new HubItem("InfoBook", 8, Items.JoinItems.Info())
+			)));
+		}
 	}
-	
-	private static Boolean isHubItem(Player p, BaseItem item) {
+
+	public static void addHubItem(Player p, HubItem item) {
+		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
+
+		List<HubItem> list = hubItemMap.get(p.getUniqueId());
+		list.add(item);
+
+		hubItemMap.put(p.getUniqueId(), list);
+	}
+
+	public static void addHubItems(Player p, HubItem... items) {
+		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
+
+		List<HubItem> list = hubItemMap.get(p.getUniqueId());
+		list.addAll(new LinkedList<>(Arrays.asList(items)));
+
+		hubItemMap.put(p.getUniqueId(), list);
+	}
+
+	public static void replaceHubItems(HashMap<UUID, List<HubItem>> map) {
+		hubItemMap = map;
+	}
+
+	public static List<HubItem> getHubItems(Player p) {
+		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
+
+		return hubItemMap.get(p.getUniqueId());
+	}
+
+	protected static ArrayList<UUID> bypassHubItems = new ArrayList<>();
+	public static void useHubItems(Player p, boolean status) {
+		if (!status) {
+			if (!bypassHubItems.contains(p.getUniqueId())) {
+				bypassHubItems.add(p.getUniqueId());
+			}
+		} else {
+			bypassHubItems.remove(p.getUniqueId());
+		}
+	}
+
+	public static Boolean isHubItem(Player p, BaseItem item) {
 		for(HubItem hubitem : getHubItems(p)) {
-			if (item.matches(hubitem.getItem())) {
+			if (item.isSimilar(hubitem.getItem())) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public static class HubItem {
-		private final String Identifier;
-		private final Integer Slot;
-		private final BaseItem Item;
-		public HubItem(String Identifier, Integer Slot, BaseItem Item) {
-			this.Identifier = Identifier;
-			this.Slot = Slot;
-			this.Item = Item;
-		}
-		public String getId() { return Identifier; }
-		public Integer getSlot() { return Slot; }
-		public BaseItem getItem() { return Item; }
-	}
-	
-	
+
 	public static void update(Player p) {
+		if (bypassHubItems.contains(p.getUniqueId())) {return;}
+
 		Inventory inv = p.getInventory();
 		ClearInvalidItems(p);
 		
@@ -57,17 +88,17 @@ public class SelectorItemHandler {
 			if (hubitem.getId().equals("GadgetSelector")) {
 				
 				if (gad != null) {
-					if (!BaseItem.from(inv.getItem(hubitem.getSlot())).matches(gad.getItem())) {
+					if (!BaseItem.from(inv.getItem(hubitem.getSlot())).isSimilar(gad.getItem())) {
 						inv.setItem(hubitem.getSlot(), gad.getItem());
 					}
 				} else {
-					if (!BaseItem.from(inv.getItem(hubitem.getSlot())).matches(hubitem.getItem())) {
+					if (!BaseItem.from(inv.getItem(hubitem.getSlot())).isSimilar(hubitem.getItem())) {
 						inv.setItem(hubitem.getSlot(), hubitem.getItem());
 					}
 				}
 				
 			} else {
-				if (!BaseItem.from(inv.getItem(hubitem.getSlot())).matches(hubitem.getItem())) {
+				if (!BaseItem.from(inv.getItem(hubitem.getSlot())).isSimilar(hubitem.getItem())) {
 					inv.setItem(hubitem.getSlot(), hubitem.getItem());
 				}
 			}
@@ -76,6 +107,8 @@ public class SelectorItemHandler {
 	}
 	
 	private static void ClearInvalidItems(Player p) {
+		if (bypassHubItems.contains(p.getUniqueId())) {return;}
+
 		Inventory inv = p.getInventory();
 		Gadget selectedGad = GadgetHandler.getGadget(p);
 		
@@ -85,9 +118,9 @@ public class SelectorItemHandler {
 			if (!item.getType().equals(Material.AIR)) {
 				
 				if (selectedGad != null) {
-					if (item.matches(selectedGad.getItem())) {
+					if (item.isSimilar(selectedGad.getItem())) {
 						continue;
-					} else if (item.matches(selectedGad.getIcon())) {
+					} else if (item.isSimilar(selectedGad.getIcon())) {
 						continue;
 					}
 				}

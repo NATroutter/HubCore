@@ -1,6 +1,7 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
 import jdk.jshell.execution.Util;
+import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.guis.SettingsGUI;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
@@ -19,6 +20,8 @@ public class FWSHandler {
 
     public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
     private static int cooldownTime = 2;
+
+    private static final PlayerDataHandler pdh = HubCore.getDataHandler();
 
     public static void shoot(Player p) {
 
@@ -57,7 +60,7 @@ public class FWSHandler {
     }
 
     private static FireworkEffect.Builder getEffect(Player p) {
-        PlayerData data = PlayerDataHandler.queryForID(p.getUniqueId());
+        PlayerData data = pdh.get(p.getUniqueId());
         if (data != null) {
 
             FireworkEffect.Builder e = FireworkEffect.builder();
@@ -82,8 +85,8 @@ public class FWSHandler {
     }
 
     public static void showGUI(Player p) {
-        PlayerData data = PlayerDataHandler.queryForID(p.getUniqueId());
-        SettingsGUI.show(p, data);
+        PlayerData data = pdh.get(p.getUniqueId());
+        SettingsGUI.show(p);
     }
 
 

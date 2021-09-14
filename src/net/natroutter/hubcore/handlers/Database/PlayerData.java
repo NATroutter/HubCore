@@ -44,9 +44,15 @@ public class PlayerData {
     @DatabaseField(canBeNull = false)
     String particlemode;
 
+    @DatabaseField(canBeNull = false)
+    Boolean noeffect;
+
+    @DatabaseField(canBeNull = false)
+    Boolean nocarry;
+
 
     public PlayerData() {}
-    public PlayerData(UUID uuid, String shape, Boolean trail, Boolean twinkle, int color_r, int color_g, int color_b, int fade_r, int fade_g, int fade_b, String particle, String particlemode) {
+    public PlayerData(UUID uuid, String shape, Boolean trail, Boolean twinkle, int color_r, int color_g, int color_b, int fade_r, int fade_g, int fade_b, String particle, String particlemode, Boolean noeffect, Boolean nocarry) {
         this.uuid = uuid;
         this.shape = shape;
         this.trail = trail;
@@ -59,6 +65,32 @@ public class PlayerData {
         this.fade_b = fade_b;
         this.particle = particle;
         this.particlemode = particlemode;
+        this.noeffect = noeffect;
+        this.nocarry = nocarry;
+    }
+
+    public Boolean getNoeffect() {
+        return noeffect;
+    }
+
+    public void setNoeffect(Boolean noeffect) {
+        this.noeffect = noeffect;
+    }
+
+    public Boolean getNocarry() {
+        return nocarry;
+    }
+
+    public void setNocarry(Boolean nocarry) {
+        this.nocarry = nocarry;
+    }
+
+    public Boolean getNoEffect() {
+        return noeffect;
+    }
+
+    public void setNoEffect(Boolean noeffect) {
+        this.noeffect = noeffect;
     }
 
     public UUID getUuid() {

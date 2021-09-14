@@ -15,12 +15,15 @@ public class Hubitems extends Command {
 	
 	public Hubitems() {
 		super("");
-		this.setPermission("hubcore.hubitem");
-		this.setPermissionMessage(lang.Prefix + lang.NoPerm);
 	}
 
 	@Override
 	public boolean execute(@NotNull CommandSender sender, @NotNull String label, String[] args) {
+		if (!sender.hasPermission("hubcore.hubitem")) {
+			sender.sendMessage(lang.Prefix + lang.NoPerm);
+			return false;
+		}
+
 		if (!(sender instanceof Player)) {
 			sender.sendMessage(lang.OnlyIngame);
 			return false;

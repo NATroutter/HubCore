@@ -6,14 +6,19 @@ import java.util.List;
 
 public class Lang {
 	
-	public String Prefix = "§4§lHubCore §8§l§» ";
+	public String Prefix = "§4§lHubCore §8§l» ";
 	public String NoPerm = "§7You dont have permissions to do that!";
 	public String TooManyArguments = "§7Too many command arguments!";
 	public String OnlyIngame = "§7This Command can only be executed ingame!";
-	public String AdminModeToggle = "§7AdminMode: §c{State}";
+	public String AdminModeToggle = "§7AdminMode: §c{state}";
+	public String AdminModeToggleOther = "§c{name}§7's AdminMode: §c{state}";
 	public String OnbackPack = "§7You are now in the backpack of player §c{name}";
 	public String inYourBackpack = "§c{name} §7is now in your backpack";
+	public String GadgetEffective = "§7Gadgets effect you: §c{state}";
+	public String CantBackpack = "§7you cant go to §c{name}§7's backpack";
+	public String NoCarryToggle = "§7Player carry: §c{state}";
 	public String Unknown = "Unknown";
+	public String TargetNotFound = "§7Target not found!";
 
 	public List<String> welcommotd = new ArrayList<>() {{
 		add(" ");
