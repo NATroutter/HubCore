@@ -24,9 +24,7 @@ public class FWSListener implements Listener {
         if (!(e.getHitEntity() instanceof Player)) {return;}
         if (!(e.getEntity().getShooter() instanceof Player)) {return;}
 
-        if (hooks != null && hooks.getCitizens().isHooked()) {
-            if (CitizensAPI.getNPCRegistry().isNPC(e.getHitEntity())) {return;}
-        }
+        if (e.getHitEntity().hasMetadata("NPC")) {return;}
 
         Player victim = (Player)e.getHitEntity();
         Player shooter = (Player)e.getEntity().getShooter();

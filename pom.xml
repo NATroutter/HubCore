@@ -6,7 +6,7 @@
 
     <groupId>net.natroutter</groupId>
     <artifactId>HubCore</artifactId>
-    <version>1.4</version>
+    <version>1.6</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>
@@ -49,6 +49,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <minimizeJar>true</minimizeJar>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
                                 <relocation>
@@ -74,8 +75,8 @@
 
     <repositories>
         <repository>
-            <id>NATLibs-dev</id>
-            <url>https://hub.nat.gs/nexus/repository/NATLibs-dev/</url>
+            <id>NATLibs</id>
+            <url>https://hub.nat.gs/nexus/repository/natlibs/</url>
         </repository>
         <repository>
             <id>spigotmc-repo</id>
@@ -93,13 +94,17 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>everything</id>
+            <url>http://repo.citizensnpcs.co/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>net.natroutter</groupId>
             <artifactId>NATLibs</artifactId>
-            <version>1.1.59</version>
+            <version>1.1.67</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -116,19 +121,19 @@
         <dependency>
             <groupId>com.j256.ormlite</groupId>
             <artifactId>ormlite-jdbc</artifactId>
-            <version>5.0</version>
+            <version>6.1</version>
         </dependency>
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.34.0</version>
+            <version>3.36.0.2</version>
         </dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>
-            <artifactId>citizens-main</artifactId>
-            <version>2.0.28-SNAPSHOT</version>
+            <artifactId>citizensapi</artifactId>
+            <version>2.0.29-SNAPSHOT</version>
             <type>jar</type>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

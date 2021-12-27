@@ -5,6 +5,7 @@ import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.FWSHandler;
 import net.natroutter.hubcore.handlers.Hooks;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,9 +28,9 @@ import java.util.UUID;
 
 public class GadgetListener implements Listener {
 
-	public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
-
 	private Hooks hooks = HubCore.getHooks();
+
+	public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
 
 	public boolean onCooldown(Player p , int time) {
 		if(cooldown.containsKey(p.getUniqueId())) {
@@ -90,16 +91,15 @@ public class GadgetListener implements Listener {
 	@EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent e) {
 		Player p = e.getPlayer();
+		Entity ent = e.getRightClicked();
 
 		if (GadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
 
-        if (e.getRightClicked() instanceof Player) {
-			if (hooks != null && hooks.getCitizens().isHooked()) {
-				if (CitizensAPI.getNPCRegistry().isNPC(e.getRightClicked())) {return;}
-			}
+		if (ent.hasMetadata("NPC")) {return;}
 
-			Player target = (Player)e.getRightClicked();
-        	BaseItem item = BaseItem.from(p.getInventory().getItemInMainHand());
+        if (e.getRightClicked() instanceof Player target) {
+
+			BaseItem item = BaseItem.from(p.getInventory().getItemInMainHand());
         	
         	if (!item.getType().equals(Material.AIR)) {
         		if (item.isSimilar(Items.Gadgets.Slapper())) {

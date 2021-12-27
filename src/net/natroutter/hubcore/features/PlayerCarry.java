@@ -61,9 +61,7 @@ public class PlayerCarry implements Listener {
             if (!Bukkit.getOnlinePlayers().contains((Player)ride)) {
                 return;
             }
-            if (hooks != null && hooks.getCitizens().isHooked()) {
-                if (CitizensAPI.getNPCRegistry().isNPC(e.getRightClicked())) {return;}
-            }
+            if (e.getRightClicked().hasMetadata("NPC")) {return;}
 
             for (Entity pas : p.getPassengers()) {
                 if (pas.getUniqueId().equals(ride.getUniqueId())) {

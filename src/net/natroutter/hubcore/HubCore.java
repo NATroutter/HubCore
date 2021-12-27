@@ -41,13 +41,9 @@ import net.natroutter.natlibs.utilities.Utilities;
 
 import java.util.ArrayList;
 
-public class HubCore extends JavaPlugin {
+public class HubCore extends JavaPlugin implements NATLibs{
 
-    //TODO
-    //Estö redstone kokonaan
-    //kanto reppu gadget (pystyy ottaa pelaajan kyytiin ja heittää sen ilmaan)
-    //ESTÖ PELAAJAN LYÖNTI ÄÄNI SAATANA!
-
+    private static NATLibs natlibs;
     private static JavaPlugin instance;
     private static Lang lang;
     private static Config config;
@@ -57,6 +53,7 @@ public class HubCore extends JavaPlugin {
     private static Hooks hooks;
     private static PlayerDataHandler dataHandler;
 
+    public static NATLibs getNATLibs() {return natlibs;}
     public static JavaPlugin getPlugin() {return instance;}
     public static Lang getLang() {return lang;}
     public static Config getCfg() {return config;}
@@ -70,8 +67,8 @@ public class HubCore extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        NATLibs libs = new NATLibs(this);
-        bungee = libs.createBungeecordHandler();
+        natlibs = registerLibrary(this);
+        bungee = createBungeecordHandler(this);
 
         yamlDatabase = new YamlDatabase(this);
         utilities = new Utilities(this);

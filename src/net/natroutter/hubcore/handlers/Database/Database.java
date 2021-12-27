@@ -3,6 +3,8 @@ package net.natroutter.hubcore.handlers.Database;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.logger.Level;
+import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.table.TableUtils;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +23,9 @@ public class Database {
 
     public Database(JavaPlugin pl) {
         ConsoleCommandSender console = pl.getServer().getConsoleSender();
+
+        Logger.setGlobalLogLevel(Level.INFO);
+
         try {
             String ConString = "jdbc:sqlite:" + pl.getDataFolder() + "/database.db";
             JdbcPooledConnectionSource source = new JdbcPooledConnectionSource(ConString);

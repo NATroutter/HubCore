@@ -32,8 +32,8 @@ public class SnowCannonListener implements Listener {
 	public void onProjectileHit(ProjectileHitEvent e) {
 		Projectile proj = e.getEntity();
 
-		if (hooks != null && hooks.getCitizens().isHooked()) {
-			if (CitizensAPI.getNPCRegistry().isNPC(e.getHitEntity())) {return;}
+		if (e.getHitEntity() != null) {
+			if (e.getHitEntity().hasMetadata("NPC")) {return;}
 		}
 
 		if (proj.getCustomName() == null) {return;}
