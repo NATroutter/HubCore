@@ -1,7 +1,7 @@
 package net.natroutter.hubcore.handlers;
 
 import net.natroutter.natlibs.handlers.hooking.Hook;
-import net.natroutter.natlibs.handlers.hooking.Hooker;
+import net.natroutter.natlibs.handlers.hooking.HookSettings;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings({"unused"})
@@ -18,14 +18,14 @@ public class Hooks {
 
 	//hooks
 	public Hooks(JavaPlugin pl) {
-		Hooker hooker = new Hooker(pl);
-		hooker.setHookedMessage("  §a+ §7{plugin} Hooked succesfully!");
-		hooker.setHookingFailedMessage("  §4- §7{plugin} Failed to hook!");
-		hooker.setDisableMessage("§7Disabling plugin because plugin hooking failed");
-		hooker.disableWhenFailed();
+		HookSettings set = new HookSettings();
+		set.setHookedMessage("  §a+ §7{plugin} Hooked succesfully!");
+		set.setHookingFailedMessage("  §4- §7{plugin} Failed to hook!");
+		set.setDisableMessage("§7Disabling plugin because plugin hooking failed");
+		set.disableWhenFailed();
 
-		placeholderAPI = hooker.create("PlaceholderAPI", true);
-		citizen = hooker.create("Citizens", true);
+		placeholderAPI = new Hook(pl,set, "PlaceholderAPI", true);
+		citizen = new Hook(pl,set, "Citizens", true);
 
 	}
 
