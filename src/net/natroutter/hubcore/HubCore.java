@@ -5,25 +5,19 @@ import net.natroutter.hubcore.features.PlayerCarry;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.FWSListener;
 import net.natroutter.hubcore.features.gadgets.snowcannon.SnowCannonHandler;
 import net.natroutter.hubcore.features.particles.ParticleScheduler;
+import net.natroutter.hubcore.handlers.CommonListener;
 import net.natroutter.hubcore.handlers.Database.Database;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.natlibs.handlers.Database.YamlDatabase;
 import net.natroutter.natlibs.handlers.FileManager;
 import net.natroutter.natlibs.objects.ConfType;
-import net.natroutter.natlibs.objects.ParticleSettings;
 import net.natroutter.natlibs.utilities.Bungeecord.BungeeHandler;
-import net.natroutter.natlibs.utilities.SkullCreator;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.natroutter.hubcore.features.Protection;
+import net.natroutter.hubcore.features.protections.Protection;
 import net.natroutter.hubcore.features.SelectorItems.SelectorItemHandler;
 import net.natroutter.hubcore.features.SelectorItems.SelectorItemListener;
 import net.natroutter.hubcore.features.gadgets.GadgetListener;
@@ -38,8 +32,7 @@ import net.natroutter.hubcore.utilities.Lang;
 import net.natroutter.natlibs.NATLibs;
 import net.natroutter.natlibs.handlers.EventManager;
 import net.natroutter.natlibs.utilities.Utilities;
-
-import java.util.ArrayList;
+import net.natroutter.natlibs.utilities.MojangAPI;
 
 public class HubCore extends JavaPlugin implements NATLibs{
 
@@ -88,8 +81,9 @@ public class HubCore extends JavaPlugin implements NATLibs{
         //Register all listeners
         evm.RegisterListeners(
                 SelectorItemListener.class, GadgetListener.class, MusicPlayer.class,
-                SnowCannonListener.class, SlapperListener.class, Protection.class,
-                FWSListener.class, PlayerCarry.class
+                SnowCannonListener.class, SlapperListener.class,
+                FWSListener.class, PlayerCarry.class, Protection.class,
+                CommonListener.class
         );
 
         //Register all commands
@@ -104,7 +98,7 @@ public class HubCore extends JavaPlugin implements NATLibs{
             SelectorItemHandler.update(op);
         }
 
-        ParticleScheduler particleScheduler = new ParticleScheduler(this, utilities);
+        new ParticleScheduler(this, utilities);
 
         //Print sexy banner and hook other plugins!
         utilities.consoleMessage("§8─────────────────────────────────────────");

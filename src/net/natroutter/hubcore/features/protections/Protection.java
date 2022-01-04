@@ -1,8 +1,9 @@
-package net.natroutter.hubcore.features;
+package net.natroutter.hubcore.features.protections;
 
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.utilities.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,10 +13,12 @@ import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.natroutter.hubcore.handlers.AdminModeHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.util.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -31,78 +34,60 @@ private final Config config = HubCore.getCfg();
 		}
 	}
 
-
 	//Disable block physics
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysic(BlockPhysicsEvent e) {
 		if (config.DisablePhysics) {
 			e.setCancelled(true);
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysic(BlockFormEvent e) {
 		if (config.DisablePhysics) {
 			e.setCancelled(true);
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysic(BlockFromToEvent e) {
 		if (config.DisablePhysics) {
 			e.setCancelled(true);
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysic(EntityChangeBlockEvent e) {
+		if (e.getEntity() instanceof Player p) {
+			if (bypassProtection.contains(p.getUniqueId())) {return;}
+		}
+
 		if (config.DisablePhysics) {
 			e.setCancelled(true);
 		}
 	}
 
 
-
-
-	@EventHandler
-	public void onConsume(PlayerItemConsumeEvent e) {
-		Player p = e.getPlayer();
-		if (!AdminModeHandler.isAdmin(p)) {
-			e.setCancelled(true);
-		}
-	}
-
-	@EventHandler
-	public void onPistonRetract(BlockPistonRetractEvent e) {
-		if (config.DisableRedstone) {
-			e.setCancelled(true);
-		}
-	}
-
-	@EventHandler
-	public void onPistonExtend(BlockPistonExtendEvent e) {
-		if (config.DisableRedstone) {
-			e.setCancelled(true);
-		}
-	}
-	
-	@EventHandler
-	public void onBlockBreak(BlockBreakEvent e) {
-		Player p = (Player)e.getPlayer();
-		if (!AdminModeHandler.isAdmin(p)) {
-			e.setCancelled(true);
-		}
-	}
-	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPlace(BlockPlaceEvent e) {
 		Player p = e.getPlayer();
+		if (bypassProtection.contains(p.getUniqueId())) {return;}
+
 		if (!AdminModeHandler.isAdmin(p)) {
 			e.setCancelled(true);
 		}
 	}
 
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onBlockBreak(BlockBreakEvent e) {
+		Player p = e.getPlayer();
+		if (bypassProtection.contains(p.getUniqueId())) {return;}
+
+		if (!AdminModeHandler.isAdmin(p)) {
+			e.setCancelled(true);
+		}
+	}
 
 	protected static ArrayList<UUID> bypassProtection = new ArrayList<>();
 	public static void bypass(Player p, boolean status) {
@@ -128,30 +113,29 @@ private final Config config = HubCore.getCfg();
 	@EventHandler
 	public void onDamageEntity(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player p) {
-			if (bypassProtection.contains(p.getUniqueId())) {
-				return;
-			}
+			if (bypassProtection.contains(p.getUniqueId())) {return;}
 
 			if (!AdminModeHandler.isAdmin(p)) {
 				e.setCancelled(true);
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
-		//if (1 == 1) {return;}
+		if (bypassProtection.contains(e.getPlayer().getUniqueId())) {return;}
 		if (e.hasBlock()) {
 			Player p = e.getPlayer();
 			Block block = e.getClickedBlock();
 			String type = block.getType().name();
-			
+
+
 			if (!(type.endsWith("BUTTON") || type.endsWith("PRESSURE_PLATE") || type.endsWith("LEVER"))) {
 				if (!AdminModeHandler.isAdmin(p)) {
 					e.setCancelled(true);
 				}
 			}
-			
+
 		}
 	}
 	

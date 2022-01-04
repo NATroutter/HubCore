@@ -6,7 +6,7 @@
 
     <groupId>net.natroutter</groupId>
     <artifactId>HubCore</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>
@@ -49,8 +49,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <minimizeJar>true</minimizeJar>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <minimizeJar>false</minimizeJar>
                             <relocations>
                                 <relocation>
                                     <pattern>net.natroutter.natlibs</pattern>

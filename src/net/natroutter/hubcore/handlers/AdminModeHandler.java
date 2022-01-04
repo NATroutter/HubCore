@@ -16,7 +16,16 @@ public class AdminModeHandler {
 	public static boolean isAdmin(Player p) {
 		return database.getBoolean(p, "Adminmode");
 	}
-	
+
+	public static void setAdminMode(Player p, boolean state) {
+		if (state) {
+			database.save(p, "Adminmode", true);
+		} else {
+			database.save(p, "Adminmode", false);
+			SelectorItemHandler.update(p);
+		}
+	}
+
 	public static void ToggleAdmin(Player p) {
 		ToggleAdmin(p, false);
 	}
@@ -28,13 +37,11 @@ public class AdminModeHandler {
 		message.setPrefix(lang.Prefix);
 
 		if (state) {
-			database.save(p, "Adminmode", false);
 			message.replaceAll("{state}", lang.ToggleStates.off);
-			SelectorItemHandler.update(p);
 		} else {
-			database.save(p, "Adminmode", true);
 			message.replaceAll("{state}", lang.ToggleStates.on);
 		}
+		setAdminMode(p, !state);
 		if (!silent) {
 			message.send(p);
 		}

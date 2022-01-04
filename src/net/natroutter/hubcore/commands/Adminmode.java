@@ -31,11 +31,10 @@ public class Adminmode extends Command {
 			return false;
 		}
 
-		if (!(sender instanceof Player)) {
+		if (!(sender instanceof Player p)) {
 			sender.sendMessage(lang.OnlyIngame);
 			return false;
 		}
-		Player p = (Player)sender;
 		
 		if (args.length == 0) {
 			AdminModeHandler.ToggleAdmin(p);
@@ -46,11 +45,11 @@ public class Adminmode extends Command {
 				return false;
 			}
 
-			boolean state = database.getBoolean(p, "Adminmode");
+			boolean state = database.getBoolean(target, "Adminmode");
 
 			StringHandler str = new StringHandler(lang.AdminModeToggleOther);
 			str.setPrefix(lang.Prefix);
-			str.replaceAll("{name}", p.getName());
+			str.replaceAll("{name}", target.getName());
 
 			if (state) {
 				str.replaceAll("{state}", lang.ToggleStates.off);
@@ -59,7 +58,7 @@ public class Adminmode extends Command {
 			}
 			str.send(p);
 
-			AdminModeHandler.ToggleAdmin(p);
+			AdminModeHandler.ToggleAdmin(target,true);
 
 		} else {
 			p.sendMessage(lang.Prefix + lang.TooManyArguments);

@@ -25,7 +25,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class CommonListener implements Listener {
 
     private static final PlayerDataHandler pdh = HubCore.getDataHandler();
-    private YamlDatabase database = HubCore.getYamlDatabase();
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
@@ -53,7 +52,7 @@ public class CommonListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        database.save(p, "Adminmode", false);
+        AdminModeHandler.setAdminMode(p, false);
     }
 
 
