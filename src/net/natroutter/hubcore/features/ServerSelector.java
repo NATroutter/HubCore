@@ -8,6 +8,7 @@ import net.natroutter.natlibs.handlers.gui.GUIItem;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
 import net.natroutter.natlibs.handlers.gui.GUIWindow.Rows;
 import net.natroutter.natlibs.utilities.Bungeecord.BungeeHandler;
+import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.entity.Player;
 
 public class ServerSelector {
@@ -26,14 +27,16 @@ public class ServerSelector {
 		for(SelectorItem item : cfg.serverSelector.SelectorItems) {
 			
 			gui.setItem(new GUIItem(Items.ServerIcon(item.Material, item.Name), (e)-> Connect(p, item.Server)), item.Row, item.Slot);
-			
+
 		}
 		return gui;
 	}
 	
 	private static void Connect(Player p, String serverName) {
 		if (HubCore.getServerSwitchCommand().length() > 0) {
-			p.chat(HubCore.getServerSwitchCommand());
+			StringHandler cmd = new StringHandler(HubCore.getServerSwitchCommand());
+			cmd.replaceAll("%server%", serverName);
+			p.chat(cmd.build());
 			return;
 		}
 		bungee.switchServer(p, serverName);
