@@ -59,7 +59,7 @@ public class HubCore extends JavaPlugin implements NATLibs{
     private static String ServerSwitchCommand = "";
 
     public static String getServerSwitchCommand() {return ServerSwitchCommand;}
-    public void setServerSwitchCommand(String cmd) {ServerSwitchCommand = cmd;}
+    public static void setServerSwitchCommand(String cmd) {ServerSwitchCommand = cmd;}
 
     @Override
     public void onEnable() {
