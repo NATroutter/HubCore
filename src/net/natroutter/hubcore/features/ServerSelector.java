@@ -32,8 +32,12 @@ public class ServerSelector {
 	}
 	
 	private static void Connect(Player p, String serverName) {
+		if (HubCore.getServerSwitchCommand().length() > 0) {
+			p.chat(HubCore.getServerSwitchCommand());
+			return;
+		}
 		bungee.switchServer(p, serverName);
 	}
-	
+
 
 }
