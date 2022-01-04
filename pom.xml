@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.natroutter</groupId>
-    <artifactId>HubCore</artifactId>
+    <artifactId>hubcore</artifactId>
     <version>1.7</version>
     <packaging>jar</packaging>
 
@@ -53,7 +53,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>net.natroutter.natlibs</pattern>
-                                    <shadedPattern>${project.groupId}.natlibs</shadedPattern>
+                                    <shadedPattern>${project.groupId}.${project.artifactId}.natlibs</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
