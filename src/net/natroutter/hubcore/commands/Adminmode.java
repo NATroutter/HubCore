@@ -5,7 +5,6 @@ import java.util.Collections;
 import net.natroutter.natlibs.handlers.Database.YamlDatabase;
 import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

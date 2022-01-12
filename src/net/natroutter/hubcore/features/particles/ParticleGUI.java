@@ -36,7 +36,7 @@ public class ParticleGUI {
         guiBuilder(p).show(p, true);
     }
 
-    private static BaseItem particleItem(Material mat, particleTypes type) {
+    private static BaseItem particleItem(Material mat, ParticleTypes type) {
         BaseItem item = new BaseItem(mat);
         item.setDisplayName(type.getLangName());
         ArrayList<String> lore = new ArrayList<>();
@@ -53,279 +53,258 @@ public class ParticleGUI {
         GUIWindow gui = getGUI(p);
 
         //Row 1
-        gui.setItem(new GUIItem(particleItem(Material.RED_MUSHROOM, particleTypes.WITCH), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.RED_MUSHROOM, ParticleTypes.WITCH), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.WITCH.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.WITCH.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.WITCH.name());
+            data.setParticle(ParticleTypes.WITCH.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row2, 1);
 
-        gui.setItem(new GUIItem(particleItem(Material.TOTEM_OF_UNDYING, particleTypes.TOTEM), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.TOTEM_OF_UNDYING, ParticleTypes.TOTEM), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!p.hasPermission(particleTypes.TOTEM.getPermission())) {
+            if (!p.hasPermission(ParticleTypes.TOTEM.getPermission())) {
                 p.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.TOTEM.name());
+            data.setParticle(ParticleTypes.TOTEM.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row2, 2);
 
-        gui.setItem(new GUIItem(particleItem(Material.INK_SAC, particleTypes.INK), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.INK_SAC, ParticleTypes.INK), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.INK.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.INK.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.INK.name());
+            data.setParticle(ParticleTypes.INK.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row2, 3);
 
-        gui.setItem(new GUIItem(particleItem(Material.SOUL_TORCH, particleTypes.SOULFLAME), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.SOUL_TORCH, ParticleTypes.SOULFLAME), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.SOULFLAME.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.SOULFLAME.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.SOULFLAME.name());
+            data.setParticle(ParticleTypes.SOULFLAME.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row2, 4);
 
-        gui.setItem(new GUIItem(particleItem(Material.SNOWBALL, particleTypes.CLOUD), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.SNOWBALL, ParticleTypes.CLOUD), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.CLOUD.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.CLOUD.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.CLOUD.name());
+            data.setParticle(ParticleTypes.CLOUD.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row2, 5);
 
-        gui.setItem(new GUIItem(particleItem(Material.SOUL_SOIL, particleTypes.SOUL), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.SOUL_SOIL, ParticleTypes.SOUL), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.SOUL.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.SOUL.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.SOUL.name());
+            data.setParticle(ParticleTypes.SOUL.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row2, 6);
 
-        gui.setItem(new GUIItem(particleItem(Material.NOTE_BLOCK, particleTypes.NOTES), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.NOTE_BLOCK, ParticleTypes.NOTES), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.NOTES.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.NOTES.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.NOTES.name());
+            data.setParticle(ParticleTypes.NOTES.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row2, 7);
 
 
         //Row 2
-        gui.setItem(new GUIItem(particleItem(Material.CONDUIT, particleTypes.CONDUIT), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.CONDUIT, ParticleTypes.CONDUIT), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.CONDUIT.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.CONDUIT.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.CONDUIT.name());
+            data.setParticle(ParticleTypes.CONDUIT.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row3, 1);
 
-        gui.setItem(new GUIItem(particleItem(Material.LAVA_BUCKET, particleTypes.LAVA), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.LAVA_BUCKET, ParticleTypes.LAVA), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.LAVA.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.LAVA.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.LAVA.name());
+            data.setParticle(ParticleTypes.LAVA.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row3, 2);
 
-        gui.setItem(new GUIItem(particleItem(Material.APPLE, particleTypes.HEARTS), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.APPLE, ParticleTypes.HEARTS), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.HEARTS.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.HEARTS.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.HEARTS.name());
+            data.setParticle(ParticleTypes.HEARTS.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row3, 3);
 
-        gui.setItem(new GUIItem(particleItem(Material.POPPY, particleTypes.HAPPY), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.POPPY, ParticleTypes.HAPPY), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.HAPPY.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.HAPPY.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.HAPPY.name());
+            data.setParticle(ParticleTypes.HAPPY.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row3, 4);
 
-        gui.setItem(new GUIItem(particleItem(Material.VILLAGER_SPAWN_EGG, particleTypes.ANGRY), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.VILLAGER_SPAWN_EGG, ParticleTypes.ANGRY), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.ANGRY.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.ANGRY.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.ANGRY.name());
+            data.setParticle(ParticleTypes.ANGRY.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row3, 5);
 
-        gui.setItem(new GUIItem(particleItem(Material.ENCHANTED_BOOK, particleTypes.ENCHANT), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.ENCHANTED_BOOK, ParticleTypes.ENCHANT), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.ENCHANT.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.ENCHANT.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.ENCHANT.name());
+            data.setParticle(ParticleTypes.ENCHANT.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row3, 6);
 
-        gui.setItem(new GUIItem(particleItem(Material.END_ROD, particleTypes.ENDROD), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.END_ROD, ParticleTypes.ENDROD), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.ENDROD.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.ENDROD.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.ENDROD.name());
+            data.setParticle(ParticleTypes.ENDROD.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row3, 7);
 
 
         //row 3
-        gui.setItem(new GUIItem(particleItem(Material.ENCHANTING_TABLE, particleTypes.ENCHANTING), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.ENCHANTING_TABLE, ParticleTypes.ENCHANTING), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.ENCHANTING.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.ENCHANTING.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.ENCHANTING.name());
+            data.setParticle(ParticleTypes.ENCHANTING.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row4, 1);
 
-        gui.setItem(new GUIItem(particleItem(Material.REDSTONE, particleTypes.RAINBOWDUST), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.REDSTONE, ParticleTypes.RAINBOWDUST), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.RAINBOWDUST.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.RAINBOWDUST.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.RAINBOWDUST.name());
+            data.setParticle(ParticleTypes.RAINBOWDUST.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row4, 2);
 
-        gui.setItem(new GUIItem(particleItem(Material.DRAGON_EGG, particleTypes.DRAGONSBREATH), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.DRAGON_EGG, ParticleTypes.DRAGONSBREATH), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.DRAGONSBREATH.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.DRAGONSBREATH.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.DRAGONSBREATH.name());
+            data.setParticle(ParticleTypes.DRAGONSBREATH.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row4, 3);
 
-        gui.setItem(new GUIItem(particleItem(Material.STONE_SWORD, particleTypes.CRITICAL), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.STONE_SWORD, ParticleTypes.CRITICAL), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.CRITICAL.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.CRITICAL.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.CRITICAL.name());
+            data.setParticle(ParticleTypes.CRITICAL.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row4, 4);
 
-        gui.setItem(new GUIItem(particleItem(Material.PILLAGER_SPAWN_EGG, particleTypes.DAMAGE), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.PILLAGER_SPAWN_EGG, ParticleTypes.DAMAGE), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.DAMAGE.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.DAMAGE.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.DAMAGE.name());
+            data.setParticle(ParticleTypes.DAMAGE.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row4, 5);
 
-        gui.setItem(new GUIItem(particleItem(Material.FLINT_AND_STEEL, particleTypes.SMOKE), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.FLINT_AND_STEEL, ParticleTypes.SMOKE), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.SMOKE.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.SMOKE.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.SMOKE.name());
+            data.setParticle(ParticleTypes.SMOKE.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row4, 6);
 
-        gui.setItem(new GUIItem(particleItem(Material.BAMBOO, particleTypes.SNEEZE), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+        gui.setItem(new GUIItem(particleItem(Material.BAMBOO, ParticleTypes.SNEEZE), (e)->{
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
-            if (!t.hasPermission(particleTypes.SNEEZE.getPermission())) {
+            if (!t.hasPermission(ParticleTypes.SNEEZE.getPermission())) {
                 t.sendMessage(lang.Prefix + lang.NoPerm);return;
             }
-            data.setParticle(particleTypes.SNEEZE.name());
+            data.setParticle(ParticleTypes.SNEEZE.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row4, 7);
@@ -333,18 +312,16 @@ public class ParticleGUI {
 
         //settings
         gui.setItem(new GUIItem(Items.Particle.Disable(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
-            data.setParticle(particleTypes.DISABLED.name());
+            data.setParticle(ParticleTypes.DISABLED.name());
             pdh.set(data);
             t.closeInventory();
         }), GUIWindow.Rows.row6, 2);
 
 
         gui.setItem(new GUIItem(Items.Particle.changemode(pmode.getOrDefault(p.getUniqueId(), ParticleMode.CLOUD)), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
 
             ParticleMode mode = ParticleMode.fromString(data.getParticlemode());

@@ -5,16 +5,9 @@ import net.natroutter.hubcore.utilities.Config;
 import net.natroutter.hubcore.utilities.Lang;
 import net.natroutter.natlibs.handlers.gui.GUIItem;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
-import net.natroutter.natlibs.handlers.gui.GUIWindow.Rows;
-import net.natroutter.natlibs.objects.BaseItem;
-import net.natroutter.natlibs.objects.ParticleSettings;
-import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.entity.Player;
 
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class GadgetGUI {
@@ -40,10 +33,9 @@ public class GadgetGUI {
 
 		for (Gadget gad : GadgetHandler.gadgets) {
 			gui.setItem(new GUIItem(gad.getIconWithNeed(), (e)-> {
-				if (e.getWhoClicked() instanceof Player) {
-					Player clicker = (Player) e.getWhoClicked();
+				if (e.getWhoClicked() instanceof Player clicker) {
 
-					if (clicker.hasPermission(gad.getPermission())) {
+                    if (clicker.hasPermission(gad.getPermission())) {
 						clicker.closeInventory();
 						GadgetHandler.setGadget(clicker, gad);
 					} else {

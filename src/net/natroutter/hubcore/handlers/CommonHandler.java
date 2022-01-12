@@ -5,22 +5,20 @@ import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("deprecation")
-public class CommonHandler {
+public record CommonHandler(JavaPlugin pl) {
 
-	private final JavaPlugin pl;
-	
 	public CommonHandler(JavaPlugin pl) {
 		this.pl = pl;
 		Initialize();
 	}
-	
+
 	private void Initialize() {
 		setWorldSettings();
 	}
-	
-	
+
+
 	public void setWorldSettings() {
-		
+
 		for (World world : pl.getServer().getWorlds()) {
 			world.setDifficulty(Difficulty.PEACEFUL);
 			world.setGameRuleValue("announceAdvancements", "false");
@@ -43,8 +41,8 @@ public class CommonHandler {
 			world.setGameRuleValue("doPatrolSpawning", "false");
 
 		}
-		
+
 	}
-	
-	
+
+
 }

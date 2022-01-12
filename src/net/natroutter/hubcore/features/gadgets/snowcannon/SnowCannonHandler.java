@@ -1,9 +1,6 @@
 package net.natroutter.hubcore.features.gadgets.snowcannon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

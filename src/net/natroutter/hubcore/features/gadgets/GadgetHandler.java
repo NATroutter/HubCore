@@ -3,7 +3,6 @@ package net.natroutter.hubcore.features.gadgets;
 import java.util.*;
 
 import net.natroutter.hubcore.HubCore;
-import net.natroutter.hubcore.features.SelectorItems.HubItem;
 import net.natroutter.hubcore.features.SelectorItems.SelectorItemHandler;
 import net.natroutter.hubcore.features.gadgets.wings.WingsHandler;
 import net.natroutter.hubcore.utilities.Config;

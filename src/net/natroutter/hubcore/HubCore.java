@@ -33,7 +33,6 @@ import net.natroutter.hubcore.utilities.Lang;
 import net.natroutter.natlibs.NATLibs;
 import net.natroutter.natlibs.handlers.EventManager;
 import net.natroutter.natlibs.utilities.Utilities;
-import net.natroutter.natlibs.utilities.MojangAPI;
 
 public class HubCore extends JavaPlugin implements NATLibs{
 

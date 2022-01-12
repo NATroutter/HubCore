@@ -153,16 +153,14 @@ public class CustomColorGUI {
 
         //back
         gui.setItem(new GUIItem(Items.back(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             t.closeInventory();
             ColorGUI.show(t);
         }), GUIWindow.Rows.row2, 1);
 
         //red up
         gui.setItem(new GUIItem(Items.arrowUP(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(colorUp(data, RGB.RED, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -170,8 +168,7 @@ public class CustomColorGUI {
 
         //green up
         gui.setItem(new GUIItem(Items.arrowUP(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(colorUp(data, RGB.GREEN, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -179,8 +176,7 @@ public class CustomColorGUI {
 
         //blue up
         gui.setItem(new GUIItem(Items.arrowUP(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(colorUp(data, RGB.BLUE, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -228,8 +224,7 @@ public class CustomColorGUI {
 
         //red down
         gui.setItem(new GUIItem(Items.arrowDOWN(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(colorDown(data, RGB.RED, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -237,8 +232,7 @@ public class CustomColorGUI {
 
         //green down
         gui.setItem(new GUIItem(Items.arrowDOWN(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(colorDown(data, RGB.GREEN, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -246,8 +240,7 @@ public class CustomColorGUI {
 
         //blue down
         gui.setItem(new GUIItem(Items.arrowDOWN(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(colorDown(data, RGB.BLUE, ColorGUI.colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);

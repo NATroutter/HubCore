@@ -3,7 +3,6 @@ package net.natroutter.hubcore.utilities;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Lang {
@@ -264,25 +263,25 @@ public class Lang {
 			
 			public String ParticleSelector = "§4§lParticleSelector";
 			public Material ParticleSelector_item = Material.BLAZE_POWDER;
-			public List<String> ParticleSelector_Lore = new ArrayList<String>() {{
+			public List<String> ParticleSelector_Lore = new ArrayList<>() {{
 				add("§7Select your fansy particles!");
 			}};
 			
 			public String GadgetSelector = "§4§lGadgetSelector";
 			public Material GadgetSelector_item = Material.CHEST;
-			public List<String> GadgetSelector_Lore = new ArrayList<String>() {{
+			public List<String> GadgetSelector_Lore = new ArrayList<>() {{
 				add("§7Select your weird and wacky Gadget");
 			}};
 			
 			public String ServerSelector = "§4§lServerSelector";
 			public Material ServerSelector_item = Material.COMPASS;
-			public List<String> ServerSelector_Lore = new ArrayList<String>() {{
+			public List<String> ServerSelector_Lore = new ArrayList<>() {{
 				add("§7Select what you want to play!");
 			}};
 			
 			public String InfoBook = "§4§lInfoBook";
 			public Material InfoBook_item = Material.BOOK;
-			public List<String> InfoBook_Lore = new ArrayList<String>() {{
+			public List<String> InfoBook_Lore = new ArrayList<>() {{
 				add("§7Server information!");
 			}};
 			

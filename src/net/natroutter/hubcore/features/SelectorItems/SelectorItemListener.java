@@ -6,7 +6,6 @@ import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.particles.ParticleGUI;
 import net.natroutter.hubcore.handlers.Hooks;
 import net.natroutter.hubcore.utilities.Lang;
-import net.natroutter.natlibs.handlers.hooking.Hook;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -92,7 +91,7 @@ public class SelectorItemListener implements Listener {
 		}
 	}
 
-	public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
+	public static HashMap<UUID, Long> cooldown = new HashMap<>();
 	private static int cooldownTime = 1;
 	public boolean onCooldown(Player p) {
 		if(cooldown.containsKey(p.getUniqueId())) {

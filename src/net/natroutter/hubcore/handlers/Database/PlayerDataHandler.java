@@ -3,7 +3,7 @@ package net.natroutter.hubcore.handlers.Database;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.DatabaseConnection;
 import net.natroutter.hubcore.features.particles.ParticleMode;
-import net.natroutter.hubcore.features.particles.particleTypes;
+import net.natroutter.hubcore.features.particles.ParticleTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -131,7 +131,7 @@ public class PlayerDataHandler {
     }
 
     private static PlayerData DefaultPlayerData(UUID uuid) {
-        return new PlayerData(uuid, "SMALLBALL", false, false, 0, 0, 0, 0, 0, 0, particleTypes.DISABLED.name() , ParticleMode.CLOUD.name(), false, false);
+        return new PlayerData(uuid, "SMALLBALL", false, false, 0, 0, 0, 0, 0, 0, ParticleTypes.DISABLED.name() , ParticleMode.CLOUD.name(), false, false);
     }
 
 }

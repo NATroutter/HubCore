@@ -2,8 +2,6 @@ package net.natroutter.hubcore.features.protections;
 
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.utilities.Config;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,12 +11,9 @@ import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.natroutter.hubcore.handlers.AdminModeHandler;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.util.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.UUID;

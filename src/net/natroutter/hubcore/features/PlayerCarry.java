@@ -1,23 +1,18 @@
 package net.natroutter.hubcore.features;
 
-import net.citizensnpcs.api.CitizensAPI;
 import net.natroutter.betterparkour.BetterParkour;
 import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.handlers.Hooks;
 import net.natroutter.hubcore.utilities.Lang;
-import net.natroutter.hubcore.utilities.Utils;
 import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
@@ -33,7 +28,7 @@ public class PlayerCarry implements Listener {
     private Lang lang = HubCore.getLang();
     private PlayerDataHandler pdh = HubCore.getDataHandler();
 
-    public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
+    public static HashMap<UUID, Long> cooldown = new HashMap<>();
     private static int cooldownTime = 2;
     private Hooks hooks = HubCore.getHooks();
 
@@ -60,7 +55,7 @@ public class PlayerCarry implements Listener {
                 return;
             }
 
-            if (!Bukkit.getOnlinePlayers().contains((Player)ride)) {
+            if (!Bukkit.getOnlinePlayers().contains(ride)) {
                 return;
             }
             if (e.getRightClicked().hasMetadata("NPC")) {return;}
@@ -112,7 +107,7 @@ public class PlayerCarry implements Listener {
 
             StringHandler msg1 = new StringHandler(lang.inYourBackpack).setPrefix(lang.Prefix);
             msg1.replaceAll("{name}", p.getName());
-            msg1.send((Player)ride);
+            msg1.send(ride);
 
 
             StringHandler msg2 = new StringHandler(lang.OnbackPack).setPrefix(lang.Prefix);

@@ -24,13 +24,12 @@ public class Hubitems extends Command {
 			return false;
 		}
 
-		if (!(sender instanceof Player)) {
+		if (!(sender instanceof Player p)) {
 			sender.sendMessage(lang.OnlyIngame);
 			return false;
 		}
 
-		Player p = (Player)sender;
-		if (args.length == 0) {
+        if (args.length == 0) {
 			SelectorItemHandler.update(p);
 		} else {
 			p.sendMessage(lang.Prefix + lang.TooManyArguments);

@@ -1,6 +1,5 @@
 package net.natroutter.hubcore.features.gadgets.snowcannon;
 
-import net.citizensnpcs.api.CitizensAPI;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
@@ -41,14 +40,12 @@ public class SnowCannonListener implements Listener {
 		if (proj.getCustomName().equals(SnowCannonHandler.ProjectileName)) {
 			Entity ent = e.getHitEntity();
 			
-			if (ent instanceof Player) {
-				Player p = (Player)ent;
+			if (ent instanceof Player p) {
 				p.playSound(p.getLocation(), Sound.BLOCK_SNOW_HIT, 1f, 0.5f);
 				
 				if (AdminModeHandler.isAdmin(p)) {return;}
 
-				if (proj.getShooter() instanceof Player) {
-					Player shooter = (Player)proj.getShooter();
+				if (proj.getShooter() instanceof Player shooter) {
 					if (shooter.getUniqueId().equals(p.getUniqueId())) {
 						return;
 					}
@@ -91,8 +88,7 @@ public class SnowCannonListener implements Listener {
 	
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent e) {
-		if (e.getDamager() instanceof Snowball) {
-			Snowball ball = (Snowball)e.getDamager();
+		if (e.getDamager() instanceof Snowball ball) {
 			if (ball.getCustomName() == null) { return; }
 			if (ball.getCustomName().equals(SnowCannonHandler.ProjectileName)) {
 				e.setCancelled(true);

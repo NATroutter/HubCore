@@ -2,7 +2,6 @@ package net.natroutter.hubcore.features.SelectorItems;
 
 import java.util.*;
 
-import net.natroutter.natlibs.utilities.SkullCreator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -11,7 +10,6 @@ import net.natroutter.hubcore.features.gadgets.Gadget;
 import net.natroutter.hubcore.features.gadgets.GadgetHandler;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.natlibs.objects.BaseItem;
-import org.bukkit.inventory.ItemFlag;
 
 public class SelectorItemHandler {
 
@@ -74,7 +72,7 @@ public class SelectorItemHandler {
 
 	public static Boolean isHubItem(Player p, BaseItem item) {
 		for(HubItem hubitem : getHubItems(p)) {
-			if (item.isSimilar(hubitem.getItem())) {
+			if (item.isSimilar(hubitem.item())) {
 				return true;
 			}
 		}
@@ -90,21 +88,21 @@ public class SelectorItemHandler {
 		Gadget gad = GadgetHandler.getGadget(p);
 		
 		for (HubItem hubitem : getHubItems(p)) {
-			if (hubitem.getId().equals("GadgetSelector")) {
+			if (hubitem.id().equals("GadgetSelector")) {
 				
 				if (gad != null) {
-					if (!BaseItem.from(inv.getItem(hubitem.getSlot())).isSimilar(gad.getItem())) {
-						inv.setItem(hubitem.getSlot(), gad.getItem());
+					if (!BaseItem.from(inv.getItem(hubitem.slot())).isSimilar(gad.getItem())) {
+						inv.setItem(hubitem.slot(), gad.getItem());
 					}
 				} else {
-					if (!BaseItem.from(inv.getItem(hubitem.getSlot())).isSimilar(hubitem.getItem())) {
-						inv.setItem(hubitem.getSlot(), hubitem.getItem());
+					if (!BaseItem.from(inv.getItem(hubitem.slot())).isSimilar(hubitem.item())) {
+						inv.setItem(hubitem.slot(), hubitem.item());
 					}
 				}
 				
 			} else {
-				if (!BaseItem.from(inv.getItem(hubitem.getSlot())).isSimilar(hubitem.getItem())) {
-					inv.setItem(hubitem.getSlot(), hubitem.getItem());
+				if (!BaseItem.from(inv.getItem(hubitem.slot())).isSimilar(hubitem.item())) {
+					inv.setItem(hubitem.slot(), hubitem.item());
 				}
 			}
 		}

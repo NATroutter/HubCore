@@ -14,14 +14,13 @@ public enum FShape {
     private static final Lang lang = HubCore.getLang();
 
     public String langName() {
-        switch (this) {
-            case SMALLBALL: return lang.Guis.Gadgets.fireworks.shapes.SmallBall;
-            case LARGEBALL: return lang.Guis.Gadgets.fireworks.shapes.LargeBall;
-            case STAR: return lang.Guis.Gadgets.fireworks.shapes.Star;
-            case CREEPER: return lang.Guis.Gadgets.fireworks.shapes.Creeper;
-            case BURST: return lang.Guis.Gadgets.fireworks.shapes.Burst;
-        }
-        return null;
+        return switch (this) {
+            case SMALLBALL -> lang.Guis.Gadgets.fireworks.shapes.SmallBall;
+            case LARGEBALL -> lang.Guis.Gadgets.fireworks.shapes.LargeBall;
+            case STAR -> lang.Guis.Gadgets.fireworks.shapes.Star;
+            case CREEPER -> lang.Guis.Gadgets.fireworks.shapes.Creeper;
+            case BURST -> lang.Guis.Gadgets.fireworks.shapes.Burst;
+        };
     }
 
     public static FShape fromString(String value) {

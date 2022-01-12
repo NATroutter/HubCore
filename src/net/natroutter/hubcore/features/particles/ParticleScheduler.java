@@ -76,10 +76,10 @@ public class ParticleScheduler {
 
                 PlayerData data = pdh.get(p.getUniqueId());
                 if (data == null) {return;}
-                particleTypes type = particleTypes.fromString(data.getParticle());
+                ParticleTypes type = ParticleTypes.fromString(data.getParticle());
                 ParticleMode mode = ParticleMode.fromString(data.getParticlemode());
                 if (type == null || mode == null) {continue;}
-                if (type == particleTypes.DISABLED) {continue;}
+                if (type == ParticleTypes.DISABLED) {continue;}
 
                 ParticleSettings set = null;
                 Location partLoc = p.getLocation().add(0, 0.6, 0);
@@ -89,11 +89,11 @@ public class ParticleScheduler {
                     set = tail(partLoc, type.getParticle());
                 }
 
-                if (type.equals(particleTypes.LAVA)) {
+                if (type.equals(ParticleTypes.LAVA)) {
                     set.setCount(1);
                 }
 
-                if (type.equals(particleTypes.RAINBOWDUST)) {
+                if (type.equals(ParticleTypes.RAINBOWDUST)) {
                     spawnDust(p, set);
                 } else {
                     utils.spawnParticleInRadius(set, 50);
@@ -106,8 +106,7 @@ public class ParticleScheduler {
     public void spawnDust(Player p, ParticleSettings set) {
         Particle.DustOptions opt = new Particle.DustOptions(Color.fromRGB(red, green, blue), 1);
         for (Entity nearEnt : p.getNearbyEntities(50,50,50)) {
-            if (!(nearEnt instanceof Player)) {continue;}
-            Player nearp = (Player)nearEnt;
+            if (!(nearEnt instanceof Player nearp)) {continue;}
             nearp.spawnParticle(set.getParticle(), set.getLoc(), set.getCount(), set.getOffsetX(), set.getOffsetY(), set.getOffsetY(), set.getSpeed(), opt);
         }
         p.spawnParticle(set.getParticle(), set.getLoc(), set.getCount(), set.getOffsetX(), set.getOffsetY(), set.getOffsetY(), set.getSpeed(), opt);

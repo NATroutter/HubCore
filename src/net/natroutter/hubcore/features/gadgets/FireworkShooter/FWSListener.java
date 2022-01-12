@@ -1,6 +1,5 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
-import net.citizensnpcs.api.CitizensAPI;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
@@ -20,15 +19,11 @@ public class FWSListener implements Listener {
 
     @EventHandler
     public void noHit(ProjectileHitEvent e) {
-        if (!(e.getEntity() instanceof Firework)) {return;}
-        if (!(e.getHitEntity() instanceof Player)) {return;}
-        if (!(e.getEntity().getShooter() instanceof Player)) {return;}
+        if (!(e.getEntity() instanceof Firework firework)) {return;}
+        if (!(e.getHitEntity() instanceof Player victim)) {return;}
+        if (!(e.getEntity().getShooter() instanceof Player shooter)) {return;}
 
         if (e.getHitEntity().hasMetadata("NPC")) {return;}
-
-        Player victim = (Player)e.getHitEntity();
-        Player shooter = (Player)e.getEntity().getShooter();
-        Firework firework = (Firework)e.getEntity();
 
         PlayerData data = pdh.get(victim.getUniqueId());
         if (data.getNoEffect()) {return;}
