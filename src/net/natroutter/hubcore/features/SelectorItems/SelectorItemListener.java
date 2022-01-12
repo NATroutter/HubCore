@@ -1,8 +1,12 @@
 package net.natroutter.hubcore.features.SelectorItems;
 
+import net.natroutter.betterparkour.BetterParkour;
+import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.particles.ParticleGUI;
+import net.natroutter.hubcore.handlers.Hooks;
 import net.natroutter.hubcore.utilities.Lang;
+import net.natroutter.natlibs.handlers.hooking.Hook;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,6 +32,7 @@ import java.util.UUID;
 public class SelectorItemListener implements Listener {
 
 	private static final Lang lang = HubCore.getLang();
+	private static final Hooks hooks = HubCore.getHooks();
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent e) {
@@ -108,6 +113,14 @@ public class SelectorItemListener implements Listener {
 
 		if (e.hasItem() && (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
 			BaseItem item = BaseItem.from(e.getItem());
+
+			if (hooks.getBetterParkour().isHooked()) {
+				ParkourAPI api = BetterParkour.getAPI();
+				if (api.getParkourHandler().inCourse(p)) {
+					e.setCancelled(true);
+					return;
+				}
+			}
 			
 			if (item.isSimilar(Items.JoinItems.serverSelector(p))) {
 				e.setCancelled(true);

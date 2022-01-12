@@ -13,6 +13,7 @@ import net.natroutter.natlibs.handlers.FileManager;
 import net.natroutter.natlibs.objects.ConfType;
 import net.natroutter.natlibs.utilities.Bungeecord.BungeeHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -64,22 +65,23 @@ public class HubCore extends JavaPlugin implements NATLibs{
     @Override
     public void onEnable() {
         //Print sexy banner and hook other plugins!
+        ConsoleCommandSender console = Bukkit.getConsoleSender();
         PluginDescriptionFile pdf = getDescription();
-        utilities.consoleMessage("§8─────────────────────────────────────────");
-        utilities.consoleMessage("§8┌[ §cHubCore §4v"+pdf.getVersion()+" §cEnabled §8]");
-        utilities.consoleMessage("§8├ §7Plugin by: §4NATroutter");
-        utilities.consoleMessage("§8├ §7Website: §4NATroutter.net");
-        utilities.consoleMessage("§8└ §7Hooks:");
+        console.sendMessage("§8─────────────────────────────────────────");
+        console.sendMessage("§8┌[ §cHubCore §4v"+pdf.getVersion()+" §cEnabled §8]");
+        console.sendMessage("§8├ §7Plugin by: §4NATroutter");
+        console.sendMessage("§8├ §7Website: §4NATroutter.net");
+        console.sendMessage("§8└ §7Hooks:");
         hooks = new Hooks(this);
-        utilities.consoleMessage("§8─────────────────────────────────────────");
+        console.sendMessage("§8─────────────────────────────────────────");
 
         instance = this;
 
         natlibs = registerLibrary(this);
         bungee = createBungeecordHandler(this);
 
-        yamlDatabase = new YamlDatabase(this);
         utilities = new Utilities(this);
+        yamlDatabase = new YamlDatabase(this);
         config = new FileManager(this, ConfType.Config).load(Config.class);
         lang = new FileManager(this, ConfType.Lang).load(Lang.class);
         dataHandler = new PlayerDataHandler(this, new Database(this), 30 * 60);

@@ -1,6 +1,8 @@
 package net.natroutter.hubcore.features;
 
 import net.citizensnpcs.api.CitizensAPI;
+import net.natroutter.betterparkour.BetterParkour;
+import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.handlers.Hooks;
@@ -62,6 +64,14 @@ public class PlayerCarry implements Listener {
                 return;
             }
             if (e.getRightClicked().hasMetadata("NPC")) {return;}
+
+            if (hooks.getBetterParkour().isHooked()) {
+                ParkourAPI api = BetterParkour.getAPI();
+                if (api.getParkourHandler().inCourse(p)) {
+                    e.setCancelled(true);
+                    return;
+                }
+            }
 
             for (Entity pas : p.getPassengers()) {
                 if (pas.getUniqueId().equals(ride.getUniqueId())) {
