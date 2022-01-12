@@ -63,6 +63,16 @@ public class HubCore extends JavaPlugin implements NATLibs{
 
     @Override
     public void onEnable() {
+        //Print sexy banner and hook other plugins!
+        PluginDescriptionFile pdf = getDescription();
+        utilities.consoleMessage("§8─────────────────────────────────────────");
+        utilities.consoleMessage("§8┌[ §cHubCore §4v"+pdf.getVersion()+" §cEnabled §8]");
+        utilities.consoleMessage("§8├ §7Plugin by: §4NATroutter");
+        utilities.consoleMessage("§8├ §7Website: §4NATroutter.net");
+        utilities.consoleMessage("§8└ §7Hooks:");
+        hooks = new Hooks(this);
+        utilities.consoleMessage("§8─────────────────────────────────────────");
+
         instance = this;
 
         natlibs = registerLibrary(this);
@@ -78,8 +88,6 @@ public class HubCore extends JavaPlugin implements NATLibs{
         new CommonHandler(this);
 
         SnowCannonHandler.Initialize();
-
-        PluginDescriptionFile pdf = getDescription();
 
         EventManager evm = new EventManager(this);
 
@@ -104,15 +112,6 @@ public class HubCore extends JavaPlugin implements NATLibs{
         }
 
         new ParticleScheduler(this, utilities);
-
-        //Print sexy banner and hook other plugins!
-        utilities.consoleMessage("§8─────────────────────────────────────────");
-        utilities.consoleMessage("§8┌[ §cHubCore §4v"+pdf.getVersion()+" §cEnabled §8]");
-        utilities.consoleMessage("§8├ §7Plugin by: §4NATroutter");
-        utilities.consoleMessage("§8├ §7Website: §4NATroutter.net");
-        utilities.consoleMessage("§8└ §7Hooks:");
-        hooks = new Hooks(this);
-        utilities.consoleMessage("§8─────────────────────────────────────────");
 
     }
 
