@@ -38,7 +38,7 @@ public class SelectorItemListener implements Listener {
 		SelectorItemHandler.InitializeItems(p);
 		SelectorItemHandler.update(p);
 
-		for (int i = 0; i<255; i++) {
+		for (int i = 0; i < 10; i++) {
 			p.sendMessage(" ");
 		}
 		for (String line : lang.welcommotd) {
