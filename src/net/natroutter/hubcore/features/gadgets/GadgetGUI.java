@@ -38,7 +38,7 @@ public class GadgetGUI {
 	private static GUIWindow GUI(Player p) {
 		GUIWindow gui = getGUI(p);
 
-		for (Gadget gad : GadgetHandler.Gadgets) {
+		for (Gadget gad : GadgetHandler.gadgets) {
 			gui.setItem(new GUIItem(gad.getIconWithNeed(), (e)-> {
 				if (e.getWhoClicked() instanceof Player) {
 					Player clicker = (Player) e.getWhoClicked();

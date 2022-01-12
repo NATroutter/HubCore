@@ -305,7 +305,7 @@ public class Items {
 	public static class JoinItems {
 
 		public static BaseItem particleSelector() {
-			BaseItem item = new BaseItem(Material.BLAZE_POWDER);
+			BaseItem item = new BaseItem(lang.Items.JoinItems.ParticleSelector_item);
 			item.addItemFlags(ItemFlag.values());
 			item.setDisplayName(lang.Items.JoinItems.ParticleSelector);
 			item.setLore(lang.Items.JoinItems.ParticleSelector_Lore);
@@ -313,7 +313,7 @@ public class Items {
 		}
 		
 		public static BaseItem gadgetSelector() {
-			BaseItem item = new BaseItem(Material.CHEST);
+			BaseItem item = new BaseItem(lang.Items.JoinItems.GadgetSelector_item);
 			item.addItemFlags(ItemFlag.values());
 			item.setDisplayName(lang.Items.JoinItems.GadgetSelector);
 			item.setLore(lang.Items.JoinItems.GadgetSelector_Lore);
@@ -323,7 +323,7 @@ public class Items {
 		public static BaseItem serverSelector(Player p) {
 			p.setCompassTarget(p.getWorld().getSpawnLocation());
 			
-			BaseItem item = new BaseItem(Material.COMPASS);
+			BaseItem item = new BaseItem(lang.Items.JoinItems.ServerSelector_item);
 			item.addItemFlags(ItemFlag.values());
 			item.setDisplayName(lang.Items.JoinItems.ServerSelector);
 			item.setLore(lang.Items.JoinItems.ServerSelector_Lore);
@@ -331,7 +331,7 @@ public class Items {
 		}
 		
 		public static BaseItem Info() {
-			BaseItem item = new BaseItem(Material.BOOKSHELF);
+			BaseItem item = new BaseItem(lang.Items.JoinItems.InfoBook_item);
 			item.addItemFlags(ItemFlag.values());
 			item.setDisplayName(lang.Items.JoinItems.InfoBook);
 			item.setLore(lang.Items.JoinItems.InfoBook_Lore);

@@ -8,3 +8,5 @@ website: ${project.url}
 softdepend:
   - PlaceholderAPI
   - Citizens
+  - BetterParkour
+

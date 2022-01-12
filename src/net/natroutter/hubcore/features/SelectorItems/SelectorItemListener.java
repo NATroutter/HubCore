@@ -59,7 +59,7 @@ public class SelectorItemListener implements Listener {
 		Item item = e.getItemDrop();
 		BaseItem item2 = BaseItem.from(item.getItemStack());
 		
-		for(Gadget gad : GadgetHandler.Gadgets) {
+		for(Gadget gad : GadgetHandler.gadgets) {
 			if (item2.isSimilar(gad.getItem())) {
 				item.remove();
 				GadgetHandler.setGadget(p, null);

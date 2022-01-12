@@ -74,8 +74,8 @@
 
     <repositories>
         <repository>
-            <id>NATLibs</id>
-            <url>https://hub.nat.gs/nexus/repository/natlibs/</url>
+            <id>NAT-Software</id>
+            <url>https://hub.nat.gs/nexus/repository/NAT-Software/</url>
         </repository>
         <repository>
             <id>spigotmc-repo</id>
@@ -104,6 +104,12 @@
             <groupId>net.natroutter</groupId>
             <artifactId>NATLibs</artifactId>
             <version>1.1.69</version>
+        </dependency>
+        <dependency>
+            <groupId>net.natroutter</groupId>
+            <artifactId>betterparkour</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>

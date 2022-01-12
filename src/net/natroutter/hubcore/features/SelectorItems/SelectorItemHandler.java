@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 
 public class SelectorItemHandler {
 
-	public static HashMap<UUID, List<HubItem>> hubItemMap = new HashMap<>();
+	public static HashMap<UUID, LinkedList<HubItem>> hubItemMap = new HashMap<>();
 
 	public static void InitializeItems(Player p) {
 		if (!hubItemMap.containsKey(p.getUniqueId())) {
@@ -31,22 +31,27 @@ public class SelectorItemHandler {
 	public static void addHubItem(Player p, HubItem item) {
 		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
 
-		List<HubItem> list = hubItemMap.get(p.getUniqueId());
+		LinkedList<HubItem> list = hubItemMap.get(p.getUniqueId());
 		list.add(item);
 
 		hubItemMap.put(p.getUniqueId(), list);
 	}
 
+	public static void setHubItems(Player p, LinkedList<HubItem> items) {
+		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
+		hubItemMap.put(p.getUniqueId(), items);
+	}
+
 	public static void addHubItems(Player p, HubItem... items) {
 		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
 
-		List<HubItem> list = hubItemMap.get(p.getUniqueId());
+		LinkedList<HubItem> list = hubItemMap.get(p.getUniqueId());
 		list.addAll(new LinkedList<>(Arrays.asList(items)));
 
 		hubItemMap.put(p.getUniqueId(), list);
 	}
 
-	public static void replaceHubItems(HashMap<UUID, List<HubItem>> map) {
+	public static void replaceHubItems(HashMap<UUID, LinkedList<HubItem>> map) {
 		hubItemMap = map;
 	}
 

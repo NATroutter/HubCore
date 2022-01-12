@@ -11,10 +11,12 @@ public class Hooks {
 	//hook pluin variables
 	private Hook placeholderAPI;
 	private Hook citizen;
+	private Hook betterParkour;
 
 	//hook getters
 	public Hook getPlaceholderAPI(){return placeholderAPI;}
 	public Hook getCitizens(){return citizen;}
+	public Hook getBetterParkour() {return betterParkour;}
 
 	//hooks
 	public Hooks(JavaPlugin pl) {
@@ -26,6 +28,7 @@ public class Hooks {
 
 		placeholderAPI = new Hook(pl,set, "PlaceholderAPI", true);
 		citizen = new Hook(pl,set, "Citizens", true);
+		betterParkour = new Hook(pl, set, "BetterParkour", true);
 
 	}
 

@@ -1,6 +1,9 @@
 package net.natroutter.hubcore.features.gadgets;
 
 import net.citizensnpcs.api.CitizensAPI;
+import net.natroutter.betterparkour.BetterParkour;
+import net.natroutter.betterparkour.ParkourAPI;
+import net.natroutter.betterparkour.handlers.ParkourHandler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.FWSHandler;
 import net.natroutter.hubcore.handlers.Hooks;
@@ -54,6 +57,14 @@ public class GadgetListener implements Listener {
 
 		if (GadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
 
+		if (hooks.getBetterParkour().isHooked()) {
+			ParkourAPI api = BetterParkour.getAPI();
+			ParkourHandler parkourHandler = api.getParkourHandler();
+			if (parkourHandler.inCourse(p)) {
+				return;
+			}
+		}
+
 		if (act.equals(Action.RIGHT_CLICK_AIR) || act.equals(Action.RIGHT_CLICK_BLOCK)) {
 
 			if (item.isSimilar(Items.Gadgets.BoomBox()) && p.isSneaking()) {
@@ -102,6 +113,15 @@ public class GadgetListener implements Listener {
 			BaseItem item = BaseItem.from(p.getInventory().getItemInMainHand());
         	
         	if (!item.getType().equals(Material.AIR)) {
+
+				if (hooks.getBetterParkour().isHooked()) {
+					ParkourAPI api = BetterParkour.getAPI();
+					ParkourHandler parkourHandler = api.getParkourHandler();
+					if (parkourHandler.inCourse(p) || parkourHandler.inCourse(target)) {
+						return;
+					}
+				}
+
         		if (item.isSimilar(Items.Gadgets.Slapper())) {
         			e.setCancelled(true);
 					if (onCooldown(p, 5)) {return;}
