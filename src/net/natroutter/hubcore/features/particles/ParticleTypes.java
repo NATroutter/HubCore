@@ -9,28 +9,28 @@ import static net.natroutter.hubcore.features.particles.ParticleTypes.Contants.*
 
 public enum ParticleTypes {
 
-    DISABLED(null, null, config.particles.witch.permission, config.particles.witch.need),
-    WITCH(Particle.SPELL_WITCH, lang.Guis.particles.witch, config.particles.witch.permission, config.particles.witch.need),
-    TOTEM(Particle.TOTEM, lang.Guis.particles.totem, config.particles.totem.permission, config.particles.totem.need),
-    INK(Particle.SQUID_INK, lang.Guis.particles.ink, config.particles.ink.permission, config.particles.ink.need),
-    SOULFLAME(Particle.SOUL_FIRE_FLAME, lang.Guis.particles.soulflame, config.particles.soulflame.permission, config.particles.soulflame.need),
-    CLOUD(Particle.CLOUD, lang.Guis.particles.cloud, config.particles.cloud.permission, config.particles.cloud.need),
-    SOUL(Particle.SOUL, lang.Guis.particles.soul, config.particles.soul.permission, config.particles.soul.need),
-    NOTES(Particle.NOTE, lang.Guis.particles.notes, config.particles.notes.permission, config.particles.notes.need),
-    CONDUIT(Particle.NAUTILUS, lang.Guis.particles.conduit, config.particles.conduit.permission, config.particles.conduit.need),
-    LAVA(Particle.LAVA, lang.Guis.particles.lava, config.particles.lava.permission, config.particles.lava.need),
-    HEARTS(Particle.HEART, lang.Guis.particles.hearts, config.particles.hearts.permission, config.particles.hearts.need),
-    HAPPY(Particle.VILLAGER_HAPPY, lang.Guis.particles.happy, config.particles.happy.permission, config.particles.happy.need),
-    ANGRY(Particle.VILLAGER_ANGRY, lang.Guis.particles.angry, config.particles.angry.permission, config.particles.angry.need),
-    ENCHANT(Particle.CRIT_MAGIC, lang.Guis.particles.enchanthit, config.particles.enchanthit.permission, config.particles.enchanthit.need),
-    ENDROD(Particle.END_ROD, lang.Guis.particles.endrod, config.particles.endrod.permission, config.particles.endrod.need),
-    ENCHANTING(Particle.ENCHANTMENT_TABLE, lang.Guis.particles.enchanting, config.particles.enchanting.permission, config.particles.enchanting.need),
-    RAINBOWDUST(Particle.REDSTONE, lang.Guis.particles.rainbowdust, config.particles.rainbowdust.permission, config.particles.rainbowdust.need),
-    DRAGONSBREATH(Particle.DRAGON_BREATH, lang.Guis.particles.dragonbreath, config.particles.dragonbreath.permission, config.particles.dragonbreath.need),
-    CRITICAL(Particle.CRIT, lang.Guis.particles.critical, config.particles.critical.permission, config.particles.critical.need),
-    DAMAGE(Particle.DAMAGE_INDICATOR, lang.Guis.particles.damage, config.particles.damage.permission, config.particles.damage.need),
-    SMOKE(Particle.SMOKE_NORMAL, lang.Guis.particles.smoke, config.particles.smoke.permission, config.particles.smoke.need),
-    SNEEZE(Particle.SNEEZE, lang.Guis.particles.sneeze, config.particles.sneeze.permission, config.particles.sneeze.need);
+    DISABLED(null, null, config.witch.permission, config.witch.need),
+    WITCH(Particle.SPELL_WITCH, particles.witch, config.witch.permission, config.witch.need),
+    TOTEM(Particle.TOTEM, particles.totem, config.totem.permission, config.totem.need),
+    INK(Particle.SQUID_INK, particles.ink, config.ink.permission, config.ink.need),
+    SOULFLAME(Particle.SOUL_FIRE_FLAME, particles.soulflame, config.soulflame.permission, config.soulflame.need),
+    CLOUD(Particle.CLOUD, particles.cloud, config.cloud.permission, config.cloud.need),
+    SOUL(Particle.SOUL, particles.soul, config.soul.permission, config.soul.need),
+    NOTES(Particle.NOTE, particles.notes, config.notes.permission, config.notes.need),
+    CONDUIT(Particle.NAUTILUS, particles.conduit, config.conduit.permission, config.conduit.need),
+    LAVA(Particle.LAVA, particles.lava, config.lava.permission, config.lava.need),
+    HEARTS(Particle.HEART, particles.hearts, config.hearts.permission, config.hearts.need),
+    HAPPY(Particle.VILLAGER_HAPPY, particles.happy, config.happy.permission, config.happy.need),
+    ANGRY(Particle.VILLAGER_ANGRY, particles.angry, config.angry.permission, config.angry.need),
+    ENCHANT(Particle.CRIT_MAGIC, particles.enchanthit, config.enchanthit.permission, config.enchanthit.need),
+    ENDROD(Particle.END_ROD, particles.endrod, config.endrod.permission, config.endrod.need),
+    ENCHANTING(Particle.ENCHANTMENT_TABLE, particles.enchanting, config.enchanting.permission, config.enchanting.need),
+    RAINBOWDUST(Particle.REDSTONE, particles.rainbowdust, config.rainbowdust.permission, config.rainbowdust.need),
+    DRAGONSBREATH(Particle.DRAGON_BREATH, particles.dragonbreath, config.dragonbreath.permission, config.dragonbreath.need),
+    CRITICAL(Particle.CRIT, particles.critical, config.critical.permission, config.critical.need),
+    DAMAGE(Particle.DAMAGE_INDICATOR, particles.damage, config.damage.permission, config.damage.need),
+    SMOKE(Particle.SMOKE_NORMAL, particles.smoke, config.smoke.permission, config.smoke.need),
+    SNEEZE(Particle.SNEEZE, particles.sneeze, config.sneeze.permission, config.sneeze.need);
 
     private Particle particle;
     private final String langName;
@@ -70,7 +70,7 @@ public enum ParticleTypes {
     }
 
     protected static class Contants {
-        protected static final Lang lang = HubCore.getLang();
-        protected static final Config config = HubCore.getCfg();
+        protected static final Lang.Guis.Particles particles = HubCore.getLang().Guis.particles;
+        protected static final Config.particles config = HubCore.getCfg().particles;
     }
 }
