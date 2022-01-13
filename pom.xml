@@ -103,12 +103,12 @@
         <dependency>
             <groupId>net.natroutter</groupId>
             <artifactId>NATLibs</artifactId>
-            <version>1.1.69</version>
+            <version>1.1.70</version>
         </dependency>
         <dependency>
             <groupId>net.natroutter</groupId>
             <artifactId>betterparkour</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

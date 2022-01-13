@@ -5,11 +5,7 @@ import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.natlibs.objects.ParticleSettings;
 import net.natroutter.natlibs.utilities.Utilities;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -96,7 +92,7 @@ public class ParticleScheduler {
                 if (type.equals(ParticleTypes.RAINBOWDUST)) {
                     spawnDust(p, set);
                 } else {
-                    utils.spawnParticleInRadius(set, 50);
+                    utils.spawnParticleWorld(set);
                 }
             }
         }, 0, 2);
@@ -105,11 +101,9 @@ public class ParticleScheduler {
 
     public void spawnDust(Player p, ParticleSettings set) {
         Particle.DustOptions opt = new Particle.DustOptions(Color.fromRGB(red, green, blue), 1);
-        for (Entity nearEnt : p.getNearbyEntities(50,50,50)) {
-            if (!(nearEnt instanceof Player nearp)) {continue;}
-            nearp.spawnParticle(set.getParticle(), set.getLoc(), set.getCount(), set.getOffsetX(), set.getOffsetY(), set.getOffsetY(), set.getSpeed(), opt);
-        }
-        p.spawnParticle(set.getParticle(), set.getLoc(), set.getCount(), set.getOffsetX(), set.getOffsetY(), set.getOffsetY(), set.getSpeed(), opt);
+        World world = set.getLoc().getWorld();
+        if (world == null) {return;}
+        world.spawnParticle(set.getParticle(), set.getLoc(), set.getCount(), set.getOffsetX(), set.getOffsetY(), set.getOffsetY(), set.getSpeed(), opt);
     }
 
 }

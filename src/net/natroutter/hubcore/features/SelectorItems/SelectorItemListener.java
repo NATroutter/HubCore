@@ -2,6 +2,7 @@ package net.natroutter.hubcore.features.SelectorItems;
 
 import net.natroutter.betterparkour.BetterParkour;
 import net.natroutter.betterparkour.ParkourAPI;
+import net.natroutter.betterparkour.events.ParkourJoinEvent;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.particles.ParticleGUI;
 import net.natroutter.hubcore.handlers.Hooks;
@@ -53,6 +54,12 @@ public class SelectorItemListener implements Listener {
 	@EventHandler
 	public void onJoin(PlayerQuitEvent e) {
 		e.setQuitMessage(null);
+	}
+
+	@EventHandler
+	public void onParkourJoin(ParkourJoinEvent e) {
+		Player p = e.getPlayer();
+		GadgetHandler.setGadget(p, null);
 	}
 
 	@EventHandler
