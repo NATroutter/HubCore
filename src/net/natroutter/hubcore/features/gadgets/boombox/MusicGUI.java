@@ -6,7 +6,6 @@ import org.bukkit.Sound;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.hubcore.utilities.Lang;
-import net.natroutter.natlibs.NATLibs;
 import net.natroutter.natlibs.handlers.gui.GUIItem;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
 import net.natroutter.natlibs.handlers.gui.GUIWindow.Rows;

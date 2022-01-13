@@ -36,8 +36,7 @@ public class SettingsGUI {
         GUIWindow gui = getGUI(p);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.SmallBall(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.SMALLBALL.name());
             pdh.set(data);
@@ -45,8 +44,7 @@ public class SettingsGUI {
         }), GUIWindow.Rows.row2, 2);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.LargeBall(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.LARGEBALL.name());
             pdh.set(data);
@@ -54,8 +52,7 @@ public class SettingsGUI {
         }), GUIWindow.Rows.row2, 3);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.Star(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.STAR.name());
             pdh.set(data);
@@ -63,8 +60,7 @@ public class SettingsGUI {
         }), GUIWindow.Rows.row2, 4);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.Creeper(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.CREEPER.name());
             pdh.set(data);
@@ -72,8 +68,7 @@ public class SettingsGUI {
         }), GUIWindow.Rows.row2, 5);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.Shapes.Burst(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             data.setShape(FShape.BURST.name());
             pdh.set(data);
@@ -82,8 +77,7 @@ public class SettingsGUI {
 
         //Additives
         gui.setItem(new GUIItem(Items.Gadgets.Firework.additives.Twinkle(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             data.setTwinkle(!data.getTwinkle());
             pdh.set(data);
@@ -91,8 +85,7 @@ public class SettingsGUI {
         }), GUIWindow.Rows.row4, 2);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.additives.Trail(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             data.setTrail(!data.getTrail());
             pdh.set(data);
@@ -106,8 +99,7 @@ public class SettingsGUI {
         //colors
         FColor color = FColor.fromRGB(dd.getColor_r(), dd.getColor_g(), dd.getColor_b());
         gui.setItem(new GUIItem(Items.Gadgets.Firework.colorDisplay(color), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             t.closeInventory();
             ColorGUI.colortype.put(t.getUniqueId(), FColorType.MAIN);
             ColorGUI.show(t);
@@ -115,8 +107,7 @@ public class SettingsGUI {
 
         FColor fadecolor = FColor.fromRGB(dd.getFade_r(), dd.getFade_g(), dd.getFade_b());
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fadeColor(fadecolor), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             t.closeInventory();
             ColorGUI.colortype.put(t.getUniqueId(), FColorType.FADE);
             ColorGUI.show(t);

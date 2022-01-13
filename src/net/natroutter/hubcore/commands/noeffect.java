@@ -21,11 +21,10 @@ public class noeffect extends Command {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player p)) {
             sender.sendMessage(lang.Prefix + lang.OnlyIngame);
             return false;
         }
-        Player p = (Player)sender;
 
         if (args.length == 0) {
             if (p.hasPermission("hubcore.noeffect")) {

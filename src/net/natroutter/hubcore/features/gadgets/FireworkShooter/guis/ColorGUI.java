@@ -9,7 +9,6 @@ import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.hubcore.utilities.Lang;
 import net.natroutter.natlibs.handlers.gui.GUIItem;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -67,56 +66,49 @@ public class ColorGUI {
 
         //Row 1
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.DarkRed), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.DarkRed, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row2, 1);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.Red), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.Red, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row2, 2);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.Gold), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.Gold, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row2, 3);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.Yellow), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.Yellow, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row2, 4);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.DarkGreen), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.DarkGreen, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row2, 5);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.Green), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.Green, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row2, 6);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.Aqua), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.Aqua, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -125,56 +117,49 @@ public class ColorGUI {
 
         //Row 2
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.DarkAqua), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.DarkAqua, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row3, 1);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.DarkBlue), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.DarkBlue, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row3, 2);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.Blue), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.Blue, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row3, 3);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.LightPurple), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.LightPurple, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row3, 4);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.DarkPurple), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.DarkPurple, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row3, 5);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.White), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.White, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
         }), GUIWindow.Rows.row3, 6);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.Gray), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.Gray, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -182,8 +167,7 @@ public class ColorGUI {
 
         //Row 3
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.DarkGray), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.DarkGray, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -203,8 +187,7 @@ public class ColorGUI {
 
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.fireworkStar(FColor.Black), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
             PlayerData data = pdh.get(t.getUniqueId());
             pdh.set(changeColor(data, FColor.DarkGray, colortype.getOrDefault(t.getUniqueId(), FColorType.MAIN)));
             updateDisplay(t);
@@ -212,16 +195,14 @@ public class ColorGUI {
 
         //controls
         gui.setItem(new GUIItem(Items.back(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
 
             t.closeInventory();
             SettingsGUI.show(t);
         }), GUIWindow.Rows.row6, 3);
 
         gui.setItem(new GUIItem(Items.Gadgets.Firework.customColor(), (e)->{
-            if (!(e.getWhoClicked() instanceof Player)) {return;}
-            Player t = (Player)e.getWhoClicked();
+            if (!(e.getWhoClicked() instanceof Player t)) {return;}
 
             if (t.hasPermission("hubcore.gadgets.fireworkshooter.customcolor")) {
                 t.closeInventory();

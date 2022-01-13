@@ -8,7 +8,6 @@ import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
-import org.bukkit.block.data.type.Stairs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 
@@ -16,7 +15,6 @@ import net.natroutter.hubcore.HubCore;
 import net.natroutter.natlibs.objects.BaseItem;
 import net.natroutter.natlibs.utilities.SkullCreator;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;

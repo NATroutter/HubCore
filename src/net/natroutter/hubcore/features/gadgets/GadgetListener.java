@@ -1,6 +1,5 @@
 package net.natroutter.hubcore.features.gadgets;
 
-import net.citizensnpcs.api.CitizensAPI;
 import net.natroutter.betterparkour.BetterParkour;
 import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.betterparkour.handlers.ParkourHandler;
@@ -23,9 +22,7 @@ import net.natroutter.hubcore.features.gadgets.snowcannon.SnowCannonHandler;
 import net.natroutter.hubcore.features.gadgets.wings.WingsHandler;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.natlibs.objects.BaseItem;
-import org.bukkit.inventory.EquipmentSlot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -33,7 +30,7 @@ public class GadgetListener implements Listener {
 
 	private Hooks hooks = HubCore.getHooks();
 
-	public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
+	public static HashMap<UUID, Long> cooldown = new HashMap<>();
 
 	public boolean onCooldown(Player p , int time) {
 		if(cooldown.containsKey(p.getUniqueId())) {

@@ -1,12 +1,10 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
-import jdk.jshell.execution.Util;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.guis.SettingsGUI;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.utilities.Utils;
-import net.natroutter.natlibs.handlers.gui.GUIWindow;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -18,7 +16,7 @@ import java.util.UUID;
 
 public class FWSHandler {
 
-    public static HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
+    public static HashMap<UUID, Long> cooldown = new HashMap<>();
     private static int cooldownTime = 2;
 
     private static final PlayerDataHandler pdh = HubCore.getDataHandler();
@@ -72,13 +70,13 @@ public class FWSHandler {
 
             FShape shape = FShape.fromString(data.getShape());
             if (shape != null) {
-                switch (shape) {
-                    case SMALLBALL:return e.with(FireworkEffect.Type.BALL);
-                    case LARGEBALL:return e.with(FireworkEffect.Type.BALL_LARGE);
-                    case STAR:return e.with(FireworkEffect.Type.STAR);
-                    case CREEPER:return e.with(FireworkEffect.Type.CREEPER);
-                    case BURST:return e.with(FireworkEffect.Type.BURST);
-                }
+                return switch (shape) {
+                    case SMALLBALL -> e.with(FireworkEffect.Type.BALL);
+                    case LARGEBALL -> e.with(FireworkEffect.Type.BALL_LARGE);
+                    case STAR -> e.with(FireworkEffect.Type.STAR);
+                    case CREEPER -> e.with(FireworkEffect.Type.CREEPER);
+                    case BURST -> e.with(FireworkEffect.Type.BURST);
+                };
             }
         }
         return null;

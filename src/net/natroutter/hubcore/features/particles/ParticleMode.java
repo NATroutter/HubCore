@@ -8,21 +8,19 @@ public enum ParticleMode {
     CLOUD;
 
     public ParticleMode next() {
-        switch (this) {
-            case TAIL: return CLOUD;
-            case CLOUD: return TAIL;
-        }
-        return null;
+        return switch (this) {
+            case TAIL -> CLOUD;
+            case CLOUD -> TAIL;
+        };
     }
 
     private static final Lang lang = HubCore.getLang();
 
     public String langName() {
-        switch (this) {
-            case TAIL: return lang.Guis.particles.particles.Tail;
-            case CLOUD: return lang.Guis.particles.particles.Cloud;
-        }
-        return null;
+        return switch (this) {
+            case TAIL -> lang.Guis.particles.particles.Tail;
+            case CLOUD -> lang.Guis.particles.particles.Cloud;
+        };
     }
 
     public static ParticleMode fromString(String value) {

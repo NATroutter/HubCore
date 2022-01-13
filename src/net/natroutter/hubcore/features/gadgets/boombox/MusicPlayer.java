@@ -24,8 +24,8 @@ public class MusicPlayer implements Listener {
 	private final Lang lang = HubCore.getLang();
 	private final YamlDatabase database = HubCore.getYamlDatabase();
 
-    public static HashMap<UUID, Sound> selectedSound = new HashMap<UUID, Sound>();
-    public static HashMap<UUID, Integer> selectedSlot = new HashMap<UUID, Integer>();
+    public static HashMap<UUID, Sound> selectedSound = new HashMap<>();
+    public static HashMap<UUID, Integer> selectedSlot = new HashMap<>();
 	
     @EventHandler
     public void interactNoteblock(PlayerInteractEvent e) {
@@ -49,8 +49,7 @@ public class MusicPlayer implements Listener {
                     float pitch = utils.pitchToFloat(p);
 
                     for (Entity ent : p.getWorld().getNearbyEntities(p.getLocation(), 10,10,10)) {
-                        if (ent instanceof Player) {
-                            Player playTo = (Player)ent;
+                        if (ent instanceof Player playTo) {
                             playTo.playSound(p.getLocation(), sound, 100, pitch);
                         }
                     }
