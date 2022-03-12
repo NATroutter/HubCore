@@ -57,12 +57,6 @@ public class SelectorItemListener implements Listener {
 	}
 
 	@EventHandler
-	public void onParkourJoin(ParkourJoinEvent e) {
-		Player p = e.getPlayer();
-		GadgetHandler.setGadget(p, null);
-	}
-
-	@EventHandler
 	public void onDrop(PlayerDropItemEvent e) {
 		Player p = e.getPlayer();
 		if (AdminModeHandler.isAdmin(p)) {return;}

@@ -1,6 +1,7 @@
 package net.natroutter.hubcore;
 
 import net.natroutter.hubcore.commands.*;
+import net.natroutter.hubcore.features.BetterParkourListener;
 import net.natroutter.hubcore.features.PlayerCarry;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.FWSListener;
 import net.natroutter.hubcore.features.gadgets.snowcannon.SnowCannonHandler;
@@ -13,9 +14,11 @@ import net.natroutter.natlibs.handlers.FileManager;
 import net.natroutter.natlibs.objects.ConfType;
 import net.natroutter.natlibs.utilities.Bungeecord.BungeeHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.natroutter.hubcore.features.protections.Protection;
@@ -33,6 +36,8 @@ import net.natroutter.hubcore.utilities.Lang;
 import net.natroutter.natlibs.NATLibs;
 import net.natroutter.natlibs.handlers.EventManager;
 import net.natroutter.natlibs.utilities.Utilities;
+
+import java.util.Arrays;
 
 public class HubCore extends JavaPlugin implements NATLibs{
 
@@ -90,21 +95,32 @@ public class HubCore extends JavaPlugin implements NATLibs{
 
         SnowCannonHandler.Initialize();
 
-        EventManager evm = new EventManager(this);
+        PluginManager pm = Bukkit.getPluginManager();
+        CommandMap map = Bukkit.getCommandMap();
 
         //Register all listeners
-        evm.RegisterListeners(
-                SelectorItemListener.class, GadgetListener.class, MusicPlayer.class,
-                SnowCannonListener.class, SlapperListener.class,
-                FWSListener.class, PlayerCarry.class, Protection.class,
-                CommonListener.class
-        );
+        pm.registerEvents(new SelectorItemListener(), this);
+        pm.registerEvents(new GadgetListener(), this);
+        pm.registerEvents(new MusicPlayer(), this);
+        pm.registerEvents(new SnowCannonListener(), this);
+        pm.registerEvents(new SlapperListener(), this);
+        pm.registerEvents(new FWSListener(), this);
+        pm.registerEvents(new PlayerCarry(), this);
+        pm.registerEvents(new Protection(), this);
+        pm.registerEvents(new CommonListener(), this);
+
+        if (hooks.getBetterParkour() != null || hooks.getBetterParkour().isHooked()) {
+            pm.registerEvents(new BetterParkourListener(), this);
+        }
+
 
         //Register all commands
-        evm.RegisterCommands(
-                Adminmode.class, Hubitems.class, noeffect.class, nocarry.class
-        );
-
+        map.registerAll("hubcore", Arrays.asList(
+                new Adminmode(),
+                new Hubitems(),
+                new noeffect(),
+                new nocarry()
+        ));
 
         //Update all online players inventories!
         for(Player op : Bukkit.getOnlinePlayers()) {
