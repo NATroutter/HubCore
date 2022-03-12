@@ -47,14 +47,5 @@ public class CommonListener implements Listener {
 
     }
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
-        if (AdminModeHandler.isAdmin(p)) {
-            AdminModeHandler.setAdminMode(p, false);
-        }
-    }
-
-
 
 }
