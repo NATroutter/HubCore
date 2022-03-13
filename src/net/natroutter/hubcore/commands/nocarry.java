@@ -16,7 +16,7 @@ public class nocarry extends Command {
     private PlayerDataHandler pdh = HubCore.getDataHandler();
 
     public nocarry() {
-        super("");
+        super("nocarry");
     }
 
     @Override

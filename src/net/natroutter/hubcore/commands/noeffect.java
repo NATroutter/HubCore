@@ -16,7 +16,7 @@ public class noeffect extends Command {
     private PlayerDataHandler pdh = HubCore.getDataHandler();
 
     public noeffect() {
-        super("");
+        super("noeffect");
     }
 
     @Override
