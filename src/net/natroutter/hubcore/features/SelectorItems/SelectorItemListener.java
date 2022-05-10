@@ -2,11 +2,12 @@ package net.natroutter.hubcore.features.SelectorItems;
 
 import net.natroutter.betterparkour.BetterParkour;
 import net.natroutter.betterparkour.ParkourAPI;
-import net.natroutter.betterparkour.events.ParkourJoinEvent;
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.particles.ParticleGUI;
+import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Hooks;
-import net.natroutter.hubcore.utilities.Lang;
+import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,8 +32,32 @@ import java.util.UUID;
 
 public class SelectorItemListener implements Listener {
 
-	private static final Lang lang = HubCore.getLang();
-	private static final Hooks hooks = HubCore.getHooks();
+	private LangManager lang;
+	private Hooks hooks;
+	private SelectorItemHandler selectorItemHandler;
+	private GadgetHandler gadgetHandler;
+	private AdminModeHandler adminModeHandler;
+	private Items items;
+	private GadgetGUI gadgetGUI;
+	private ServerSelector serverSelector;
+	private ParticleGUI particleGUI;
+
+	public SelectorItemListener(Handler handler) {
+		this.lang = handler.getLang();
+		this.hooks = handler.getHooks();
+		this.selectorItemHandler = handler.getSelectorItemHandler();
+		this.gadgetHandler = handler.getGadgetHandler();
+		this.adminModeHandler = handler.getAdminModeHandler();
+		this.items = handler.getItems();
+		this.gadgetGUI = handler.getGadgetGUI();
+		this.serverSelector = handler.getServerSelector();
+		this.particleGUI = handler.getParticleGUI();
+	}
+
+	@EventHandler
+	public void onQuit(PlayerQuitEvent e) {
+		cooldown.remove(e.getPlayer().getUniqueId());
+	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent e) {
@@ -40,15 +65,13 @@ public class SelectorItemListener implements Listener {
 		Player p = e.getPlayer();
 		p.getInventory().clear();
 
-		SelectorItemHandler.InitializeItems(p);
-		SelectorItemHandler.update(p);
+		selectorItemHandler.InitializeItems(p);
+		selectorItemHandler.update(p);
 
 		for (int i = 0; i < 10; i++) {
 			p.sendMessage(" ");
 		}
-		for (String line : lang.welcommotd) {
-			p.sendMessage(line);
-		}
+		lang.sendList(p, Translations.WelcomeMotd);
 	}
 
 	@EventHandler
@@ -59,15 +82,16 @@ public class SelectorItemListener implements Listener {
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent e) {
 		Player p = e.getPlayer();
-		if (AdminModeHandler.isAdmin(p)) {return;}
+		if (adminModeHandler.isAdmin(p)) {return;}
 		
 		Item item = e.getItemDrop();
 		BaseItem item2 = BaseItem.from(item.getItemStack());
 		
-		for(Gadget gad : GadgetHandler.gadgets) {
+		for(Gadget gad : gadgetHandler.gadgets) {
 			if (item2.isSimilar(gad.getItem())) {
 				item.remove();
-				GadgetHandler.setGadget(p, null);
+				gadgetHandler.setGadget(p, null);
+				selectorItemHandler.update(p);
 				return;
 			}
 		}
@@ -81,18 +105,18 @@ public class SelectorItemListener implements Listener {
 		if (window == null) {
 			Player p = (Player)e.getWhoClicked();
 			
-			if (AdminModeHandler.isAdmin(p)) {return;}
-			if (SelectorItemHandler.bypassHubItems.contains(p.getUniqueId())) {return;}
+			if (adminModeHandler.isAdmin(p)) {return;}
+			if (selectorItemHandler.bypassHubItems.contains(p.getUniqueId())) {return;}
 
 			e.setCancelled(true);
 			
 			if (e.getInventory().getType().equals(InventoryType.PLAYER)) {
-				SelectorItemHandler.update(p);
+				selectorItemHandler.update(p);
 			}
 		}
 	}
 
-	public static HashMap<UUID, Long> cooldown = new HashMap<>();
+	public HashMap<UUID, Long> cooldown = new HashMap<>();
 	private static int cooldownTime = 1;
 	public boolean onCooldown(Player p) {
 		if(cooldown.containsKey(p.getUniqueId())) {
@@ -109,7 +133,7 @@ public class SelectorItemListener implements Listener {
 	public void onInteract(PlayerInteractEvent e) {
 		//if (1 == 1) {return;}
 		Player p = e.getPlayer();
-		if (SelectorItemHandler.bypassHubItems.contains(p.getUniqueId())) {return;}
+		if (selectorItemHandler.bypassHubItems.contains(p.getUniqueId())) {return;}
 
 		if (e.hasItem() && (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
 			BaseItem item = BaseItem.from(e.getItem());
@@ -122,23 +146,21 @@ public class SelectorItemListener implements Listener {
 				}
 			}
 			
-			if (item.isSimilar(Items.JoinItems.serverSelector(p))) {
+			if (item.isSimilar(items.serverSelector(p))) {
 				e.setCancelled(true);
-				ServerSelector.show(p);
+				serverSelector.show(p);
 				
-			} else if (item.isSimilar(Items.JoinItems.gadgetSelector())) {
+			} else if (item.isSimilar(items.gadgetSelector())) {
 				e.setCancelled(true);
-				GadgetGUI.show(p);
+				gadgetGUI.show(p);
 				
-			} else if (item.isSimilar(Items.JoinItems.particleSelector())) {
+			} else if (item.isSimilar(items.particleSelector())) {
 				e.setCancelled(true);
-				ParticleGUI.show(p);
+				particleGUI.show(p);
 
-			} else if (item.isSimilar(Items.JoinItems.Info())) {
+			} else if (item.isSimilar(items.Info())) {
 				if (onCooldown(p)){return;}
-				for (String line : lang.info) {
-					p.sendMessage(line);
-				}
+				lang.sendList(p, Translations.Info);
 
 			}
 				
@@ -148,7 +170,7 @@ public class SelectorItemListener implements Listener {
 	@EventHandler
 	public void onHandSwap(PlayerSwapHandItemsEvent e) {
 		Player p = e.getPlayer();
-		if (AdminModeHandler.isAdmin(p)) {return;}
+		if (adminModeHandler.isAdmin(p)) {return;}
 		e.setCancelled(true);
 	}
 	

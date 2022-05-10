@@ -1,9 +1,11 @@
 package net.natroutter.hubcore.commands;
 
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
+import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
-import net.natroutter.hubcore.utilities.Lang;
+import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,17 +14,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class noeffect extends Command {
 
-    private Lang lang = HubCore.getLang();
-    private PlayerDataHandler pdh = HubCore.getDataHandler();
+    private LangManager lang;
+    private PlayerDataHandler pdh;
 
-    public noeffect() {
+    public noeffect(Handler handler) {
         super("noeffect");
+        this.lang = handler.getLang();
+        this.pdh = handler.getDataHandler();
     }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         if (!(sender instanceof Player p)) {
-            sender.sendMessage(lang.Prefix + lang.OnlyIngame);
+            lang.send(sender, Translations.Prefix, Translations.OnlyIngame);
             return false;
         }
 
@@ -32,16 +36,16 @@ public class noeffect extends Command {
                 PlayerData data = pdh.get(p.getUniqueId());
                 boolean state = !data.getNoEffect();
                 data.setNoEffect(state);
-                StringHandler msg = new StringHandler(lang.GadgetEffective).setPrefix(lang.Prefix);
-                msg.replaceAll("{state}", state ? lang.ToggleStates.off : lang.ToggleStates.on);
+                StringHandler msg = new StringHandler(lang.get(Translations.GadgetEffective)).setPrefix(lang.get(Translations.Prefix));
+                msg.replaceAll("{state}", state ? lang.get(Translations.ToggleStates_off) : lang.get(Translations.ToggleStates_on));
                 msg.send(p);
                 pdh.set(data);
 
             } else {
-                p.sendMessage(lang.Prefix + lang.NoPerm);
+                lang.send(sender, Translations.Prefix, Translations.NoPerm);
             }
         } else {
-            p.sendMessage(lang.Prefix + lang.TooManyArguments);
+            lang.send(sender, Translations.Prefix, Translations.TooManyArguments);
         }
 
         return false;

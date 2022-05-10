@@ -2,6 +2,7 @@ package net.natroutter.hubcore.features.SelectorItems;
 
 import java.util.*;
 
+import net.natroutter.hubcore.Handler;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -13,20 +14,27 @@ import net.natroutter.natlibs.objects.BaseItem;
 
 public class SelectorItemHandler {
 
-	public static HashMap<UUID, LinkedList<HubItem>> hubItemMap = new HashMap<>();
+	public HashMap<UUID, LinkedList<HubItem>> hubItemMap = new HashMap<>();
 
-	public static void InitializeItems(Player p) {
+	private Items items;
+	private GadgetHandler gadgetHandler;
+	public SelectorItemHandler(Handler handler) {
+		this.items = handler.getItems();
+		this.gadgetHandler = handler.getGadgetHandler();
+	}
+
+	public void InitializeItems(Player p) {
 		if (!hubItemMap.containsKey(p.getUniqueId())) {
 			hubItemMap.put(p.getUniqueId(), new LinkedList<>(Arrays.asList(
-					new HubItem("ParticleSelector", 0, Items.JoinItems.particleSelector()),
-					new HubItem("GadgetSelector", 1, Items.JoinItems.gadgetSelector()),
-					new HubItem("ServerSelector", 4, Items.JoinItems.serverSelector(p)),
-					new HubItem("InfoBook", 8, Items.JoinItems.Info())
+					new HubItem("ParticleSelector", 0, items.particleSelector()),
+					new HubItem("GadgetSelector", 1, items.gadgetSelector()),
+					new HubItem("ServerSelector", 4, items.serverSelector(p)),
+					new HubItem("InfoBook", 8, items.Info())
 			)));
 		}
 	}
 
-	public static void addHubItem(Player p, HubItem item) {
+	public void addHubItem(Player p, HubItem item) {
 		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
 
 		LinkedList<HubItem> list = hubItemMap.get(p.getUniqueId());
@@ -35,12 +43,12 @@ public class SelectorItemHandler {
 		hubItemMap.put(p.getUniqueId(), list);
 	}
 
-	public static void setHubItems(Player p, LinkedList<HubItem> items) {
+	public void setHubItems(Player p, LinkedList<HubItem> items) {
 		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
 		hubItemMap.put(p.getUniqueId(), items);
 	}
 
-	public static void addHubItems(Player p, HubItem... items) {
+	public void addHubItems(Player p, HubItem... items) {
 		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
 
 		LinkedList<HubItem> list = hubItemMap.get(p.getUniqueId());
@@ -49,18 +57,18 @@ public class SelectorItemHandler {
 		hubItemMap.put(p.getUniqueId(), list);
 	}
 
-	public static void replaceHubItems(HashMap<UUID, LinkedList<HubItem>> map) {
+	public void replaceHubItems(HashMap<UUID, LinkedList<HubItem>> map) {
 		hubItemMap = map;
 	}
 
-	public static List<HubItem> getHubItems(Player p) {
+	public List<HubItem> getHubItems(Player p) {
 		if (!hubItemMap.containsKey(p.getUniqueId())) {InitializeItems(p);}
 
 		return hubItemMap.get(p.getUniqueId());
 	}
 
-	protected static ArrayList<UUID> bypassHubItems = new ArrayList<>();
-	public static void useHubItems(Player p, boolean status) {
+	protected ArrayList<UUID> bypassHubItems = new ArrayList<>();
+	public void useHubItems(Player p, boolean status) {
 		if (!status) {
 			if (!bypassHubItems.contains(p.getUniqueId())) {
 				bypassHubItems.add(p.getUniqueId());
@@ -70,7 +78,7 @@ public class SelectorItemHandler {
 		}
 	}
 
-	public static Boolean isHubItem(Player p, BaseItem item) {
+	public Boolean isHubItem(Player p, BaseItem item) {
 		for(HubItem hubitem : getHubItems(p)) {
 			if (item.isSimilar(hubitem.item())) {
 				return true;
@@ -79,13 +87,13 @@ public class SelectorItemHandler {
 		return false;
 	}
 
-	public static void update(Player p) {
+	public void update(Player p) {
 		if (bypassHubItems.contains(p.getUniqueId())) {return;}
 
 		Inventory inv = p.getInventory();
 		ClearInvalidItems(p);
 		
-		Gadget gad = GadgetHandler.getGadget(p);
+		Gadget gad = gadgetHandler.getGadget(p);
 		
 		for (HubItem hubitem : getHubItems(p)) {
 			if (hubitem.id().equals("GadgetSelector")) {
@@ -109,11 +117,11 @@ public class SelectorItemHandler {
 		p.updateInventory();
 	}
 	
-	private static void ClearInvalidItems(Player p) {
+	private void ClearInvalidItems(Player p) {
 		if (bypassHubItems.contains(p.getUniqueId())) {return;}
 
 		Inventory inv = p.getInventory();
-		Gadget selectedGad = GadgetHandler.getGadget(p);
+		Gadget selectedGad = gadgetHandler.getGadget(p);
 		
 		for (int slot = 0; slot < inv.getContents().length; slot++) {
 			BaseItem item = BaseItem.from(inv.getItem(slot));

@@ -1,7 +1,8 @@
 package net.natroutter.hubcore.features.gadgets;
 
 import net.natroutter.hubcore.HubCore;
-import net.natroutter.hubcore.utilities.Lang;
+import net.natroutter.hubcore.files.Translations;
+import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import net.natroutter.natlibs.objects.BaseItem;
 import net.natroutter.natlibs.utilities.StringHandler;
 
@@ -15,8 +16,6 @@ public class Gadget {
 	BaseItem IconItem;
 	String need;
 	String permission;
-
-	private final Lang lang = HubCore.getLang();
 
 	public Gadget(String Identifier, Integer slot, BaseItem GadgetItem, String need, String permission) {
 		this.slot = slot;
@@ -54,7 +53,7 @@ public class Gadget {
 		return GadgetItem;
 	}
 
-	public BaseItem getIconWithNeed() {
+	public BaseItem getIconWithNeed(LangManager lang) {
 		BaseItem item = null;
 
 		if (IconItem != null) {
@@ -62,7 +61,7 @@ public class Gadget {
 		} else {
 			item = new BaseItem(GadgetItem);
 		}
-		for (String line : lang.Items.gadgets.unlock_lore) {
+		for (String line : lang.getList(Translations.Items_Gadgets_Unlock_Lore)) {
 			StringHandler s = new StringHandler(line);
 			s.replaceAll("{need}", need);
 			item.addLore(s.build());

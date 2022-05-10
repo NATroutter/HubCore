@@ -1,7 +1,8 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
 import net.natroutter.hubcore.HubCore;
-import net.natroutter.hubcore.utilities.Lang;
+import net.natroutter.hubcore.files.Translations;
+import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 
 public enum FShape {
 
@@ -11,15 +12,13 @@ public enum FShape {
     CREEPER,
     BURST;
 
-    private static final Lang lang = HubCore.getLang();
-
-    public String langName() {
+    public String langName(LangManager lang) {
         return switch (this) {
-            case SMALLBALL -> lang.Guis.Gadgets.fireworks.shapes.SmallBall;
-            case LARGEBALL -> lang.Guis.Gadgets.fireworks.shapes.LargeBall;
-            case STAR -> lang.Guis.Gadgets.fireworks.shapes.Star;
-            case CREEPER -> lang.Guis.Gadgets.fireworks.shapes.Creeper;
-            case BURST -> lang.Guis.Gadgets.fireworks.shapes.Burst;
+            case SMALLBALL -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_SmallBall);
+            case LARGEBALL -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_LargeBall);
+            case STAR -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_Star);
+            case CREEPER -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_Creeper);
+            case BURST -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_Burst);
         };
     }
 

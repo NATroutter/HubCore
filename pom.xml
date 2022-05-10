@@ -6,7 +6,7 @@
 
     <groupId>net.natroutter</groupId>
     <artifactId>hubcore</artifactId>
-    <version>1.7</version>
+    <version>1.8</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>
@@ -17,13 +17,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>https://NATroutter.net</url>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>apache.snapshots</id>
-            <url>https://repository.apache.org/snapshots/</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <build>
         <sourceDirectory>src</sourceDirectory>
@@ -41,7 +34,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.3.0-SNAPSHOT</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -50,12 +43,7 @@
                         </goals>
                         <configuration>
                             <minimizeJar>false</minimizeJar>
-                            <relocations>
-                                <relocation>
-                                    <pattern>net.natroutter.natlibs</pattern>
-                                    <shadedPattern>${project.groupId}.${project.artifactId}.natlibs</shadedPattern>
-                                </relocation>
-                            </relocations>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
                 </executions>
@@ -63,10 +51,13 @@
         </plugins>
         <resources>
             <resource>
-                <directory>${project.basedir}</directory>
+                <directory>${project.basedir}/resources</directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>plugin.yml</include>
+                    <include>lang/fi_fi.yml</include>
+                    <include>lang/en_us.yml</include>
+                    <include>Database.yml</include>
                 </includes>
             </resource>
         </resources>
@@ -75,7 +66,7 @@
     <repositories>
         <repository>
             <id>NAT-Software</id>
-            <url>https://hub.nat.gs/nexus/repository/NAT-Software/</url>
+            <url>https://hub.nat.gg/nexus/repository/NAT-Software/</url>
         </repository>
         <repository>
             <id>papermc</id>
@@ -103,12 +94,13 @@
         <dependency>
             <groupId>net.natroutter</groupId>
             <artifactId>NATLibs</artifactId>
-            <version>1.1.70</version>
+            <version>2.0.12</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.natroutter</groupId>
             <artifactId>betterparkour</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -131,14 +123,20 @@
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.36.0.2</version>
+            <version>3.36.0.3</version>
         </dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>
-            <artifactId>citizensapi</artifactId>
+            <artifactId>citizens-main</artifactId>
             <version>2.0.29-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

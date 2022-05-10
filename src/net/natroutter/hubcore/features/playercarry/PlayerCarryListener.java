@@ -1,11 +1,13 @@
-package net.natroutter.hubcore.features;
+package net.natroutter.hubcore.features.playercarry;
 
 import net.natroutter.betterparkour.BetterParkour;
 import net.natroutter.betterparkour.ParkourAPI;
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
+import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.handlers.Hooks;
-import net.natroutter.hubcore.utilities.Lang;
+import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,7 +17,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.util.Vector;
+import org.checkerframework.common.returnsreceiver.qual.This;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,27 +27,26 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class PlayerCarry implements Listener {
+public class PlayerCarryListener implements Listener {
 
-    private Lang lang = HubCore.getLang();
-    private PlayerDataHandler pdh = HubCore.getDataHandler();
+    private Handler handler;
+    private Hooks hooks;
+    private LangManager lang;
+    private PlayerDataHandler pdh;
+    private PlayerCarryHandler playerCarryHandler;
 
-    public static HashMap<UUID, Long> cooldown = new HashMap<>();
-    private static int cooldownTime = 2;
-    private Hooks hooks = HubCore.getHooks();
-
-
-    protected static ArrayList<UUID> bypassCarry = new ArrayList<>();
-    public static void bypass(Player p, boolean status) {
-        if (status) {
-            if (!bypassCarry.contains(p.getUniqueId())) {
-                bypassCarry.add(p.getUniqueId());
-            }
-        } else {
-            bypassCarry.remove(p.getUniqueId());
-        }
+    public PlayerCarryListener(Handler handler) {
+        this.handler = handler;
+        this.hooks = handler.getHooks();
+        this.lang = handler.getLang();
+        this.pdh = handler.getDataHandler();
+        this.playerCarryHandler = handler.getPlayerCarryHandler();
     }
 
+    @EventHandler
+    public void onLeave(PlayerQuitEvent e) {
+        playerCarryHandler.cooldown.remove(e.getPlayer().getUniqueId());
+    }
 
     @EventHandler
     public void onInteractEntity(PlayerInteractAtEntityEvent e) {
@@ -51,7 +54,7 @@ public class PlayerCarry implements Listener {
 
             Player p = e.getPlayer();
 
-            if (bypassCarry.contains(p.getUniqueId())) {
+            if (playerCarryHandler.bypassCarry.contains(p.getUniqueId())) {
                 return;
             }
 
@@ -77,22 +80,22 @@ public class PlayerCarry implements Listener {
                 return;
             }
 
-            if(cooldown.containsKey(p.getUniqueId())) {
-                long cooldownLeft = ((cooldown.get(p.getUniqueId())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
+            if(playerCarryHandler.cooldown.containsKey(p.getUniqueId())) {
+                long cooldownLeft = ((playerCarryHandler.cooldown.get(p.getUniqueId())/1000)+playerCarryHandler.cooldownTime) - (System.currentTimeMillis()/1000);
                 if(cooldownLeft>0) {
                     return;
                 }
             }
-            cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+            playerCarryHandler.cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 
             if (pdh.get(ride.getUniqueId()).getNocarry()) {
-                StringHandler msg = new StringHandler(lang.CantBackpack).setPrefix(lang.Prefix);
+                StringHandler msg = new StringHandler(lang.get(Translations.CantBackpack)).setPrefix(lang.get(Translations.Prefix));
                 msg.replaceAll("{name}", ride.getName());
                 msg.send(p);
                 return;
             }
             if (pdh.get(p.getUniqueId()).getNocarry()) {
-                StringHandler msg = new StringHandler(lang.CantBackpack).setPrefix(lang.Prefix);
+                StringHandler msg = new StringHandler(lang.get(Translations.CantBackpack)).setPrefix(lang.get(Translations.Prefix));
                 msg.replaceAll("{name}", ride.getName());
                 msg.send(p);
                 return;
@@ -105,12 +108,12 @@ public class PlayerCarry implements Listener {
             }
             ride.addPassenger(p);
 
-            StringHandler msg1 = new StringHandler(lang.inYourBackpack).setPrefix(lang.Prefix);
+            StringHandler msg1 = new StringHandler(lang.get(Translations.inYourBackpack)).setPrefix(lang.get(Translations.Prefix));
             msg1.replaceAll("{name}", p.getName());
             msg1.send(ride);
 
 
-            StringHandler msg2 = new StringHandler(lang.OnbackPack).setPrefix(lang.Prefix);
+            StringHandler msg2 = new StringHandler(lang.get(Translations.OnbackPack)).setPrefix(lang.get(Translations.Prefix));
             msg2.replaceAll("{name}", ride.getName());
             msg2.send(p);
         }
@@ -127,7 +130,7 @@ public class PlayerCarry implements Listener {
                 passengers.add(ride);
                 ride.leaveVehicle();
             }
-            Bukkit.getScheduler().runTaskLater(HubCore.getPlugin(), () -> passengers.forEach(player -> player.setVelocity(vec)), 1L);
+            Bukkit.getScheduler().runTaskLater(handler.getInstance(), () -> passengers.forEach(player -> player.setVelocity(vec)), 1L);
         }
     }
 

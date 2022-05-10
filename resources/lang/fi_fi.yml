@@ -1,0 +1,181 @@
+Prefix: "&4&lHubCore &8&l» "
+NoPerm: "&7Sinulla ei ole oikeuksia tuohon!"
+TooManyArguments: "&7Liianmonta komento argumenttiä!"
+OnlyIngame: "&7Tätä komentoa voi käyttää vain pelissä."
+AdminModeToggle: "&7Ylläpitotila: &c{state}"
+AdminModeToggleOther: "&7Pelaajan &c{name}&7 ylläpitotila: &c{state}"
+OnbackPack: "&7Olet nyt pelaajan &c{name} &7reppuselässä."
+inYourBackpack: "&c{name} &7hyppäsi reppuselkääsi"
+GadgetEffective: "&7Lelujen vaikutus: &c{state}"
+CantBackpack: "&7Et voi hypätä pelaajan &c{name} &7reppuselkään."
+NoCarryToggle: "&7Pelaajien keljettaminen: &c{state}"
+Unknown: Tuntematon
+TargetNotFound: "&7Kohdetta ei löydy"
+WelcomeMotd:
+  - " "
+  - "&8&l&m━━━━━━━━━━━━&8&l|&4&l Welcome &8&l|&m━━━━━━━━━━━━"
+  - " "
+  - "&7Welcome to server!"
+  - " "
+  - "&8&l&m━━━━━━━━━━━━&8&l|&4&l Welcome &8&l|&m━━━━━━━━━━━━"
+  - " "
+Info:
+  - " "
+  - "&8&l&m━━━━━━━━━━━━&8&l|&4&l Info &8&l|&m━━━━━━━━━━━━"
+  - " "
+  - "&7info text here!"
+  - " "
+  - "&8&l&m━━━━━━━━━━━━&8&l|&4&l Info &8&l|&m━━━━━━━━━━━━"
+  - " "
+Gadgets:
+  BoomBox:
+    NoteNotSelected: "&7Valitse sointu ensin! (Vinkki: ShiftClick)"
+ToggleStates:
+  'on': Päällä
+  'off': Pois Päältä
+Guis:
+  Gadgets:
+    Title: "&4&lHilavitkuttimet"
+    BoomBox:
+      Title: "&4&lSoitin"
+      Bass: "&c&lBass"
+      SnareDrum: "&c&lSnare Drum"
+      Hat: "&c&lHat"
+      BassDrum: "&c&lBass Drum"
+      Bells: "&c&lBells"
+      Flute: "&c&lFlute"
+      Chimes: "&c&lChimes"
+      Guitar: "&c&lGuitar"
+      Xylophone: "&c&lXylophone"
+      Vibraphone: "&c&lVibraphone"
+      CowBell: "&c&lCow Bell"
+      Didgeridoo: "&c&lDidgeridoo"
+      SquareWave: "&c&lSquare wave"
+      Banjo: "&c&lBanjo"
+      ElectricPiano: "&c&lElectric piano"
+      Harp: "&c&lHarp"
+    Fireworks:
+      Title: "&4&lRaketti asetukset"
+      ColorsTitle: "&4&lRaketin Väri"
+      CustomColorTitle: "&4&lRaketin Väri"
+      Color: "&cVäri"
+      FadeColor: "&cHäivytysväri"
+      CurrentColor: "&cNykyinen väri"
+      Back: "&cTakaisin"
+      CustomColor: "&cRGB väri"
+      ColorUp: "&cVäri ylös"
+      ColorDown: "&cVäri alas"
+      Red: "&c&l{value}"
+      Green: "&4&l{value}"
+      Blue: "&c&l{value}"
+      CurrentSetting: "&cNykyiset asetukset"
+      CurrentSetting_Lore:
+        - "&7Muoto: &c{shape}"
+        - "&7Väri: &c{color}"
+        - "&7Häivytysväri: &c{fadecolor}"
+        - "&7Tuike: &c{twinkle}"
+        - "&7Polku: &c{trail}"
+      SaveSettings: "&cTallenna asetukset"
+      Colors:
+        DarkRed: "&4Tumman punainen"
+        Red: "&cPunainen"
+        Gold: "&6kulta"
+        Yellow: "&2Keltainen"
+        DarkGreen: "&2Tumman vihreä"
+        Green: "&4Vihreä"
+        Aqua: "&bTurkoosi"
+        DarkAqua: "&3Tumma Turoosi"
+        DarkBlue: "&1Tumman sininen"
+        Blue: "&cSininen"
+        LightPurple: "&dVaalean purppura"
+        DarkPurple: "&5Tumma Purppura"
+        White: "&fValkoinen"
+        Gray: "&7Harmaa"
+        DarkGray: "&8Tumman harmaa"
+        Black: "&0Musta"
+        Custom: "&8(&c{r}&7, &c{g}&7, &c{b}&8)"
+      Additives:
+        Trail: "&cVaihda polku"
+        Twinkle: "&cVaihda tuike"
+      Shapes:
+        SmallBall: "&cPienipallo"
+        LargeBall: "&cIsopallo"
+        Star: "&cTähti"
+        Creeper: "&cHiipijä"
+        Burst: "&cPurskaus"
+  Particles:
+    Title: "&4&lHiukkaset"
+    Particles:
+      Tail: Häntä
+      Cloud: Pilvi
+    ParticleMode: "&cHiukkastila"
+    ParticleMode_Lore:
+      - "&7Paina tästä vaihtaaksesi hiukkas tilaa."
+      - " "
+      - "&7Nykyinen tila: &c{status}"
+    Disabled: "&cPois päältä"
+    Disabled_Lore:
+      - "&7Paina tästä ottaaksesi hiukkaset pois."
+    Effect_Lore:
+      - "&7Tarvitset: &c{need}"
+    Witch: "&cNoita"
+    Totem: "&cToteemi"
+    Ink: "&cMuste"
+    Soulflame: "&cSielutuli"
+    Cloud: "&cPilvi"
+    Soul: "&cSielu"
+    Notes: "&cNuotti"
+    Conduit: "&cConduitti"
+    Lava: "&cLaava"
+    Hearts: "&cSydän"
+    Happy: "&cIloinen"
+    Angry: "&cVihainen"
+    Enchanthit: "&cTaikaisku"
+    Endrod: "&cÄärisauva"
+    Enchanting: "&cLumous"
+    RainbowDust: "&cSateenkaaripöly"
+    DragonBreath: "&cLohikäärmeenhenkäys"
+    Critical: "&cKriittinen"
+    Damage: "&cVahinko"
+    Smoke: "&cSavu"
+    Sneeze: "&cRäkä"
+Items:
+  Gadgets:
+    Unlock_Lore:
+      - " "
+      - "&7Tarvitset: &c{need}"
+    FireWorkShooter: "&c&lRaketti tykki"
+    FireWorkShooter_Lore:
+      - "&7Onko nyt uusivuosi?"
+    Slapper: "&c&lLäpsytin"
+    Slapper_Lore:
+      - "&7Läpsytä takaa ;)"
+    BoomBox: "&c&lSoitin"
+    BoomBox_Lore:
+      - "&7Pistetään pileet pystyyn!"
+    SnowCannon: "&c&lLumitykki"
+    SnowCannon_Lore:
+      - "&7Taitaatulla takatalvi!"
+    Wings:
+      Name: "&c&lSiivet"
+      Lore:
+        - "&7Lennä kuin linty ja liidä kuin lepakkox"
+      Booster: "&c&lTehostin"
+      Booster_Lore:
+        - "&7Tehosta lentoasi"
+    Jumpper: "&c&lJänis"
+    Jumpper_Lore:
+      - "&7Jänis roolipeli."
+  JoinItems:
+    ParticleSelector: "&4&lHiukkaset"
+    ParticleSelector_Lore:
+      - "&7Valitse hienoja hiukkasia!"
+    GadgetSelector: "&4&lHilavitkuttimet"
+    GadgetSelector_Lore:
+      - "&7Valitse hienoja leluja"
+    ServerSelector: "&4&lPelimuodot"
+    ServerSelector_Lore:
+      - "&7Mitäs tänään pelattaisiin?"
+    InfoBook: "&4&lTietokirja"
+    InfoBook_Lore:
+      - "&7Kaikki tieto mitä voit tarvita!"

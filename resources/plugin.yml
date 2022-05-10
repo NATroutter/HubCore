@@ -3,8 +3,9 @@ name: HubCore
 version: ${project.version}
 author: NATroutter
 description: ${project.description}
-api-version: 1.17
+api-version: 1.18
 website: ${project.url}
+depend: [NATLibs]
 softdepend:
   - PlaceholderAPI
   - Citizens

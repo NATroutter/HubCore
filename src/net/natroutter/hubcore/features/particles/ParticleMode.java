@@ -1,7 +1,8 @@
 package net.natroutter.hubcore.features.particles;
 
 import net.natroutter.hubcore.HubCore;
-import net.natroutter.hubcore.utilities.Lang;
+import net.natroutter.hubcore.files.Translations;
+import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 
 public enum ParticleMode {
     TAIL,
@@ -14,12 +15,10 @@ public enum ParticleMode {
         };
     }
 
-    private static final Lang lang = HubCore.getLang();
-
-    public String langName() {
+    public String langName(LangManager lang) {
         return switch (this) {
-            case TAIL -> lang.Guis.particles.particles.Tail;
-            case CLOUD -> lang.Guis.particles.particles.Cloud;
+            case TAIL -> lang.get(Translations.Guis_Particles_Particles_Tail);
+            case CLOUD -> lang.get(Translations.Guis_Particles_Particles_Cloud);
         };
     }
 

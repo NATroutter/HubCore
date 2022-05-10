@@ -1,46 +1,47 @@
 package net.natroutter.hubcore.features;
 
-import net.natroutter.hubcore.HubCore;
-import net.natroutter.hubcore.utilities.Config;
-import net.natroutter.hubcore.utilities.Config.SelectorItem;
+import net.natroutter.hubcore.Handler;
+import net.natroutter.hubcore.files.Config;
+import net.natroutter.hubcore.files.Config.SelectorItem;
+import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.utilities.Items;
+import net.natroutter.hubcore.utilities.ServerSwitcher;
+import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import net.natroutter.natlibs.handlers.gui.GUIItem;
+import net.natroutter.natlibs.handlers.gui.GUIRow;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
-import net.natroutter.natlibs.handlers.gui.GUIWindow.Rows;
-import net.natroutter.natlibs.utilities.Bungeecord.BungeeHandler;
-import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.entity.Player;
 
 public class ServerSelector {
 
-	private static final Config cfg = HubCore.getCfg();
-	private static final BungeeHandler bungee = HubCore.getBungee();
-	
-	private static final GUIWindow gui = new GUIWindow(cfg.serverSelector.Title, Rows.row6, true);
+	private Config config;
+	private Items items;
+	private ServerSwitcher serverSwitcher;
+	public ServerSelector(Handler handler) {
+		this.config = handler.getConfig();
+		this.items = handler.getItems();
+		this.serverSwitcher = handler.getServerSwitcher();
+	}
 
-	public static void show(Player p) {
+	public void show(Player p) {
 		SelectorGUI(p).show(p);
 	}
 		
 	
-	private static GUIWindow SelectorGUI(Player p) {
-		for(SelectorItem item : cfg.serverSelector.SelectorItems) {
-			
-			gui.setItem(new GUIItem(Items.ServerIcon(item.Material, item.Name), (e)-> Connect(p, item.Server)), item.Row, item.Slot);
-
+	private GUIWindow SelectorGUI(Player p) {
+		GUIWindow gui = new GUIWindow(config.serverSelector.Title, config.serverSelector.GuiSize, true);
+		for(SelectorItem item : config.serverSelector.SelectorItems) {
+			if (item.Server == null || item.Material == null || item.Name == null || item.Row == null || item.Slot == null || item.Lore == null) {
+				continue;
+			}
+			gui.setItem(new GUIItem(items.ServerIcon(item.Material, item.Name), (e)-> {
+				if (!(e.getWhoClicked() instanceof Player clicker)) {return;}
+				serverSwitcher.switchServer(clicker, item.Server);
+			}), item.Row, item.Slot);
 		}
 		return gui;
 	}
-	
-	private static void Connect(Player p, String serverName) {
-		if (HubCore.getServerSwitchCommand().length() > 0) {
-			StringHandler cmd = new StringHandler(HubCore.getServerSwitchCommand());
-			cmd.replaceAll("%server%", serverName);
-			p.chat(cmd.build());
-			return;
-		}
-		bungee.switchServer(p, serverName);
-	}
+
 
 
 }

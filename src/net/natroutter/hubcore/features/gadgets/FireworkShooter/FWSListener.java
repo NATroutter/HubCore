@@ -1,5 +1,6 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
@@ -14,8 +15,13 @@ import org.bukkit.util.Vector;
 
 public class FWSListener implements Listener {
 
-    private PlayerDataHandler pdh = HubCore.getDataHandler();
-    private Hooks hooks = HubCore.getHooks();
+    private PlayerDataHandler pdh ;
+    private Hooks hooks;
+
+    public FWSListener(Handler handler) {
+        this.pdh = handler.getDataHandler();
+        this.hooks = handler.getHooks();
+    }
 
     @EventHandler
     public void noHit(ProjectileHitEvent e) {

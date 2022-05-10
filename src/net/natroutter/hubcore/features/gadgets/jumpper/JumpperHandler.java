@@ -6,7 +6,9 @@ import org.bukkit.util.Vector;
 
 public class JumpperHandler {
 
-	public static void jump(Player p) {
+	public JumpperHandler(){}
+
+	public void jump(Player p) {
 		
 		if (p.isOnGround()) {
 			Vector ogVec = p.getLocation().getDirection();

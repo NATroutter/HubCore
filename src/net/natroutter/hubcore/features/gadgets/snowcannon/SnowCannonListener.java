@@ -1,5 +1,6 @@
 package net.natroutter.hubcore.features.gadgets.snowcannon;
 
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
@@ -23,9 +24,19 @@ import net.natroutter.natlibs.utilities.Utilities;
 
 public class SnowCannonListener implements Listener {
 	
-	private static final Utilities utils = HubCore.getUtilities();
-	private PlayerDataHandler pdh = HubCore.getDataHandler();
-	private Hooks hooks = HubCore.getHooks();
+	private Utilities utilities;
+	private PlayerDataHandler pdh;
+	private Hooks hooks;
+	private AdminModeHandler adminModeHandler;
+	private SnowCannonHandler snowCannonHandler;
+
+	public SnowCannonListener(Handler handler) {
+		this.utilities = handler.getUtilities();
+		this.pdh = handler.getDataHandler();
+		this.hooks = handler.getHooks();
+		this.adminModeHandler = handler.getAdminModeHandler();
+		this.snowCannonHandler = handler.getSnowCannonHandler();
+	}
 
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent e) {
@@ -37,13 +48,13 @@ public class SnowCannonListener implements Listener {
 
 		if (proj.getCustomName() == null) {return;}
 
-		if (proj.getCustomName().equals(SnowCannonHandler.ProjectileName)) {
+		if (proj.getCustomName().equals(snowCannonHandler.ProjectileName)) {
 			Entity ent = e.getHitEntity();
 			
 			if (ent instanceof Player p) {
 				p.playSound(p.getLocation(), Sound.BLOCK_SNOW_HIT, 1f, 0.5f);
 				
-				if (AdminModeHandler.isAdmin(p)) {return;}
+				if (adminModeHandler.isAdmin(p)) {return;}
 
 				if (proj.getShooter() instanceof Player shooter) {
 					if (shooter.getUniqueId().equals(p.getUniqueId())) {
@@ -56,7 +67,7 @@ public class SnowCannonListener implements Listener {
 
 				if (p.getActivePotionEffects().size() > 0) {
 					for (PotionEffect pot : p.getActivePotionEffects()) {
-						Integer dura = SnowCannonHandler.newDuration(pot.getDuration());
+						Integer dura = snowCannonHandler.newDuration(pot.getDuration());
 						
 						if (pot.getType().equals(PotionEffectType.SLOW)) {
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, dura, 2), false);
@@ -90,7 +101,7 @@ public class SnowCannonListener implements Listener {
 	public void onDamage(EntityDamageByEntityEvent e) {
 		if (e.getDamager() instanceof Snowball ball) {
 			if (ball.getCustomName() == null) { return; }
-			if (ball.getCustomName().equals(SnowCannonHandler.ProjectileName)) {
+			if (ball.getCustomName().equals(snowCannonHandler.ProjectileName)) {
 				e.setCancelled(true);
 			}
 		}
@@ -101,7 +112,7 @@ public class SnowCannonListener implements Listener {
 		Player p = e.getPlayer();
 		if (p.hasPotionEffect(PotionEffectType.SLOW) && p.hasPotionEffect(PotionEffectType.SLOW_FALLING) && p.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
 			
-			Integer toGround = utils.distanceToGround(p.getLocation());
+			Integer toGround = utilities.distanceToGround(p.getLocation());
 			
 			p.setVelocity(p.getVelocity().add(new Vector(0, -Math.abs((toGround*2) + 5), 0)));
 		}

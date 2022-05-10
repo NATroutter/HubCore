@@ -1,7 +1,6 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
-import net.natroutter.hubcore.HubCore;
-import net.natroutter.hubcore.features.gadgets.FireworkShooter.guis.SettingsGUI;
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.utilities.Utils;
@@ -16,12 +15,19 @@ import java.util.UUID;
 
 public class FWSHandler {
 
-    public static HashMap<UUID, Long> cooldown = new HashMap<>();
+    public HashMap<UUID, FColorType> colortype = new HashMap<>();
+    public HashMap<UUID, Long> cooldown = new HashMap<>();
     private static int cooldownTime = 2;
 
-    private static final PlayerDataHandler pdh = HubCore.getDataHandler();
+    private PlayerDataHandler pdh;
+    private Utils utils;
 
-    public static void shoot(Player p) {
+    public FWSHandler(Handler handler) {
+        this.pdh = handler.getDataHandler();
+        this.utils = handler.getUtils();
+    }
+
+    public void shoot(Player p) {
 
         if(cooldown.containsKey(p.getUniqueId())) {
             long cooldownLeft = ((cooldown.get(p.getUniqueId())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
@@ -31,7 +37,7 @@ public class FWSHandler {
         }
         cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 
-        Utils.soundInRadius(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 30);
+        utils.soundInRadius(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 30);
 
         Location loc = p.getEyeLocation();
         Firework firework = p.getWorld().spawn(loc, Firework.class);
@@ -57,7 +63,7 @@ public class FWSHandler {
 
     }
 
-    private static FireworkEffect.Builder getEffect(Player p) {
+    private FireworkEffect.Builder getEffect(Player p) {
         PlayerData data = pdh.get(p.getUniqueId());
         if (data != null) {
 
@@ -81,11 +87,5 @@ public class FWSHandler {
         }
         return null;
     }
-
-    public static void showGUI(Player p) {
-        PlayerData data = pdh.get(p.getUniqueId());
-        SettingsGUI.show(p);
-    }
-
 
 }

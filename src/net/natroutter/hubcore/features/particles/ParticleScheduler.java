@@ -1,8 +1,10 @@
 package net.natroutter.hubcore.features.particles;
 
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
+import net.natroutter.natlibs.handlers.ParticleSpawner;
 import net.natroutter.natlibs.objects.ParticleSettings;
 import net.natroutter.natlibs.utilities.Utilities;
 import org.bukkit.*;
@@ -15,24 +17,26 @@ import java.util.UUID;
 
 public class ParticleScheduler {
 
-    private static final PlayerDataHandler pdh = HubCore.getDataHandler();
-
-    private JavaPlugin plugin;
+    private Handler handler;
     private Utilities utils;
+    private PlayerDataHandler pdh;
     private int task;
+    private ParticleSpawner spawner;
 
     private int red = 255;
     private int green = 0;
     private int blue = 0;
 
-    public ParticleScheduler(JavaPlugin plugin, Utilities utils) {
-        this.plugin = plugin;
-        this.utils = utils;
+    public ParticleScheduler(Handler handler) {
+        this.handler = handler;
+        this.utils = handler.getUtilities();
+        this.pdh = handler.getDataHandler();
+        this.spawner = handler.getSpawner();
         init();
     }
 
-    protected static ArrayList<UUID> disableParticle = new ArrayList<>();
-    public static void disableParticle(Player p, boolean status) {
+    protected ArrayList<UUID> disableParticle = new ArrayList<>();
+    public void disableParticle(Player p, boolean status) {
         if (status) {
             if (!disableParticle.contains(p.getUniqueId())) {
                 disableParticle.add(p.getUniqueId());
@@ -51,7 +55,7 @@ public class ParticleScheduler {
     }
 
     private void init() {
-        task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ()-> {
+        task = Bukkit.getScheduler().scheduleSyncRepeatingTask(handler.getInstance(), ()-> {
             if(red > 0 && blue == 0){
                 red--;
                 green++;
@@ -92,7 +96,7 @@ public class ParticleScheduler {
                 if (type.equals(ParticleTypes.RAINBOWDUST)) {
                     spawnDust(p, set);
                 } else {
-                    utils.spawnParticleWorld(set);
+                    spawner.spawnParticleWorld(set);
                 }
             }
         }, 0, 2);

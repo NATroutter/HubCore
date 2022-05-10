@@ -1,0 +1,181 @@
+Prefix: "&4&lHubCore &8&l» "
+NoPerm: "&7You dont have permissions to do that!"
+TooManyArguments: "&7Too many command arguments!"
+OnlyIngame: "&7This Command can only be executed ingame!"
+AdminModeToggle: "&7AdminMode: &c{state}"
+AdminModeToggleOther: "&c{name}&7's AdminMode: &c{state}"
+OnbackPack: "&7You are now in the backpack of player &c{name}"
+inYourBackpack: "&c{name} &7is now in your backpack"
+GadgetEffective: "&7Gadgets effect you: &c{state}"
+CantBackpack: "&7you cant go to &c{name}&7's backpack"
+NoCarryToggle: "&7Player carry: &c{state}"
+Unknown: Unknown
+TargetNotFound: "&7Target not found!"
+WelcomeMotd:
+  - " "
+  - "&8&l&m━━━━━━━━━━━━&8&l|&4&l Welcome &8&l|&m━━━━━━━━━━━━"
+  - " "
+  - "&7Welcome to server!"
+  - " "
+  - "&8&l&m━━━━━━━━━━━━&8&l|&4&l Welcome &8&l|&m━━━━━━━━━━━━"
+  - " "
+Info:
+  - " "
+  - "&8&l&m━━━━━━━━━━━━&8&l|&4&l Info &8&l|&m━━━━━━━━━━━━"
+  - " "
+  - "&7info text here!"
+  - " "
+  - "&8&l&m━━━━━━━━━━━━&8&l|&4&l Info &8&l|&m━━━━━━━━━━━━"
+  - " "
+Gadgets:
+  BoomBox:
+    NoteNotSelected: "&7You need to select note first, (Tip: ShiftClick)"
+ToggleStates:
+  'on': Enabled
+  'off': Disabled
+Guis:
+  Gadgets:
+    Title: "&4&lGadgets"
+    BoomBox:
+      Title: "&4&lBoomBox"
+      Bass: "&c&lBass"
+      SnareDrum: "&c&lSnare Drum"
+      Hat: "&c&lHat"
+      BassDrum: "&c&lBass Drum"
+      Bells: "&c&lBells"
+      Flute: "&c&lFlute"
+      Chimes: "&c&lChimes"
+      Guitar: "&c&lGuitar"
+      Xylophone: "&c&lXylophone"
+      Vibraphone: "&c&lVibraphone"
+      CowBell: "&c&lCow Bell"
+      Didgeridoo: "&c&lDidgeridoo"
+      SquareWave: "&c&lSquare wave"
+      Banjo: "&c&lBanjo"
+      ElectricPiano: "&c&lElectric piano"
+      Harp: "&c&lHarp"
+    Fireworks:
+      Title: "&4&lFireworks settings"
+      ColorsTitle: "&4&lFirework color"
+      CustomColorTitle: "&4&lCustom firework color"
+      Color: "&cColor"
+      FadeColor: "&cFade Color"
+      CurrentColor: "&cCurrent Color"
+      Back: "&cBack"
+      CustomColor: "&cCustom color"
+      ColorUp: "&cColor up"
+      ColorDown: "&cColor down"
+      Red: "&c&l{value}"
+      Green: "&a&l{value}"
+      Blue: "&9&l{value}"
+      CurrentSetting: "&cCurrent settings"
+      CurrentSetting_Lore:
+        - "&7Shape: &c{shape}"
+        - "&7Color: &c{color}"
+        - "&7Fade Color: &c{fadecolor}"
+        - "&7Twinkle: &c{twinkle}"
+        - "&7Trail: &c{trail}"
+      SaveSettings: "&cSave Settings"
+      Colors:
+        DarkRed: "&4Dark red"
+        Red: "&cRed"
+        Gold: "&6Gold"
+        Yellow: "&2Yellow"
+        DarkGreen: "&2Dark Green"
+        Green: "&aGreen"
+        Aqua: "&bAqua"
+        DarkAqua: "&3Dark Aqua"
+        DarkBlue: "&1Dark Blue"
+        Blue: "&9Blue"
+        LightPurple: "&dLight Purple"
+        DarkPurple: "&5Dark Purple"
+        White: "&fWhite"
+        Gray: "&7Gray"
+        DarkGray: "&8Dark Gray"
+        Black: "&0Black"
+        Custom: "&8(&c{r}&7, &c{g}&7, &c{b}&8)"
+      Additives:
+        Trail: "&cToggle trail"
+        Twinkle: "&cToggle twinkle"
+      Shapes:
+        SmallBall: "&cSmallBall"
+        LargeBall: "&cLargeBall"
+        Star: "&cStar"
+        Creeper: "&cCreeper"
+        Burst: "&cBurst"
+  Particles:
+    Title: "&4&lParticle Selector"
+    Particles:
+      Tail: Tail
+      Cloud: Cloud
+    ParticleMode: "&cParticleMode"
+    ParticleMode_Lore:
+      - "&7Click here to change particle mode"
+      - " "
+      - "&7Current mode: &c{status}"
+    Disabled: "&cDisabled"
+    Disabled_Lore:
+      - "&7Click here to disable current particle effects"
+    Effect_Lore:
+      - "&7Need to unlock: &c{need}"
+    Witch: "&cWitch"
+    Totem: "&cTotem"
+    Ink: "&cInk"
+    Soulflame: "&cSoulflame"
+    Cloud: "&cCloud"
+    Soul: "&cSoul"
+    Notes: "&cNotes"
+    Conduit: "&cConduit"
+    Lava: "&cLava"
+    Hearts: "&cHearts"
+    Happy: "&cHappy"
+    Angry: "&cAngry"
+    Enchanthit: "&cEnchanted hit"
+    Endrod: "&cEndrod"
+    Enchanting: "&cEnchanting"
+    RainbowDust: "&cRainbowdust"
+    DragonBreath: "&cDragonsbreath"
+    Critical: "&cCritical"
+    Damage: "&cDamage"
+    Smoke: "&cSmoke"
+    Sneeze: "&cSneeze"
+Items:
+  Gadgets:
+    Unlock_Lore:
+      - " "
+      - "&7Need to unlock: &c{need}"
+    FireWorkShooter: "&c&lFireworkShooter"
+    FireWorkShooter_Lore:
+      - "&7Shoots fireworks"
+    Slapper: "&c&lSlapper"
+    Slapper_Lore:
+      - "&7Slap other players!"
+    BoomBox: "&c&lBoomBox"
+    BoomBox_Lore:
+      - "&7Throw a pary anywhere any time!"
+    SnowCannon: "&c&lSnowCannon"
+    SnowCannon_Lore:
+      - "&7Shoot snow like nobodies business!"
+    Wings:
+      Name: "&c&lWings"
+      Lore:
+        - "&7Keeps you in the air, DONT REMOVE!"
+      Booster: "&c&lBooster"
+      Booster_Lore:
+        - "&7Boost your flight!"
+    Jumpper: "&c&lJumpper"
+    Jumpper_Lore:
+      - "&7Jump like a rabbit"
+  JoinItems:
+    ParticleSelector: "&4&lParticleSelector"
+    ParticleSelector_Lore:
+      - "&7Select your fansy particles!"
+    GadgetSelector: "&4&lGadgetSelector"
+    GadgetSelector_Lore:
+      - "&7Select your weird and wacky Gadget"
+    ServerSelector: "&4&lServerSelector"
+    ServerSelector_Lore:
+      - "&7Select what you want to play!"
+    InfoBook: "&4&lInfoBook"
+    InfoBook_Lore:
+      - "&7Server information!"

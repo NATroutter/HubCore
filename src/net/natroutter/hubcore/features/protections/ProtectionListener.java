@@ -1,7 +1,9 @@
 package net.natroutter.hubcore.features.protections;
 
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
-import net.natroutter.hubcore.utilities.Config;
+import net.natroutter.hubcore.files.Config;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,11 +18,21 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import net.natroutter.hubcore.handlers.AdminModeHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
-public class Protection implements Listener {
+public class ProtectionListener implements Listener {
 
-private final Config config = HubCore.getCfg();
+
+	private Config config;
+	private AdminModeHandler adminModeHandler;
+	private ProtectionHandler protectionHandler;
+	public ProtectionListener(Handler handler) {
+		this.config = handler.getConfig();
+		this.adminModeHandler = handler.getAdminModeHandler();
+		this.protectionHandler = handler.getProtectionHandler();
+	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onRedstoneActive(BlockRedstoneEvent e) {
@@ -31,8 +43,15 @@ private final Config config = HubCore.getCfg();
 
 	//Disable block physics
 
+	private boolean excluded(String name) {
+		return name.endsWith("_STAIRS") || name.endsWith("_FENCE") || name.endsWith("_FENCE_GATE") || name.endsWith("_DOOR") || name.endsWith("GLASS_PANE");
+	}
+
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysic(BlockPhysicsEvent e) {
+		String name =e.getBlock().getType().name();
+		if (excluded(name)) {return;}
+		if (protectionHandler.disabledMaterials.contains(e.getBlock().getType())) {return;}
 		if (config.DisablePhysics) {
 			e.setCancelled(true);
 		}
@@ -40,6 +59,9 @@ private final Config config = HubCore.getCfg();
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysic(BlockFormEvent e) {
+		String name =e.getBlock().getType().name();
+		if (excluded(name)) {return;}
+		if (protectionHandler.disabledMaterials.contains(e.getBlock().getType())) {return;}
 		if (config.DisablePhysics) {
 			e.setCancelled(true);
 		}
@@ -47,6 +69,9 @@ private final Config config = HubCore.getCfg();
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysic(BlockFromToEvent e) {
+		String name =e.getBlock().getType().name();
+		if (excluded(name)) {return;}
+		if (protectionHandler.disabledMaterials.contains(e.getBlock().getType())) {return;}
 		if (config.DisablePhysics) {
 			e.setCancelled(true);
 		}
@@ -54,8 +79,12 @@ private final Config config = HubCore.getCfg();
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPhysic(EntityChangeBlockEvent e) {
+		String name =e.getBlock().getType().name();
+		if (excluded(name)) {return;}
+		if (protectionHandler.disabledMaterials.contains(e.getBlock().getType())) {return;}
+
 		if (e.getEntity() instanceof Player p) {
-			if (bypassProtection.contains(p.getUniqueId())) {return;}
+			if (protectionHandler.bypassProtection.contains(p.getUniqueId())) {return;}
 		}
 
 		if (config.DisablePhysics) {
@@ -63,13 +92,19 @@ private final Config config = HubCore.getCfg();
 		}
 	}
 
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onBlockExplode(BlockExplodeEvent e) {
+		if (config.DisablePhysics) {
+			e.setCancelled(true);
+		}
+	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPlace(BlockPlaceEvent e) {
 		Player p = e.getPlayer();
-		if (bypassProtection.contains(p.getUniqueId())) {return;}
+		if (protectionHandler.bypassProtection.contains(p.getUniqueId())) {return;}
 
-		if (!AdminModeHandler.isAdmin(p)) {
+		if (!adminModeHandler.isAdmin(p)) {
 			e.setCancelled(true);
 		}
 	}
@@ -77,21 +112,10 @@ private final Config config = HubCore.getCfg();
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockBreak(BlockBreakEvent e) {
 		Player p = e.getPlayer();
-		if (bypassProtection.contains(p.getUniqueId())) {return;}
+		if (protectionHandler.bypassProtection.contains(p.getUniqueId())) {return;}
 
-		if (!AdminModeHandler.isAdmin(p)) {
+		if (!adminModeHandler.isAdmin(p)) {
 			e.setCancelled(true);
-		}
-	}
-
-	protected static ArrayList<UUID> bypassProtection = new ArrayList<>();
-	public static void bypass(Player p, boolean status) {
-		if (status) {
-			if (!bypassProtection.contains(p.getUniqueId())) {
-				bypassProtection.add(p.getUniqueId());
-			}
-		} else {
-			bypassProtection.remove(p.getUniqueId());
 		}
 	}
 
@@ -99,7 +123,7 @@ private final Config config = HubCore.getCfg();
 	public void onPvP(EntityDamageByEntityEvent e) {
 		if (!(e.getDamager() instanceof Player attacker)) {return;}
 		if (!(e.getEntity() instanceof Player victim)) {return;}
-		if (bypassProtection.contains(victim.getUniqueId()) && bypassProtection.contains(attacker.getUniqueId())) {
+		if (protectionHandler.bypassProtection.contains(victim.getUniqueId()) && protectionHandler.bypassProtection.contains(attacker.getUniqueId())) {
 			return;
 		}
 		e.setCancelled(true);
@@ -108,9 +132,9 @@ private final Config config = HubCore.getCfg();
 	@EventHandler
 	public void onDamageEntity(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player p) {
-			if (bypassProtection.contains(p.getUniqueId())) {return;}
+			if (protectionHandler.bypassProtection.contains(p.getUniqueId())) {return;}
 
-			if (!AdminModeHandler.isAdmin(p)) {
+			if (!adminModeHandler.isAdmin(p)) {
 				e.setCancelled(true);
 			}
 		}
@@ -118,15 +142,15 @@ private final Config config = HubCore.getCfg();
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
-		if (bypassProtection.contains(e.getPlayer().getUniqueId())) {return;}
-		if (e.hasBlock()) {
+		if (protectionHandler.bypassProtection.contains(e.getPlayer().getUniqueId())) {return;}
+		if (e.hasBlock() && e.getClickedBlock() != null) {
 			Player p = e.getPlayer();
 			Block block = e.getClickedBlock();
 			String type = block.getType().name();
 
 
 			if (!(type.endsWith("BUTTON") || type.endsWith("PRESSURE_PLATE") || type.endsWith("LEVER"))) {
-				if (!AdminModeHandler.isAdmin(p)) {
+				if (!adminModeHandler.isAdmin(p)) {
 					e.setCancelled(true);
 				}
 			}

@@ -3,8 +3,9 @@ package net.natroutter.hubcore.features.gadgets;
 import net.natroutter.betterparkour.BetterParkour;
 import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.betterparkour.handlers.ParkourHandler;
-import net.natroutter.hubcore.HubCore;
+import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.FWSHandler;
+import net.natroutter.hubcore.features.gadgets.FireworkShooter.guis.FireworkGUI;
 import net.natroutter.hubcore.handlers.Hooks;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -22,15 +23,38 @@ import net.natroutter.hubcore.features.gadgets.snowcannon.SnowCannonHandler;
 import net.natroutter.hubcore.features.gadgets.wings.WingsHandler;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.natlibs.objects.BaseItem;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 import java.util.UUID;
 
 public class GadgetListener implements Listener {
 
-	private Hooks hooks = HubCore.getHooks();
+	public HashMap<UUID, Long> cooldown = new HashMap<>();
 
-	public static HashMap<UUID, Long> cooldown = new HashMap<>();
+	private Hooks hooks;
+	private GadgetHandler gadgetHandler;
+	private Items items;
+	private SlapperHandler slapperHandler;
+	private MusicGUI musicGUI;
+	private WingsHandler wingsHandler;
+	private SnowCannonHandler snowCannonHandler;
+	private JumpperHandler jumpperHandler;
+	private FWSHandler fwsHandler;
+	private FireworkGUI fireworkGUI;
+
+	public GadgetListener(Handler handler) {
+		this.hooks = handler.getHooks();
+		this.gadgetHandler = handler.getGadgetHandler();
+		this.items = handler.getItems();
+		this.slapperHandler = handler.getSlapperHandler();
+		this.musicGUI = handler.getMusicGUI();
+		this.wingsHandler = handler.getWingsHandler();
+		this.snowCannonHandler = handler.getSnowCannonHandler();
+		this.jumpperHandler = handler.getJumpperHandler();
+		this.fwsHandler = handler.getFwsHandler();
+		this.fireworkGUI = handler.getFireworkGUI();
+	}
 
 	public boolean onCooldown(Player p , int time) {
 		if(cooldown.containsKey(p.getUniqueId())) {
@@ -43,6 +67,10 @@ public class GadgetListener implements Listener {
 		return false;
 	}
 
+	@EventHandler
+	public void onLeave(PlayerQuitEvent e) {
+		cooldown.remove(e.getPlayer().getUniqueId());
+	}
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
@@ -52,7 +80,7 @@ public class GadgetListener implements Listener {
 		BaseItem item = BaseItem.from(e.getItem());
 		Action act = e.getAction();
 
-		if (GadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
+		if (gadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
 
 		if (hooks.getBetterParkour().isHooked()) {
 			ParkourAPI api = BetterParkour.getAPI();
@@ -64,33 +92,33 @@ public class GadgetListener implements Listener {
 
 		if (act.equals(Action.RIGHT_CLICK_AIR) || act.equals(Action.RIGHT_CLICK_BLOCK)) {
 
-			if (item.isSimilar(Items.Gadgets.BoomBox()) && p.isSneaking()) {
+			if (item.isSimilar(items.gadged_BoomBox()) && p.isSneaking()) {
 				if (onCooldown(p, 1)) {return;}
 				e.setCancelled(true);
-				MusicGUI.show(p);
+				musicGUI.show(p);
 				
-			} else if (item.isSimilar(Items.Gadgets.Wings.Booster())) {
+			} else if (item.isSimilar(items.gadged_Booster())) {
 				e.setCancelled(true);
-				WingsHandler.boost(p);
+				wingsHandler.boost(p);
 				
-			} else if (item.isSimilar(Items.Gadgets.SnowCannon())) {
+			} else if (item.isSimilar(items.gadged_SnowCannon())) {
 				e.setCancelled(true);
-				SnowCannonHandler.shoot(p);
+				snowCannonHandler.shoot(p);
 
-			} else if (item.isSimilar(Items.Gadgets.Jumpper())) {
+			} else if (item.isSimilar(items.gadged_Jumpper())) {
 				e.setCancelled(true);
-				JumpperHandler.jump(p);
+				jumpperHandler.jump(p);
 				
-			} else if (item.isSimilar(Items.Gadgets.FireworkShooter())) {
+			} else if (item.isSimilar(items.gadged_FireworkShooter())) {
 				if (onCooldown(p, 1)) {return;}
 				e.setCancelled(true);
-				FWSHandler.shoot(p);
+				fwsHandler.shoot(p);
 
 			}
 		} else if (act.equals(Action.LEFT_CLICK_AIR) || act.equals(Action.LEFT_CLICK_BLOCK)) {
-			if (item.isSimilar(Items.Gadgets.FireworkShooter())) {
+			if (item.isSimilar(items.gadged_FireworkShooter())) {
 				e.setCancelled(true);
-				FWSHandler.showGUI(p);
+				fireworkGUI.showSettingsGUI(p);
 
 			}
 		}
@@ -101,7 +129,7 @@ public class GadgetListener implements Listener {
 		Player p = e.getPlayer();
 		Entity ent = e.getRightClicked();
 
-		if (GadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
+		if (gadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
 
 		if (ent.hasMetadata("NPC")) {return;}
 
@@ -119,10 +147,10 @@ public class GadgetListener implements Listener {
 					}
 				}
 
-        		if (item.isSimilar(Items.Gadgets.Slapper())) {
+        		if (item.isSimilar(items.gadged_Slapper())) {
         			e.setCancelled(true);
 					if (onCooldown(p, 5)) {return;}
-        			SlapperHandler.slap(p, target);
+					slapperHandler.slap(p, target);
         		}
         	}
         	
