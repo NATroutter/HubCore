@@ -1,5 +1,7 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
+import net.natroutter.betterparkour.BetterParkour;
+import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
@@ -30,6 +32,14 @@ public class FWSListener implements Listener {
         if (!(e.getEntity().getShooter() instanceof Player shooter)) {return;}
 
         if (e.getHitEntity().hasMetadata("NPC")) {return;}
+
+        if (hooks.getBetterParkour().isHooked()) {
+            ParkourAPI api = BetterParkour.getAPI();
+            if (api.getParkourHandler().inCourse(victim)) {
+                e.setCancelled(true);
+                return;
+            }
+        }
 
         PlayerData data = pdh.get(victim.getUniqueId());
         if (data.getNoEffect()) {return;}

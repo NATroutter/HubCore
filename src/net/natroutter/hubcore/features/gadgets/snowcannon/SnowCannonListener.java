@@ -1,5 +1,7 @@
 package net.natroutter.hubcore.features.gadgets.snowcannon;
 
+import net.natroutter.betterparkour.BetterParkour;
+import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
@@ -52,6 +54,14 @@ public class SnowCannonListener implements Listener {
 			Entity ent = e.getHitEntity();
 			
 			if (ent instanceof Player p) {
+				if (hooks.getBetterParkour().isHooked()) {
+					ParkourAPI api = BetterParkour.getAPI();
+					if (api.getParkourHandler().inCourse(p)) {
+						e.setCancelled(true);
+						return;
+					}
+				}
+
 				p.playSound(p.getLocation(), Sound.BLOCK_SNOW_HIT, 1f, 0.5f);
 				
 				if (adminModeHandler.isAdmin(p)) {return;}

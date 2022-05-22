@@ -63,13 +63,6 @@ public class PlayerCarryListener implements Listener {
             }
             if (e.getRightClicked().hasMetadata("NPC")) {return;}
 
-            if (hooks.getBetterParkour().isHooked()) {
-                ParkourAPI api = BetterParkour.getAPI();
-                if (api.getParkourHandler().inCourse(p)) {
-                    e.setCancelled(true);
-                    return;
-                }
-            }
 
             for (Entity pas : p.getPassengers()) {
                 if (pas.getUniqueId().equals(ride.getUniqueId())) {
@@ -106,6 +99,15 @@ public class PlayerCarryListener implements Listener {
                     ride = (Player) ride.getPassengers().get(0);
                 }
             }
+
+            if (hooks.getBetterParkour().isHooked()) {
+                ParkourAPI api = BetterParkour.getAPI();
+                if (api.getParkourHandler().inCourse(p) || api.getParkourHandler().inCourse(ride)) {
+                    e.setCancelled(true);
+                    return;
+                }
+            }
+
             ride.addPassenger(p);
 
             StringHandler msg1 = new StringHandler(lang.get(Translations.inYourBackpack)).setPrefix(lang.get(Translations.Prefix));
