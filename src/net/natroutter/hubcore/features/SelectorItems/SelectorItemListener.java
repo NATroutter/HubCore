@@ -7,7 +7,7 @@ import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.particles.ParticleGUI;
 import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Hooks;
-import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
+import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

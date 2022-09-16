@@ -2,8 +2,8 @@ package net.natroutter.hubcore.features.gadgets.boombox;
 
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.files.Translations;
-import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import net.natroutter.natlibs.handlers.gui.GUIRow;
+import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 

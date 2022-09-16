@@ -6,7 +6,6 @@ import net.natroutter.hubcore.files.Config.SelectorItem;
 import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.utilities.Items;
 import net.natroutter.hubcore.utilities.ServerSwitcher;
-import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import net.natroutter.natlibs.handlers.gui.GUIItem;
 import net.natroutter.natlibs.handlers.gui.GUIRow;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;

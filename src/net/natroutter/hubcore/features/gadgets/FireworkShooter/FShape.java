@@ -2,7 +2,7 @@ package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.files.Translations;
-import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
+import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 
 public enum FShape {
 

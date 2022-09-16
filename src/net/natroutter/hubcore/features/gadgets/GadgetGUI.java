@@ -5,10 +5,10 @@ import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.SelectorItems.SelectorItemHandler;
 import net.natroutter.hubcore.files.Config;
 import net.natroutter.hubcore.files.Translations;
-import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import net.natroutter.natlibs.handlers.gui.GUIItem;
 import net.natroutter.natlibs.handlers.gui.GUIRow;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
+import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

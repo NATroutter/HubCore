@@ -7,7 +7,7 @@ import net.natroutter.hubcore.features.particles.ParticleMode;
 import net.natroutter.hubcore.files.Config;
 import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
-import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
+import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;

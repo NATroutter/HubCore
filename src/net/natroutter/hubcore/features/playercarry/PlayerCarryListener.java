@@ -7,7 +7,7 @@ import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.handlers.Hooks;
-import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
+import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

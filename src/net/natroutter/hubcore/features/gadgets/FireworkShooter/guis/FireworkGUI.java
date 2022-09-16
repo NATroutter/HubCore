@@ -6,10 +6,10 @@ import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.handlers.LangHandler.language.LangManager;
 import net.natroutter.natlibs.handlers.gui.GUIItem;
 import net.natroutter.natlibs.handlers.gui.GUIRow;
 import net.natroutter.natlibs.handlers.gui.GUIWindow;
+import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.entity.Player;
 
 public class FireworkGUI {

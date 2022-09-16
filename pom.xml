@@ -6,7 +6,7 @@
 
     <groupId>net.natroutter</groupId>
     <artifactId>hubcore</artifactId>
-    <version>1.8</version>
+    <version>1.9</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>
@@ -130,7 +130,7 @@
         <dependency>
             <groupId>net.natroutter</groupId>
             <artifactId>NATLibs</artifactId>
-            <version>2.0.12</version>
+            <version>2.0.13</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
