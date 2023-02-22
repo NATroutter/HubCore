@@ -1,5 +1,6 @@
 package net.natroutter.hubcore.features.gadgets;
 
+import fi.natroutter.natlibs.objects.BaseItem;
 import net.natroutter.betterparkour.BetterParkour;
 import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.betterparkour.handlers.ParkourHandler;
@@ -22,7 +23,6 @@ import net.natroutter.hubcore.features.gadgets.slapper.SlapperHandler;
 import net.natroutter.hubcore.features.gadgets.snowcannon.SnowCannonHandler;
 import net.natroutter.hubcore.features.gadgets.wings.WingsHandler;
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.objects.BaseItem;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;

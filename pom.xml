@@ -6,7 +6,7 @@
 
     <groupId>net.natroutter</groupId>
     <artifactId>hubcore</artifactId>
-    <version>1.9</version>
+    <version>1.10</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>
@@ -16,7 +16,7 @@
         <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>https://NATroutter.net</url>
+    <url>https://NATroutter.fi</url>
 
     <build>
         <sourceDirectory>src</sourceDirectory>
@@ -128,9 +128,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.natroutter</groupId>
-            <artifactId>NATLibs</artifactId>
-            <version>2.0.13</version>
+            <groupId>fi.natroutter</groupId>
+            <artifactId>natlibs</artifactId>
+            <version>3.0.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

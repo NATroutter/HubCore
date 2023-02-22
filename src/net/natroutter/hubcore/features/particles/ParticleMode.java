@@ -1,8 +1,8 @@
 package net.natroutter.hubcore.features.particles;
 
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.files.Translations;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 
 public enum ParticleMode {
     TAIL,

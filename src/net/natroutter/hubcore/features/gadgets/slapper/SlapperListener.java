@@ -1,12 +1,12 @@
 package net.natroutter.hubcore.features.gadgets.slapper;
 
+import fi.natroutter.natlibs.objects.BaseItem;
 import net.natroutter.hubcore.Handler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.objects.BaseItem;
 
 public class SlapperListener implements Listener {
 

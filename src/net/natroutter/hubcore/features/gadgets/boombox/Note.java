@@ -1,11 +1,10 @@
 package net.natroutter.hubcore.features.gadgets.boombox;
 
+import fi.natroutter.natlibs.objects.BaseItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemFlag;
-
-import net.natroutter.natlibs.objects.BaseItem;
 
 public class Note {
 

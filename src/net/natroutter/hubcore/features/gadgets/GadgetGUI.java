@@ -1,14 +1,15 @@
 package net.natroutter.hubcore.features.gadgets;
 
+import fi.natroutter.natlibs.handlers.gui.GUIItem;
+import fi.natroutter.natlibs.handlers.gui.GUIRow;
+import fi.natroutter.natlibs.handlers.gui.GUIWindow;
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.features.SelectorItems.SelectorItemHandler;
 import net.natroutter.hubcore.files.Config;
 import net.natroutter.hubcore.files.Translations;
-import net.natroutter.natlibs.handlers.gui.GUIItem;
-import net.natroutter.natlibs.handlers.gui.GUIRow;
-import net.natroutter.natlibs.handlers.gui.GUIWindow;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -31,9 +32,11 @@ public class GadgetGUI {
 	public void show(Player p) {
 		GUI(p).show(p);
 	}
-	
+
+	LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
+
 	private GUIWindow GUI(Player p) {
-		GUIWindow gui = new GUIWindow(lang.get(Translations.Guis_Gadgets_Title), GUIRow.row3, true);
+		GUIWindow gui = new GUIWindow(lcs.deserialize(lang.get(Translations.Guis_Gadgets_Title)), GUIRow.row3, true);
 
 		for (Gadget gad : gadgetHandler.gadgets) {
 			gui.setItem(new GUIItem(gad.getIconWithNeed(lang), (e)-> {

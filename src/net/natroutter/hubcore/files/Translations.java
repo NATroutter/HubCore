@@ -1,8 +1,8 @@
 package net.natroutter.hubcore.files;
 
 
-import net.natroutter.natlibs.handlers.langHandler.TranslationTemplate;
-import net.natroutter.natlibs.handlers.langHandler.language.key.TranslationKey;
+import fi.natroutter.natlibs.handlers.langHandler.TranslationTemplate;
+import fi.natroutter.natlibs.handlers.langHandler.language.key.TranslationKey;
 
 public enum Translations implements TranslationTemplate {
     Prefix,

@@ -1,8 +1,8 @@
 package net.natroutter.hubcore.commands;
 
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.files.Translations;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

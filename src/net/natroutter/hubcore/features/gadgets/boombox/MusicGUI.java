@@ -1,18 +1,19 @@
 package net.natroutter.hubcore.features.gadgets.boombox;
 
+import fi.natroutter.natlibs.handlers.gui.GUIItem;
+import fi.natroutter.natlibs.handlers.gui.GUIRow;
+import fi.natroutter.natlibs.handlers.gui.GUIWindow;
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import fi.natroutter.natlibs.objects.BaseItem;
+import fi.natroutter.natlibs.utilities.Utilities;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.files.Translations;
-import net.natroutter.natlibs.handlers.gui.GUIRow;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.handlers.gui.GUIItem;
-import net.natroutter.natlibs.handlers.gui.GUIWindow;
-import net.natroutter.natlibs.objects.BaseItem;
-import net.natroutter.natlibs.utilities.Utilities;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -56,9 +57,10 @@ public class MusicGUI {
 		NoteSelector(p).show(p);
 	}
 		
-	
+	LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
+
 	private GUIWindow NoteSelector(Player p) {
-		GUIWindow gui = new GUIWindow(lang.get(Translations.Guis_Gadgets_BoomBox_Title), GUIRow.row5, true);
+		GUIWindow gui = new GUIWindow(lcs.deserialize(lang.get(Translations.Guis_Gadgets_BoomBox_Title)), GUIRow.row5, true);
 		for (Note note : Notes) {
 			
 			BaseItem item = items.ServerIcon(Material.NOTE_BLOCK, note.getName());

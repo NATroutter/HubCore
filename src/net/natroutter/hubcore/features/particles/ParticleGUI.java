@@ -1,17 +1,18 @@
 package net.natroutter.hubcore.features.particles;
 
+import fi.natroutter.natlibs.handlers.gui.GUIItem;
+import fi.natroutter.natlibs.handlers.gui.GUIRow;
+import fi.natroutter.natlibs.handlers.gui.GUIWindow;
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import fi.natroutter.natlibs.objects.BaseItem;
+import fi.natroutter.natlibs.utilities.StringHandler;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.files.Config;
 import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.handlers.gui.GUIItem;
-import net.natroutter.natlibs.handlers.gui.GUIRow;
-import net.natroutter.natlibs.handlers.gui.GUIWindow;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import net.natroutter.natlibs.objects.BaseItem;
-import net.natroutter.natlibs.utilities.StringHandler;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -36,9 +37,11 @@ public class ParticleGUI {
         this.config = handler.getConfig();
     }
 
+    LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
+
     private GUIWindow getGUI(Player p) {
         if (!GUIS.containsKey(p.getUniqueId())) {
-            GUIS.put(p.getUniqueId(), new GUIWindow(lang.get(Translations.Guis_Particles_Title), GUIRow.row6, true));
+            GUIS.put(p.getUniqueId(), new GUIWindow(lcs.deserialize(lang.get(Translations.Guis_Particles_Title)), GUIRow.row6, true));
         }
         return GUIS.get(p.getUniqueId());
     }

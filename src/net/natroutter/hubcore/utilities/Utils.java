@@ -1,7 +1,7 @@
 package net.natroutter.hubcore.utilities;
 
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import net.natroutter.hubcore.Handler;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;

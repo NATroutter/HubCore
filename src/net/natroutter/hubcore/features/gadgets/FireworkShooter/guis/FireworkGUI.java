@@ -1,15 +1,16 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter.guis;
 
+import fi.natroutter.natlibs.handlers.gui.GUIItem;
+import fi.natroutter.natlibs.handlers.gui.GUIRow;
+import fi.natroutter.natlibs.handlers.gui.GUIWindow;
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.features.gadgets.FireworkShooter.*;
 import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.handlers.gui.GUIItem;
-import net.natroutter.natlibs.handlers.gui.GUIRow;
-import net.natroutter.natlibs.handlers.gui.GUIWindow;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import org.bukkit.entity.Player;
 
 public class FireworkGUI {
@@ -30,8 +31,10 @@ public class FireworkGUI {
         settingsGuiBuilder(p).show(p);
     }
 
+    LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
+
     private GUIWindow settingsGuiBuilder(Player p) {
-        GUIWindow gui = new GUIWindow(lang.get(Translations.Guis_Gadgets_Fireworks_Title), GUIRow.row6, true);
+        GUIWindow gui = new GUIWindow(lcs.deserialize(lang.get(Translations.Guis_Gadgets_Fireworks_Title)), GUIRow.row6, true);
 
         gui.setItem(new GUIItem(items.SmallBall(), (e)->{
             if (!(e.getWhoClicked() instanceof Player t)) {return;}
@@ -134,7 +137,7 @@ public class FireworkGUI {
     }
 
     private GUIWindow colorsGuiBuilder(Player p) {
-        GUIWindow gui = new GUIWindow(lang.get(Translations.Guis_Gadgets_Fireworks_ColorsTitle), GUIRow.row6, true);
+        GUIWindow gui = new GUIWindow(lcs.deserialize(lang.get(Translations.Guis_Gadgets_Fireworks_ColorsTitle)), GUIRow.row6, true);
 
         //Row 1
         gui.setItem(new GUIItem(items.fireworkStar(FColor.DarkRed), (e)->{
@@ -368,7 +371,7 @@ public class FireworkGUI {
     }
 
     private GUIWindow customColorGuiBuilder(Player p) {
-        GUIWindow gui = new GUIWindow(lang.get(Translations.Guis_Gadgets_Fireworks_CustomColorTitle), GUIRow.row3, true);
+        GUIWindow gui = new GUIWindow(lcs.deserialize(lang.get(Translations.Guis_Gadgets_Fireworks_CustomColorTitle)), GUIRow.row3, true);
 
         //back
         gui.setItem(new GUIItem(items.back(), (e)->{

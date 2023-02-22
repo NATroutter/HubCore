@@ -1,12 +1,12 @@
 package net.natroutter.hubcore.features.particles;
 
+import fi.natroutter.natlibs.handlers.ParticleSpawner;
+import fi.natroutter.natlibs.objects.ParticleSettings;
+import fi.natroutter.natlibs.utilities.Utilities;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.handlers.Database.PlayerData;
 import net.natroutter.hubcore.handlers.Database.PlayerDataHandler;
-import net.natroutter.natlibs.handlers.ParticleSpawner;
-import net.natroutter.natlibs.objects.ParticleSettings;
-import net.natroutter.natlibs.utilities.Utilities;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -3,7 +3,7 @@ package net.natroutter.hubcore.files;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.natroutter.natlibs.handlers.gui.GUIRow;
+import fi.natroutter.natlibs.handlers.gui.GUIRow;
 import org.bukkit.Material;
 
 public class Config {

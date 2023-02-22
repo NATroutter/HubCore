@@ -1,5 +1,7 @@
 package net.natroutter.hubcore.features.gadgets.snowcannon;
 
+import fi.natroutter.natlibs.events.PlayerJumpEvent;
+import fi.natroutter.natlibs.utilities.Utilities;
 import net.natroutter.betterparkour.BetterParkour;
 import net.natroutter.betterparkour.ParkourAPI;
 import net.natroutter.hubcore.Handler;
@@ -21,8 +23,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import net.natroutter.hubcore.handlers.AdminModeHandler;
-import net.natroutter.natlibs.events.PlayerJumpEvent;
-import net.natroutter.natlibs.utilities.Utilities;
 
 public class SnowCannonListener implements Listener {
 	

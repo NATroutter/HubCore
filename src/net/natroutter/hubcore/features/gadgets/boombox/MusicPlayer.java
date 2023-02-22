@@ -3,11 +3,12 @@ package net.natroutter.hubcore.features.gadgets.boombox;
 import java.util.HashMap;
 import java.util.UUID;
 
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import fi.natroutter.natlibs.objects.BaseItem;
+import fi.natroutter.natlibs.utilities.Utilities;
 import net.natroutter.hubcore.Handler;
 import net.natroutter.hubcore.files.Translations;
 import net.natroutter.hubcore.utilities.Utils;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import net.natroutter.natlibs.utilities.Utilities;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,7 +19,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.objects.BaseItem;
 
 
 public class MusicPlayer implements Listener { 

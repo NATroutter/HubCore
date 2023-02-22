@@ -2,6 +2,7 @@ package net.natroutter.hubcore.features.SelectorItems;
 
 import java.util.*;
 
+import fi.natroutter.natlibs.objects.BaseItem;
 import net.natroutter.hubcore.Handler;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,7 +11,6 @@ import org.bukkit.inventory.Inventory;
 import net.natroutter.hubcore.features.gadgets.Gadget;
 import net.natroutter.hubcore.features.gadgets.GadgetHandler;
 import net.natroutter.hubcore.utilities.Items;
-import net.natroutter.natlibs.objects.BaseItem;
 
 public class SelectorItemHandler {
 

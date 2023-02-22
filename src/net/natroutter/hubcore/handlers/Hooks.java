@@ -1,7 +1,7 @@
 package net.natroutter.hubcore.handlers;
 
-import net.natroutter.natlibs.handlers.hooking.Hook;
-import net.natroutter.natlibs.handlers.hooking.HookSettings;
+import fi.natroutter.natlibs.handlers.hooking.Hook;
+import fi.natroutter.natlibs.handlers.hooking.HookSettings;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings({"unused"})

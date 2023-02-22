@@ -1,9 +1,9 @@
 package net.natroutter.hubcore.features.gadgets.FireworkShooter;
 
+import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import fi.natroutter.natlibs.utilities.StringHandler;
 import net.natroutter.hubcore.HubCore;
 import net.natroutter.hubcore.files.Translations;
-import net.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import net.natroutter.natlibs.utilities.StringHandler;
 
 public enum FColor {
 

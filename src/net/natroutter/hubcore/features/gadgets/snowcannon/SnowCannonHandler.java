@@ -2,6 +2,7 @@ package net.natroutter.hubcore.features.gadgets.snowcannon;
 
 import java.util.ArrayList;
 
+import fi.natroutter.natlibs.objects.ParticleSettings;
 import net.natroutter.hubcore.Handler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,9 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 
-import net.natroutter.hubcore.HubCore;
-import net.natroutter.natlibs.objects.ParticleSettings;
-import net.natroutter.natlibs.utilities.Utilities;
 
 public class SnowCannonHandler {
 
