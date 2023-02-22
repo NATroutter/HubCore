@@ -1,13 +1,13 @@
 package fi.natroutter.hubcore.features.playercarry;
 
+import fi.natroutter.betterparkour.BetterParkour;
+import fi.natroutter.betterparkour.ParkourAPI;
 import fi.natroutter.hubcore.Handler;
 import fi.natroutter.hubcore.files.Translations;
 import fi.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import fi.natroutter.hubcore.handlers.Hooks;
 import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import fi.natroutter.natlibs.utilities.StringHandler;
-import net.natroutter.betterparkour.BetterParkour;
-import net.natroutter.betterparkour.ParkourAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;

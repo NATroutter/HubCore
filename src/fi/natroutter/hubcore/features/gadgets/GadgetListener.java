@@ -1,5 +1,8 @@
 package fi.natroutter.hubcore.features.gadgets;
 
+import fi.natroutter.betterparkour.BetterParkour;
+import fi.natroutter.betterparkour.ParkourAPI;
+import fi.natroutter.betterparkour.handlers.ParkourHandler;
 import fi.natroutter.hubcore.Handler;
 import fi.natroutter.hubcore.features.gadgets.FireworkShooter.FWSHandler;
 import fi.natroutter.hubcore.features.gadgets.boombox.MusicGUI;
@@ -8,9 +11,6 @@ import fi.natroutter.hubcore.features.gadgets.snowcannon.SnowCannonHandler;
 import fi.natroutter.hubcore.handlers.Hooks;
 import fi.natroutter.hubcore.utilities.Items;
 import fi.natroutter.natlibs.objects.BaseItem;
-import net.natroutter.betterparkour.BetterParkour;
-import net.natroutter.betterparkour.ParkourAPI;
-import net.natroutter.betterparkour.handlers.ParkourHandler;
 import fi.natroutter.hubcore.features.gadgets.FireworkShooter.guis.FireworkGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;

@@ -1,5 +1,7 @@
 package fi.natroutter.hubcore.features.SelectorItems;
 
+import fi.natroutter.betterparkour.BetterParkour;
+import fi.natroutter.betterparkour.ParkourAPI;
 import fi.natroutter.hubcore.Handler;
 import fi.natroutter.hubcore.features.ServerSelector;
 import fi.natroutter.hubcore.features.gadgets.GadgetHandler;
@@ -10,8 +12,6 @@ import fi.natroutter.hubcore.utilities.Items;
 import fi.natroutter.natlibs.handlers.gui.GUIWindow;
 import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
 import fi.natroutter.natlibs.objects.BaseItem;
-import net.natroutter.betterparkour.BetterParkour;
-import net.natroutter.betterparkour.ParkourAPI;
 import fi.natroutter.hubcore.features.particles.ParticleGUI;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;

@@ -1,12 +1,12 @@
 package fi.natroutter.hubcore.features.gadgets.snowcannon;
 
+import fi.natroutter.betterparkour.BetterParkour;
+import fi.natroutter.betterparkour.ParkourAPI;
 import fi.natroutter.hubcore.Handler;
 import fi.natroutter.hubcore.handlers.AdminModeHandler;
 import fi.natroutter.hubcore.handlers.Hooks;
 import fi.natroutter.natlibs.events.PlayerJumpEvent;
 import fi.natroutter.natlibs.utilities.Utilities;
-import net.natroutter.betterparkour.BetterParkour;
-import net.natroutter.betterparkour.ParkourAPI;
 import fi.natroutter.hubcore.handlers.Database.PlayerData;
 import fi.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import org.bukkit.Sound;

@@ -6,7 +6,7 @@
 
     <groupId>fi.natroutter</groupId>
     <artifactId>hubcore</artifactId>
-    <version>1.11.1</version>
+    <version>1.11.2</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>
@@ -127,6 +127,7 @@
     </repositories>
 
     <dependencies>
+
         <dependency>
             <groupId>fi.natroutter</groupId>
             <artifactId>natlibs</artifactId>
@@ -134,11 +135,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.natroutter</groupId>
+            <groupId>fi.natroutter</groupId>
             <artifactId>betterparkour</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.12</version>
             <scope>provided</scope>
         </dependency>
+
+
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
