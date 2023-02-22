@@ -1,4 +1,4 @@
-main: net.natroutter.hubcore.HubCore
+main: HubCore
 name: HubCore
 version: ${project.version}
 author: NATroutter
