@@ -1,7 +1,5 @@
 package fi.natroutter.hubcore.utilities;
 
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import fi.natroutter.hubcore.Handler;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -11,11 +9,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class Utils {
 
-	private LangManager lang;
-
-	public Utils(Handler handler) {
-		this.lang = handler.getLang();
-	}
 
 	public boolean nameMatch(ItemStack item1, ItemStack item2) {
 		if (item1 == null || item2 == null) {

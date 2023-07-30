@@ -1,6 +1,6 @@
 package fi.natroutter.hubcore.features.gadgets.slapper;
 
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.handlers.Database.PlayerData;
 import fi.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import org.bukkit.Sound;
@@ -11,13 +11,8 @@ import fi.natroutter.hubcore.handlers.AdminModeHandler;
 
 public class SlapperHandler {
 
-	private PlayerDataHandler pdh;
-	private AdminModeHandler adminModeHandler;
-	
-	public SlapperHandler(Handler handler) {
-		this.pdh = handler.getDataHandler();
-		this.adminModeHandler = handler.getAdminModeHandler();
-	}
+	private PlayerDataHandler pdh = HubCore.getDataHandler();
+	private AdminModeHandler adminModeHandler = HubCore.getAdminModeHandler();
 	
 	public void slap(Player p, Player target) {
 		PlayerData data = pdh.get(target.getUniqueId());

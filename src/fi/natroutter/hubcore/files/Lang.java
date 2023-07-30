@@ -1,25 +1,32 @@
 package fi.natroutter.hubcore.files;
 
 
-import fi.natroutter.natlibs.handlers.langHandler.TranslationTemplate;
-import fi.natroutter.natlibs.handlers.langHandler.language.key.TranslationKey;
+import fi.natroutter.hubcore.HubCore;
+import fi.natroutter.natlibs.config.ILang;
+import fi.natroutter.natlibs.config.Language;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public enum Translations implements TranslationTemplate {
-    Prefix,
-    NoPerm,
-    TooManyArguments,
-    OnlyIngame,
-    AdminModeToggle,
-    AdminModeToggleOther,
-    OnbackPack,
-    inYourBackpack,
-    GadgetEffective,
-    CantBackpack,
-    NoCarryToggle,
-    Unknown,
-    TargetNotFound,
-    WelcomeMotd,
-    Info,
+@AllArgsConstructor
+public enum Lang implements ILang {
+    Prefix("Prefix"),
+    NoPerm("NoPerm"),
+    TooManyArguments("TooManyArguments"),
+    InvalidArguments("InvalidArguments"),
+    ConfigReloaded("ConfigReloaded"),
+    OnlyIngame("OnlyIngame"),
+    AdminModeToggle("AdminModeToggle"),
+    AdminModeToggleOther("AdminModeToggleOther"),
+    OnbackPack("OnbackPack"),
+    inYourBackpack("inYourBackpack"),
+    GadgetEffective("GadgetEffective"),
+    CantBackpack("CantBackpack"),
+    NoCarryToggle("NoCarryToggle"),
+    Unknown("Unknown"),
+    TargetNotFound("TargetNotFound"),
+    WelcomeMotd("WelcomeMotd"),
+    Info("Info"),
 
     Gadgets_BoomBox_NoteNotSelected("Gadgets.BoomBox.NoteNotSelected"),
     ToggleStates_on("ToggleStates.on"),
@@ -140,18 +147,25 @@ public enum Translations implements TranslationTemplate {
     Items_JoinItems_InfoBook("Items.JoinItems.InfoBook"),
     Items_JoinItems_InfoBook_Lore("Items.JoinItems.InfoBook_Lore");
 
-    private String path = null;
-    Translations() {}
-    Translations(String path) {
-        this.path = path;
+    @Getter
+    private String path;
+
+    public static void reload() {
+        Prefix.reloadFile();
     }
 
     @Override
-    public TranslationKey getKey() {
-        if (path == null) {
-            return TranslationKey.of(this.name());
-        }
-        return TranslationKey.of(this.path);
+    public Language lang() {
+        return Language.getFromKey(Config.Language);
     }
 
+    @Override
+    public ILang prefix() {
+        return Prefix;
+    }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return HubCore.getInstance();
+    }
 }

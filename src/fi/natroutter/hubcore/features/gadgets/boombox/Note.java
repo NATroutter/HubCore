@@ -36,7 +36,7 @@ public class Note {
 
     public BaseItem getItem() {
     	BaseItem item = new BaseItem(Material.NOTE_BLOCK);
-        item.setDisplayName(this.name);
+        item.name(this.name);
         item.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.addItemFlags(ItemFlag.values());
         return item;

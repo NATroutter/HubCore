@@ -1,14 +1,14 @@
 package fi.natroutter.hubcore.features.gadgets.snowcannon;
 
 import fi.natroutter.betterparkour.BetterParkour;
-import fi.natroutter.betterparkour.ParkourAPI;
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.handlers.AdminModeHandler;
 import fi.natroutter.hubcore.handlers.Hooks;
 import fi.natroutter.natlibs.events.PlayerJumpEvent;
-import fi.natroutter.natlibs.utilities.Utilities;
 import fi.natroutter.hubcore.handlers.Database.PlayerData;
 import fi.natroutter.hubcore.handlers.Database.PlayerDataHandler;
+import fi.natroutter.natlibs.utilities.Utilities;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,25 +18,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-public class SnowCannonListener implements Listener {
-	
-	private Utilities utilities;
-	private PlayerDataHandler pdh;
-	private Hooks hooks;
-	private AdminModeHandler adminModeHandler;
-	private SnowCannonHandler snowCannonHandler;
+import java.util.List;
 
-	public SnowCannonListener(Handler handler) {
-		this.utilities = handler.getUtilities();
-		this.pdh = handler.getDataHandler();
-		this.hooks = handler.getHooks();
-		this.adminModeHandler = handler.getAdminModeHandler();
-		this.snowCannonHandler = handler.getSnowCannonHandler();
-	}
+public class SnowCannonListener implements Listener {
+
+	private PlayerDataHandler pdh = HubCore.getDataHandler();
+	private Hooks hooks = HubCore.getHooks();
+	private AdminModeHandler adminModeHandler = HubCore.getAdminModeHandler();
+	private SnowCannonHandler snowCannonHandler = HubCore.getSnowCannonHandler();
+
 
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent e) {
@@ -48,13 +43,12 @@ public class SnowCannonListener implements Listener {
 
 		if (proj.getCustomName() == null) {return;}
 
-		if (proj.getCustomName().equals(snowCannonHandler.ProjectileName)) {
+		if (proj.getPersistentDataContainer().has(snowCannonHandler.namespacedKey, PersistentDataType.INTEGER)) {
 			Entity ent = e.getHitEntity();
 			
 			if (ent instanceof Player p) {
 				if (hooks.getBetterParkour().isHooked()) {
-					ParkourAPI api = BetterParkour.getAPI();
-					if (api.getParkourHandler().inCourse(p)) {
+					if (BetterParkour.getParkourHandler().inCourse(p)) {
 						e.setCancelled(true);
 						return;
 					}
@@ -78,24 +72,34 @@ public class SnowCannonListener implements Listener {
 						Integer dura = snowCannonHandler.newDuration(pot.getDuration());
 						
 						if (pot.getType().equals(PotionEffectType.SLOW)) {
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, dura, 2), false);
+							p.addPotionEffects(List.of(
+									new PotionEffect(PotionEffectType.SLOW, dura, 2)
+							));
 							
 						} else if (pot.getType().equals(PotionEffectType.SLOW_FALLING)) {
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, dura, 2), false);
+							p.addPotionEffects(List.of(
+									new PotionEffect(PotionEffectType.SLOW_FALLING, dura, 2)
+							));
 							
 						} else if (pot.getType().equals(PotionEffectType.SLOW_DIGGING)) {
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, dura, 2), false);
+							p.addPotionEffects(List.of(
+									new PotionEffect(PotionEffectType.SLOW_DIGGING, dura, 2)
+							));
 							
 						} else if (pot.getType().equals(PotionEffectType.GLOWING)) {
-							p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, dura, 2), false);
+							p.addPotionEffects(List.of(
+									new PotionEffect(PotionEffectType.GLOWING, dura, 2)
+							));
 							
 						}
 					}
 				} else {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2), false);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 2), false);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2), false);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 2), false);
+					p.addPotionEffects(List.of(
+							new PotionEffect(PotionEffectType.SLOW, 40, 2),
+							new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 2),
+							new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2),
+							new PotionEffect(PotionEffectType.GLOWING, 40, 2)
+					));
 				}
 
 				if (p.getFreezeTicks() < p.getMaxFreezeTicks()) {
@@ -108,8 +112,7 @@ public class SnowCannonListener implements Listener {
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent e) {
 		if (e.getDamager() instanceof Snowball ball) {
-			if (ball.getCustomName() == null) { return; }
-			if (ball.getCustomName().equals(snowCannonHandler.ProjectileName)) {
+			if (ball.getPersistentDataContainer().has(snowCannonHandler.namespacedKey, PersistentDataType.INTEGER)) {
 				e.setCancelled(true);
 			}
 		}
@@ -120,7 +123,7 @@ public class SnowCannonListener implements Listener {
 		Player p = e.getPlayer();
 		if (p.hasPotionEffect(PotionEffectType.SLOW) && p.hasPotionEffect(PotionEffectType.SLOW_FALLING) && p.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
 			
-			Integer toGround = utilities.distanceToGround(p.getLocation());
+			float toGround = Utilities.distanceToGround(p.getLocation());
 			
 			p.setVelocity(p.getVelocity().add(new Vector(0, -Math.abs((toGround*2) + 5), 0)));
 		}

@@ -2,10 +2,10 @@ package fi.natroutter.hubcore.features.gadgets;
 
 import java.util.*;
 
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
+import fi.natroutter.hubcore.files.Config;
 import fi.natroutter.hubcore.utilities.Items;
 import fi.natroutter.hubcore.features.gadgets.wings.WingsHandler;
-import fi.natroutter.hubcore.files.Config;
 import org.bukkit.entity.Player;
 
 public class GadgetHandler {
@@ -13,21 +13,16 @@ public class GadgetHandler {
 	public HashMap<UUID, Gadget> SelectedGadget = new HashMap<>();
 	public LinkedList<Gadget> gadgets;
 
-	private Items items;
-	private Config config;
-	private WingsHandler wingsHandler;
-	public GadgetHandler(Handler handler) {
-		this.items = handler.getItems();
-		this.config = handler.getConfig();
-		this.wingsHandler = handler.getWingsHandler();
-
+	private WingsHandler wingsHandler = HubCore.getWingsHandler();
+	
+	public GadgetHandler() {
 		gadgets = new LinkedList<>(Arrays.asList(
-				new Gadget("BoomBox", 10, items.gadged_BoomBox(), config.gadgets.boombox.need, config.gadgets.boombox.permission),
-				new Gadget("Wings", 11, items.gadged_Booster(), items.gadged_Wing(), config.gadgets.wings.need, config.gadgets.wings.permission),
-				new Gadget("SnowCannon", 12, items.gadged_SnowCannon(), config.gadgets.snowcannon.need, config.gadgets.snowcannon.permission),
-				new Gadget("Slapper", 13, items.gadged_Slapper(), config.gadgets.slapper.need, config.gadgets.slapper.permission),
-				new Gadget("Jumpper", 14, items.gadged_Jumpper(), config.gadgets.jumpper.need, config.gadgets.jumpper.permission),
-				new Gadget("FWShooter", 15, items.gadged_FireworkShooter(), config.gadgets.fireworkshooter.need, config.gadgets.fireworkshooter.permission)
+				new Gadget("BoomBox", 10, Items.gadged_BoomBox(), Config.Gadgets_Boombox_Need, Config.Gadgets_Boombox_Perm),
+				new Gadget("Wings", 11, Items.gadged_Booster(), Items.gadged_Wing(), Config.Gadgets_Wings_Need, Config.Gadgets_Wings_Perm),
+				new Gadget("SnowCannon", 12, Items.gadged_SnowCannon(), Config.Gadgets_Snowcannon_Need, Config.Gadgets_Snowcannon_Perm),
+				new Gadget("Slapper", 13, Items.gadged_Slapper(), Config.Gadgets_Slapper_Need, Config.Gadgets_Slapper_Perm),
+				new Gadget("Jumpper", 14, Items.gadged_Jumpper(), Config.Gadgets_Jumpper_Need, Config.Gadgets_Jumpper_Perm),
+				new Gadget("FWShooter", 15, Items.gadged_FireworkShooter(), Config.Gadgets_Fireworkshooter_Need, Config.Gadgets_Fireworkshooter_Perm)
 		));
 	}
 

@@ -2,19 +2,15 @@ package fi.natroutter.hubcore.utilities;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import fi.natroutter.hubcore.Handler;
-import fi.natroutter.natlibs.utilities.StringHandler;
+import fi.natroutter.hubcore.HubCore;
+import fi.natroutter.natlibs.utilities.Utilities;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.entity.Player;
 
 public class ServerSwitcher {
 
-    private Handler handler;
     private boolean useCommand = false;
     private String command = "";
-
-    public ServerSwitcher(Handler handler) {
-        this.handler = handler;
-    }
 
     public void setUseCommand(boolean useCommand) {
         this.useCommand = useCommand;
@@ -30,11 +26,11 @@ public class ServerSwitcher {
             out.writeUTF("ConnectOther");
             out.writeUTF(p.getName());
             out.writeUTF(server);
-            p.sendPluginMessage(handler.getInstance(), "BungeeCord", out.toByteArray());
+            p.sendPluginMessage(HubCore.getInstance(), "BungeeCord", out.toByteArray());
         } else {
-            StringHandler str = new StringHandler(command);
-            str.replaceAll("%server%", server);
-            p.performCommand(str.build());
+            p.performCommand(Utilities.parse(command,
+                    Placeholder.parsed("server", server)
+            ));
         }
     }
 

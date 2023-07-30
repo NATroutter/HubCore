@@ -1,13 +1,11 @@
 package fi.natroutter.hubcore.features.playercarry;
 
 import fi.natroutter.betterparkour.BetterParkour;
-import fi.natroutter.betterparkour.ParkourAPI;
-import fi.natroutter.hubcore.Handler;
-import fi.natroutter.hubcore.files.Translations;
+import fi.natroutter.hubcore.HubCore;
+import fi.natroutter.hubcore.files.Lang;
 import fi.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import fi.natroutter.hubcore.handlers.Hooks;
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import fi.natroutter.natlibs.utilities.StringHandler;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -25,19 +23,9 @@ import java.util.List;
 
 public class PlayerCarryListener implements Listener {
 
-    private Handler handler;
-    private Hooks hooks;
-    private LangManager lang;
-    private PlayerDataHandler pdh;
-    private PlayerCarryHandler playerCarryHandler;
-
-    public PlayerCarryListener(Handler handler) {
-        this.handler = handler;
-        this.hooks = handler.getHooks();
-        this.lang = handler.getLang();
-        this.pdh = handler.getDataHandler();
-        this.playerCarryHandler = handler.getPlayerCarryHandler();
-    }
+    private Hooks hooks = HubCore.getHooks();
+    private PlayerDataHandler pdh = HubCore.getDataHandler();
+    private PlayerCarryHandler playerCarryHandler = HubCore.getPlayerCarryHandler();
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
@@ -78,15 +66,15 @@ public class PlayerCarryListener implements Listener {
             playerCarryHandler.cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 
             if (pdh.get(ride.getUniqueId()).getNocarry()) {
-                StringHandler msg = new StringHandler(lang.get(Translations.CantBackpack)).setPrefix(lang.get(Translations.Prefix));
-                msg.replaceAll("{name}", ride.getName());
-                msg.send(p);
+                p.sendMessage(Lang.CantBackpack.prefixed(
+                        Placeholder.parsed("name", ride.getName())
+                ));
                 return;
             }
             if (pdh.get(p.getUniqueId()).getNocarry()) {
-                StringHandler msg = new StringHandler(lang.get(Translations.CantBackpack)).setPrefix(lang.get(Translations.Prefix));
-                msg.replaceAll("{name}", ride.getName());
-                msg.send(p);
+                p.sendMessage(Lang.CantBackpack.prefixed(
+                        Placeholder.parsed("name", ride.getName())
+                ));
                 return;
             }
 
@@ -97,8 +85,7 @@ public class PlayerCarryListener implements Listener {
             }
 
             if (hooks.getBetterParkour().isHooked()) {
-                ParkourAPI api = BetterParkour.getAPI();
-                if (api.getParkourHandler().inCourse(p) || api.getParkourHandler().inCourse(ride)) {
+                if (BetterParkour.getParkourHandler().inCourse(p) || BetterParkour.getParkourHandler().inCourse(ride)) {
                     e.setCancelled(true);
                     return;
                 }
@@ -106,14 +93,13 @@ public class PlayerCarryListener implements Listener {
 
             ride.addPassenger(p);
 
-            StringHandler msg1 = new StringHandler(lang.get(Translations.inYourBackpack)).setPrefix(lang.get(Translations.Prefix));
-            msg1.replaceAll("{name}", p.getName());
-            msg1.send(ride);
+            ride.sendMessage(Lang.inYourBackpack.prefixed(
+                    Placeholder.parsed("name", ride.getName())
+            ));
 
-
-            StringHandler msg2 = new StringHandler(lang.get(Translations.OnbackPack)).setPrefix(lang.get(Translations.Prefix));
-            msg2.replaceAll("{name}", ride.getName());
-            msg2.send(p);
+            p.sendMessage(Lang.OnbackPack.prefixed(
+                    Placeholder.parsed("name", ride.getName())
+            ));
         }
     }
 
@@ -128,7 +114,7 @@ public class PlayerCarryListener implements Listener {
                 passengers.add(ride);
                 ride.leaveVehicle();
             }
-            Bukkit.getScheduler().runTaskLater(handler.getInstance(), () -> passengers.forEach(player -> player.setVelocity(vec)), 1L);
+            Bukkit.getScheduler().runTaskLater(HubCore.getInstance(), () -> passengers.forEach(player -> player.setVelocity(vec)), 1L);
         }
     }
 

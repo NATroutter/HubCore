@@ -3,13 +3,6 @@ package fi.natroutter.hubcore.events;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
 
-class test implements Listener {
-    @EventHandler
-    public void test(AdminModeToggleEvent e) {
-
-    }
-}
-
 public class AdminModeToggleEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLERS = new HandlerList();

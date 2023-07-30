@@ -1,41 +1,36 @@
 package fi.natroutter.hubcore.commands;
 
-import java.util.Collections;
-
+import fi.natroutter.hubcore.HubCore;
+import fi.natroutter.hubcore.files.Lang;
+import fi.natroutter.hubcore.handlers.AdminModeHandler;
 import fi.natroutter.natlibs.handlers.database.YamlDatabase;
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import fi.natroutter.natlibs.utilities.StringHandler;
-import fi.natroutter.hubcore.Handler;
-import fi.natroutter.hubcore.files.Translations;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fi.natroutter.hubcore.handlers.AdminModeHandler;
+import java.util.Collections;
 
 public class Adminmode extends Command {
 
-	private LangManager lang;
-	private YamlDatabase database;
-	private AdminModeHandler adminModeHandler;
-	public Adminmode(Handler handler) {
+	private YamlDatabase database = HubCore.getYamlDatabase();
+	private AdminModeHandler adminModeHandler = HubCore.getAdminModeHandler();
+
+	public Adminmode() {
 		super("adminmode");
 		this.setAliases(Collections.singletonList("am"));
-		this.lang = handler.getLang();
-		this.database = handler.getYamlDatabase();
-		this.adminModeHandler = handler.getAdminModeHandler();
 	}
 
 	@Override
 	public boolean execute(CommandSender sender, String label, String[] args) {
 		if (!sender.hasPermission("hubcore.admin")) {
-			lang.send(sender, Translations.Prefix, Translations.NoPerm);
+			sender.sendMessage(Lang.NoPerm.prefixed());
 			return false;
 		}
 
 		if (!(sender instanceof Player p)) {
-			lang.send(sender, Translations.Prefix, Translations.OnlyIngame);
+			sender.sendMessage(Lang.OnlyIngame.prefixed());
 			return false;
 		}
 		
@@ -44,27 +39,21 @@ public class Adminmode extends Command {
 		} else if (args.length == 1) {
 			Player target = Bukkit.getPlayer(args[0]);
 			if (target == null) {
-				lang.send(sender, Translations.Prefix, Translations.TargetNotFound);
+				sender.sendMessage(Lang.TargetNotFound.prefixed());
 				return false;
 			}
 
 			boolean state = database.getBoolean(target, "Adminmode");
 
-			StringHandler str = new StringHandler(lang.get(Translations.AdminModeToggleOther));
-			str.setPrefix(lang.get(Translations.Prefix));
-			str.replaceAll("{name}", target.getName());
-
-			if (state) {
-				str.replaceAll("{state}", lang.get(Translations.ToggleStates_off));
-			} else {
-				str.replaceAll("{state}", lang.get(Translations.ToggleStates_on));
-			}
-			str.send(p);
+			p.sendMessage(Lang.AdminModeToggleOther.asComponent(
+					Placeholder.parsed("name", target.getName()),
+					Placeholder.component("state", (state ? Lang.ToggleStates_off : Lang.ToggleStates_on).asComponent())
+			));
 
 			adminModeHandler.ToggleAdmin(target,true);
 
 		} else {
-			lang.send(sender, Translations.Prefix, Translations.TooManyArguments);
+			sender.sendMessage(Lang.TooManyArguments.prefixed());
 		}
 		return false;
 	}

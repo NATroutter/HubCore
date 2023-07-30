@@ -1,58 +1,39 @@
 package fi.natroutter.hubcore.features.gadgets;
 
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.features.SelectorItems.SelectorItemHandler;
-import fi.natroutter.hubcore.files.Config;
-import fi.natroutter.hubcore.files.Translations;
-import fi.natroutter.natlibs.handlers.gui.GUIItem;
-import fi.natroutter.natlibs.handlers.gui.GUIRow;
-import fi.natroutter.natlibs.handlers.gui.GUIWindow;
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import fi.natroutter.hubcore.files.Lang;
+import fi.natroutter.natlibs.handlers.guibuilder.Button;
+import fi.natroutter.natlibs.handlers.guibuilder.GUI;
+import fi.natroutter.natlibs.handlers.guibuilder.GUIFrame;
+import fi.natroutter.natlibs.handlers.guibuilder.Rows;
 import org.bukkit.entity.Player;
 
-public class GadgetGUI {
+import java.util.List;
 
-	private Config config;
-	private LangManager lang;
-	private GadgetHandler gadgetHandler;
-	private SelectorItemHandler selectorItemHandler;
+public class GadgetGUI extends GUIFrame {
 
-	public GadgetGUI(Handler handler) {
-		this.config = handler.getConfig();
-		this.lang = handler.getLang();
-		this.gadgetHandler = handler.getGadgetHandler();
-		this.selectorItemHandler = handler.getSelectorItemHandler();
-	}
-	
-	public void show(Player p) {
-		GUI(p).show(p);
+	private GadgetHandler gadgetHandler = HubCore.getGadgetHandler();
+	private SelectorItemHandler selectorItemHandler = HubCore.getSelectorItemHandler();
+	public GadgetGUI() {
+		super(Lang.Guis_Gadgets_Title, Rows.row3);
 	}
 
-	LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
 
-	private GUIWindow GUI(Player p) {
-		GUIWindow gui = new GUIWindow(lcs.deserialize(lang.get(Translations.Guis_Gadgets_Title)), GUIRow.row3, true);
-
+	@Override
+	protected boolean onShow(Player player, GUI gui, List<Object> args) {
 		for (Gadget gad : gadgetHandler.gadgets) {
-			gui.setItem(new GUIItem(gad.getIconWithNeed(lang), (e)-> {
-				if (e.getWhoClicked() instanceof Player clicker) {
-
-                    if (clicker.hasPermission(gad.getPermission())) {
-						clicker.closeInventory();
-						gadgetHandler.setGadget(clicker, gad);
-						selectorItemHandler.update(p);
-					} else {
-						lang.send(clicker, Translations.Prefix, Translations.NoPerm);
-					}
-
+			gui.setButton(new Button(gad.getIconWithNeed(), (e, g)->{
+				Player p = e.getPlayer();
+				if (!p.hasPermission(gad.getPermission())) {
+					p.sendMessage(Lang.NoPerm.prefixed());
+					return;
 				}
-
-			}), gad.slot);
+				gadgetHandler.setGadget(p, gad);
+				selectorItemHandler.update(p);
+				gui.close(p);
+			}),gad.getSlot());
 		}
-		
-		return gui;
+		return true;
 	}
-	
-
 }

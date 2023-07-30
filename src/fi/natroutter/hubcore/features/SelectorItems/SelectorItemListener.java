@@ -1,18 +1,19 @@
 package fi.natroutter.hubcore.features.SelectorItems;
 
 import fi.natroutter.betterparkour.BetterParkour;
-import fi.natroutter.betterparkour.ParkourAPI;
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.features.ServerSelector;
+import fi.natroutter.hubcore.features.gadgets.Gadget;
+import fi.natroutter.hubcore.features.gadgets.GadgetGUI;
 import fi.natroutter.hubcore.features.gadgets.GadgetHandler;
-import fi.natroutter.hubcore.files.Translations;
+import fi.natroutter.hubcore.features.particles.ParticleGUI;
+import fi.natroutter.hubcore.files.Lang;
 import fi.natroutter.hubcore.handlers.AdminModeHandler;
 import fi.natroutter.hubcore.handlers.Hooks;
 import fi.natroutter.hubcore.utilities.Items;
-import fi.natroutter.natlibs.handlers.gui.GUIWindow;
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import fi.natroutter.natlibs.handlers.guibuilder.GuiHelper;
 import fi.natroutter.natlibs.objects.BaseItem;
-import fi.natroutter.hubcore.features.particles.ParticleGUI;
+import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,36 +23,21 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
-
-import fi.natroutter.hubcore.features.gadgets.Gadget;
-import fi.natroutter.hubcore.features.gadgets.GadgetGUI;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.UUID;
 
 public class SelectorItemListener implements Listener {
 
-	private LangManager lang;
-	private Hooks hooks;
-	private SelectorItemHandler selectorItemHandler;
-	private GadgetHandler gadgetHandler;
-	private AdminModeHandler adminModeHandler;
-	private Items items;
-	private GadgetGUI gadgetGUI;
-	private ServerSelector serverSelector;
-	private ParticleGUI particleGUI;
-
-	public SelectorItemListener(Handler handler) {
-		this.lang = handler.getLang();
-		this.hooks = handler.getHooks();
-		this.selectorItemHandler = handler.getSelectorItemHandler();
-		this.gadgetHandler = handler.getGadgetHandler();
-		this.adminModeHandler = handler.getAdminModeHandler();
-		this.items = handler.getItems();
-		this.gadgetGUI = handler.getGadgetGUI();
-		this.serverSelector = handler.getServerSelector();
-		this.particleGUI = handler.getParticleGUI();
-	}
+	private Hooks hooks = HubCore.getHooks();
+	private SelectorItemHandler selectorItemHandler = HubCore.getSelectorItemHandler();
+	private GadgetHandler gadgetHandler = HubCore.getGadgetHandler();
+	private AdminModeHandler adminModeHandler = HubCore.getAdminModeHandler();
+	private GadgetGUI gadgetGUI = HubCore.getGadgetGUI();
+	private ServerSelector serverSelector = HubCore.getServerSelector();
+	private ParticleGUI particleGUI = HubCore.getParticleGUI();
 
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
@@ -70,12 +56,12 @@ public class SelectorItemListener implements Listener {
 		for (int i = 0; i < 10; i++) {
 			p.sendMessage(" ");
 		}
-		lang.sendList(p, Translations.WelcomeMotd);
+		p.sendMessage(Lang.WelcomeMotd.asSingleComponent());
 	}
 
 	@EventHandler
 	public void onJoin(PlayerQuitEvent e) {
-		e.setQuitMessage(null);
+		e.quitMessage(null);
 	}
 
 	@EventHandler
@@ -88,6 +74,12 @@ public class SelectorItemListener implements Listener {
 		
 		for(Gadget gad : gadgetHandler.gadgets) {
 			if (item2.isSimilar(gad.getItem())) {
+				if (gad.getIdentifier().equals("Wings")) {
+					EntityEquipment equip = e.getPlayer().getEquipment();
+					if (equip.getChestplate().displayName().equals(gad.getIcon().displayName())) {
+						equip.setChestplate(new ItemStack(Material.AIR));
+					}
+				}
 				item.remove();
 				gadgetHandler.setGadget(p, null);
 				selectorItemHandler.update(p);
@@ -95,22 +87,22 @@ public class SelectorItemListener implements Listener {
 			}
 		}
 		e.setCancelled(true);
-		
+
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onInventoryclick(InventoryClickEvent e) {
-		GUIWindow window = GUIWindow.getWindow(e.getView());
-		if (window == null) {
-			Player p = (Player)e.getWhoClicked();
-			
-			if (adminModeHandler.isAdmin(p)) {return;}
-			if (selectorItemHandler.bypassHubItems.contains(p.getUniqueId())) {return;}
+		if(e.getWhoClicked() instanceof Player p) {
+			if (!GuiHelper.hasOpen(p)) {
 
-			e.setCancelled(true);
-			
-			if (e.getInventory().getType().equals(InventoryType.PLAYER)) {
-				selectorItemHandler.update(p);
+				if (adminModeHandler.isAdmin(p)) {return;}
+				if (selectorItemHandler.bypassHubItems.contains(p.getUniqueId())) {return;}
+
+				e.setCancelled(true);
+
+				if (e.getInventory().getType().equals(InventoryType.PLAYER)) {
+					selectorItemHandler.update(p);
+				}
 			}
 		}
 	}
@@ -138,28 +130,27 @@ public class SelectorItemListener implements Listener {
 			BaseItem item = BaseItem.from(e.getItem());
 
 			if (hooks.getBetterParkour().isHooked()) {
-				ParkourAPI api = BetterParkour.getAPI();
-				if (api.getParkourHandler().inCourse(p)) {
+				if (BetterParkour.getParkourHandler().inCourse(p)) {
 					e.setCancelled(true);
 					return;
 				}
 			}
 			
-			if (item.isSimilar(items.serverSelector(p))) {
+			if (item.isSimilar(Items.serverSelector(p))) {
 				e.setCancelled(true);
 				serverSelector.show(p);
 				
-			} else if (item.isSimilar(items.gadgetSelector())) {
+			} else if (item.isSimilar(Items.gadgetSelector())) {
 				e.setCancelled(true);
 				gadgetGUI.show(p);
 				
-			} else if (item.isSimilar(items.particleSelector())) {
+			} else if (item.isSimilar(Items.particleSelector())) {
 				e.setCancelled(true);
 				particleGUI.show(p);
 
-			} else if (item.isSimilar(items.Info())) {
+			} else if (item.isSimilar(Items.Info())) {
 				if (onCooldown(p)){return;}
-				lang.sendList(p, Translations.Info);
+				p.sendMessage(Lang.Info.asSingleComponent());
 
 			}
 				

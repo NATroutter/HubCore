@@ -1,8 +1,7 @@
 package fi.natroutter.hubcore.features.gadgets.FireworkShooter;
 
 import fi.natroutter.betterparkour.BetterParkour;
-import fi.natroutter.betterparkour.ParkourAPI;
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.handlers.Database.PlayerData;
 import fi.natroutter.hubcore.handlers.Database.PlayerDataHandler;
 import fi.natroutter.hubcore.handlers.Hooks;
@@ -12,17 +11,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 public class FWSListener implements Listener {
 
-    private PlayerDataHandler pdh ;
-    private Hooks hooks;
-
-    public FWSListener(Handler handler) {
-        this.pdh = handler.getDataHandler();
-        this.hooks = handler.getHooks();
-    }
+    private PlayerDataHandler pdh = HubCore.getDataHandler();
+    private Hooks hooks = HubCore.getHooks();
 
     @EventHandler
     public void noHit(ProjectileHitEvent e) {
@@ -33,8 +28,7 @@ public class FWSListener implements Listener {
         if (e.getHitEntity().hasMetadata("NPC")) {return;}
 
         if (hooks.getBetterParkour().isHooked()) {
-            ParkourAPI api = BetterParkour.getAPI();
-            if (api.getParkourHandler().inCourse(victim)) {
+            if (BetterParkour.getParkourHandler().inCourse(victim)) {
                 e.setCancelled(true);
                 return;
             }
@@ -45,7 +39,7 @@ public class FWSListener implements Listener {
 
         if (firework.getCustomName() == null) {return;}
 
-        if (firework.getCustomName().equalsIgnoreCase("Fireworkshooter-projectile")) {
+        if (firework.getPersistentDataContainer().has(FWSHandler.namespacedKey, PersistentDataType.INTEGER)) {
             shooter.playSound(shooter.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 100, 1);
             victim.playSound(shooter.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_DEATH, 100, 2);
             victim.setVelocity(new Vector(0, 2, 0));

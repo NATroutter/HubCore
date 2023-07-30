@@ -1,17 +1,16 @@
 package fi.natroutter.hubcore.features.gadgets;
 
 import fi.natroutter.betterparkour.BetterParkour;
-import fi.natroutter.betterparkour.ParkourAPI;
 import fi.natroutter.betterparkour.handlers.ParkourHandler;
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.features.gadgets.FireworkShooter.FWSHandler;
+import fi.natroutter.hubcore.features.gadgets.FireworkShooter.guis.FwSettingsGUI;
 import fi.natroutter.hubcore.features.gadgets.boombox.MusicGUI;
 import fi.natroutter.hubcore.features.gadgets.slapper.SlapperHandler;
 import fi.natroutter.hubcore.features.gadgets.snowcannon.SnowCannonHandler;
 import fi.natroutter.hubcore.handlers.Hooks;
 import fi.natroutter.hubcore.utilities.Items;
 import fi.natroutter.natlibs.objects.BaseItem;
-import fi.natroutter.hubcore.features.gadgets.FireworkShooter.guis.FireworkGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -24,37 +23,28 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import fi.natroutter.hubcore.features.gadgets.jumpper.JumpperHandler;
 import fi.natroutter.hubcore.features.gadgets.wings.WingsHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class GadgetListener implements Listener {
 
 	public HashMap<UUID, Long> cooldown = new HashMap<>();
 
-	private Hooks hooks;
-	private GadgetHandler gadgetHandler;
-	private Items items;
-	private SlapperHandler slapperHandler;
-	private MusicGUI musicGUI;
-	private WingsHandler wingsHandler;
-	private SnowCannonHandler snowCannonHandler;
-	private JumpperHandler jumpperHandler;
-	private FWSHandler fwsHandler;
-	private FireworkGUI fireworkGUI;
-
-	public GadgetListener(Handler handler) {
-		this.hooks = handler.getHooks();
-		this.gadgetHandler = handler.getGadgetHandler();
-		this.items = handler.getItems();
-		this.slapperHandler = handler.getSlapperHandler();
-		this.musicGUI = handler.getMusicGUI();
-		this.wingsHandler = handler.getWingsHandler();
-		this.snowCannonHandler = handler.getSnowCannonHandler();
-		this.jumpperHandler = handler.getJumpperHandler();
-		this.fwsHandler = handler.getFwsHandler();
-		this.fireworkGUI = handler.getFireworkGUI();
-	}
+	private Hooks hooks = HubCore.getHooks();
+	private GadgetHandler gadgetHandler = HubCore.getGadgetHandler();
+	private SlapperHandler slapperHandler = HubCore.getSlapperHandler();
+	private MusicGUI musicGUI = HubCore.getMusicGUI();
+	private WingsHandler wingsHandler = HubCore.getWingsHandler();
+	private SnowCannonHandler snowCannonHandler = HubCore.getSnowCannonHandler();
+	private JumpperHandler jumpperHandler = HubCore.getJumpperHandler();
+	private FWSHandler fwsHandler = HubCore.getFwsHandler();
+	private FwSettingsGUI fwSettingsGUI = HubCore.getFwSettingsGUI();
 
 	public boolean onCooldown(Player p , int time) {
 		if(cooldown.containsKey(p.getUniqueId())) {
@@ -74,6 +64,7 @@ public class GadgetListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
+		if(!Objects.equals(e.getHand(), EquipmentSlot.HAND)) return;
 		if (!e.hasItem()) {return;}
 
 		Player p = e.getPlayer();
@@ -83,8 +74,7 @@ public class GadgetListener implements Listener {
 		if (gadgetHandler.disableGadgets.contains(p.getUniqueId())) {return;}
 
 		if (hooks.getBetterParkour().isHooked()) {
-			ParkourAPI api = BetterParkour.getAPI();
-			ParkourHandler parkourHandler = api.getParkourHandler();
+			ParkourHandler parkourHandler = BetterParkour.getParkourHandler();
 			if (parkourHandler.inCourse(p)) {
 				return;
 			}
@@ -92,33 +82,33 @@ public class GadgetListener implements Listener {
 
 		if (act.equals(Action.RIGHT_CLICK_AIR) || act.equals(Action.RIGHT_CLICK_BLOCK)) {
 
-			if (item.isSimilar(items.gadged_BoomBox()) && p.isSneaking()) {
+			if (item.isSimilar(Items.gadged_BoomBox()) && p.isSneaking()) {
 				if (onCooldown(p, 1)) {return;}
 				e.setCancelled(true);
 				musicGUI.show(p);
 				
-			} else if (item.isSimilar(items.gadged_Booster())) {
+			} else if (item.isSimilar(Items.gadged_Booster())) {
 				e.setCancelled(true);
 				wingsHandler.boost(p);
 				
-			} else if (item.isSimilar(items.gadged_SnowCannon())) {
+			} else if (item.isSimilar(Items.gadged_SnowCannon())) {
 				e.setCancelled(true);
 				snowCannonHandler.shoot(p);
 
-			} else if (item.isSimilar(items.gadged_Jumpper())) {
+			} else if (item.isSimilar(Items.gadged_Jumpper())) {
 				e.setCancelled(true);
 				jumpperHandler.jump(p);
 				
-			} else if (item.isSimilar(items.gadged_FireworkShooter())) {
+			} else if (item.isSimilar(Items.gadged_FireworkShooter())) {
 				if (onCooldown(p, 1)) {return;}
 				e.setCancelled(true);
 				fwsHandler.shoot(p);
 
 			}
 		} else if (act.equals(Action.LEFT_CLICK_AIR) || act.equals(Action.LEFT_CLICK_BLOCK)) {
-			if (item.isSimilar(items.gadged_FireworkShooter())) {
+			if (item.isSimilar(Items.gadged_FireworkShooter())) {
 				e.setCancelled(true);
-				fireworkGUI.showSettingsGUI(p);
+				fwSettingsGUI.show(p);
 
 			}
 		}
@@ -140,14 +130,13 @@ public class GadgetListener implements Listener {
         	if (!item.getType().equals(Material.AIR)) {
 
 				if (hooks.getBetterParkour().isHooked()) {
-					ParkourAPI api = BetterParkour.getAPI();
-					ParkourHandler parkourHandler = api.getParkourHandler();
+					ParkourHandler parkourHandler = BetterParkour.getParkourHandler();
 					if (parkourHandler.inCourse(p) || parkourHandler.inCourse(target)) {
 						return;
 					}
 				}
 
-        		if (item.isSimilar(items.gadged_Slapper())) {
+        		if (item.isSimilar(Items.gadged_Slapper())) {
         			e.setCancelled(true);
 					if (onCooldown(p, 5)) {return;}
 					slapperHandler.slap(p, target);

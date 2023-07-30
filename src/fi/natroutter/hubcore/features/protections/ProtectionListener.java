@@ -1,6 +1,6 @@
 package fi.natroutter.hubcore.features.protections;
 
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.files.Config;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -18,18 +18,13 @@ import fi.natroutter.hubcore.handlers.AdminModeHandler;
 public class ProtectionListener implements Listener {
 
 
-	private Config config;
-	private AdminModeHandler adminModeHandler;
-	private ProtectionHandler protectionHandler;
-	public ProtectionListener(Handler handler) {
-		this.config = handler.getConfig();
-		this.adminModeHandler = handler.getAdminModeHandler();
-		this.protectionHandler = handler.getProtectionHandler();
-	}
+	private AdminModeHandler adminModeHandler = HubCore.getAdminModeHandler();
+	private ProtectionHandler protectionHandler = HubCore.getProtectionHandler();
+
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onRedstoneActive(BlockRedstoneEvent e) {
-		if (config.DisableRedstone) {
+		if (Config.DisableRedstone.asBoolean()) {
 			e.setNewCurrent(0);
 		}
 	}
@@ -45,7 +40,7 @@ public class ProtectionListener implements Listener {
 		String name =e.getBlock().getType().name();
 		if (excluded(name)) {return;}
 		if (protectionHandler.disabledMaterials.contains(e.getBlock().getType())) {return;}
-		if (config.DisablePhysics) {
+		if (Config.DisablePhysics.asBoolean()) {
 			e.setCancelled(true);
 		}
 	}
@@ -55,7 +50,7 @@ public class ProtectionListener implements Listener {
 		String name =e.getBlock().getType().name();
 		if (excluded(name)) {return;}
 		if (protectionHandler.disabledMaterials.contains(e.getBlock().getType())) {return;}
-		if (config.DisablePhysics) {
+		if (Config.DisablePhysics.asBoolean()) {
 			e.setCancelled(true);
 		}
 	}
@@ -65,7 +60,7 @@ public class ProtectionListener implements Listener {
 		String name =e.getBlock().getType().name();
 		if (excluded(name)) {return;}
 		if (protectionHandler.disabledMaterials.contains(e.getBlock().getType())) {return;}
-		if (config.DisablePhysics) {
+		if (Config.DisablePhysics.asBoolean()) {
 			e.setCancelled(true);
 		}
 	}
@@ -80,14 +75,14 @@ public class ProtectionListener implements Listener {
 			if (protectionHandler.bypassProtection.contains(p.getUniqueId())) {return;}
 		}
 
-		if (config.DisablePhysics) {
+		if (Config.DisablePhysics.asBoolean()) {
 			e.setCancelled(true);
 		}
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockExplode(BlockExplodeEvent e) {
-		if (config.DisablePhysics) {
+		if (Config.DisablePhysics.asBoolean()) {
 			e.setCancelled(true);
 		}
 	}

@@ -1,37 +1,99 @@
 package fi.natroutter.hubcore.features.gadgets.FireworkShooter;
 
-import fi.natroutter.hubcore.files.Translations;
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import fi.natroutter.natlibs.utilities.StringHandler;
+import fi.natroutter.hubcore.files.Lang;
+import fi.natroutter.hubcore.objects.Color;
+import fi.natroutter.natlibs.config.ILang;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 
+@AllArgsConstructor
 public enum FColor {
 
-    DarkRed(170, 0, 0),
-    Red(255,85,85),
-    Gold(255,170,0),
-    Yellow(255,255,85),
-    DarkGreen(0,170,0),
-    Green(85,255,85),
-    Aqua(85,255,255),
-    DarkAqua(0,170,170),
-    DarkBlue(0,0,170),
-    Blue(85,85,255),
-    LightPurple(255,85,255),
-    DarkPurple(170,0,170),
-    White(255,255,255),
-    Gray(170,170,170),
-    DarkGray(85,85,85),
-    Black(0,0,0),
-    Custom(0,0,0);
+    DarkRed(
+            new Color(170, 0, 0),
+            Lang.Guis_Gadgets_Fireworks_Colors_DarkRed
+    ),
+    Red(
+            new Color(255,85,85),
+            Lang.Guis_Gadgets_Fireworks_Colors_Red
+    ),
+    Gold(
+            new Color(255,170,0),
+            Lang.Guis_Gadgets_Fireworks_Colors_Gold
+    ),
+    Yellow(
+            new Color(255,255,85),
+            Lang.Guis_Gadgets_Fireworks_Colors_Yellow
+    ),
+    DarkGreen(
+            new Color(0,170,0),
+            Lang.Guis_Gadgets_Fireworks_Colors_DarkGreen
+    ),
+    Green(
+            new Color(85,255,85),
+            Lang.Guis_Gadgets_Fireworks_Colors_Green
+    ),
+    Aqua(
+            new Color(85,255,255),
+            Lang.Guis_Gadgets_Fireworks_Colors_Aqua
+    ),
+    DarkAqua(
+            new Color(0,170,170),
+            Lang.Guis_Gadgets_Fireworks_Colors_DarkAqua
+    ),
+    DarkBlue(
+            new Color(0,0,170),
+            Lang.Guis_Gadgets_Fireworks_Colors_DarkBlue
+    ),
+    Blue(
+            new Color(85,85,255),
+            Lang.Guis_Gadgets_Fireworks_Colors_Blue
+    ),
+    LightPurple(
+            new Color(255,85,255),
+            Lang.Guis_Gadgets_Fireworks_Colors_LightPurple
+    ),
+    DarkPurple(
+            new Color(170,0,170),
+            Lang.Guis_Gadgets_Fireworks_Colors_DarkPurple
+    ),
+    White(
+            new Color(255,255,255),
+            Lang.Guis_Gadgets_Fireworks_Colors_White
+    ),
+    Gray(
+            new Color(170,170,170),
+            Lang.Guis_Gadgets_Fireworks_Colors_Gray
+    ),
+    DarkGray(
+            new Color(85,85,85),
+            Lang.Guis_Gadgets_Fireworks_Colors_DarkGray
+    ),
+    Black(
+            new Color(0,0,0),
+            Lang.Guis_Gadgets_Fireworks_Colors_Black
+    ),
+    Custom(
+            new Color(0,0,0),
+            Lang.Guis_Gadgets_Fireworks_Colors_Custom
+    );
 
-    private int r;
-    private int g;
-    private int b;
+    @Getter
+    private Color color;
 
-    FColor(int red, int green, int blue) {
-        this.r = red;
-        this.g = green;
-        this.b = blue;
+    private ILang langName;
+
+    public Component getLangName() {
+        if (this.equals(Custom)) {
+            return this.langName.asComponent(
+                    Placeholder.parsed("r", String.valueOf(color.getR())),
+                    Placeholder.parsed("g", String.valueOf(color.getG())),
+                    Placeholder.parsed("b", String.valueOf(color.getB()))
+            );
+        }
+        return this.langName.asComponent();
     }
 
     public static FColor fromString(String value) {
@@ -56,55 +118,17 @@ public enum FColor {
         return c;
     }
 
-    public String getLangName(LangManager lang) {
-        switch (this) {
-            case DarkRed: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_DarkRed);
-            case Red: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Red);
-            case Gold: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Gold);
-            case Yellow: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Yellow);
-            case DarkGreen: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_DarkGreen);
-            case Green: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Green);
-            case Aqua: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Aqua);
-            case DarkAqua: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_DarkAqua);
-            case DarkBlue: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_DarkBlue);
-            case Blue: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Blue);
-            case LightPurple: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_LightPurple);
-            case DarkPurple: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_DarkPurple);
-            case White: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_White);
-            case Gray: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Gray);
-            case DarkGray: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_DarkGray);
-            case Black: return lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Black);
-            case Custom:
-                StringHandler h = new StringHandler(lang.get(Translations.Guis_Gadgets_Fireworks_Colors_Custom));
-                h.replaceAll("{r}", r);
-                h.replaceAll("{g}", g);
-                h.replaceAll("{b}", b);
-                return h.build();
-        }
-        return null;
-    }
-
-    public int getR() {
-        return r;
-    }
-
-    public int getG() {
-        return g;
-    }
-
-    public int getB() {
-        return b;
-    }
+    public int getR() {return this.color.getR();}
+    public int getG() {return this.color.getG();}
+    public int getB() { return this.color.getB(); }
 
     public void setR(int r) {
-        this.r = r;
+        this.color.setR(r);
     }
-
     public void setG(int g) {
-        this.g = g;
+        this.color.setG(g);
     }
-
     public void setB(int b) {
-        this.b = b;
+        this.color.setB(b);
     }
 }

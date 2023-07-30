@@ -1,13 +1,15 @@
 package fi.natroutter.hubcore.features.gadgets.FireworkShooter;
 
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.utilities.Utils;
-import fi.natroutter.hubcore.Handler;
 import fi.natroutter.hubcore.handlers.Database.PlayerData;
 import fi.natroutter.hubcore.handlers.Database.PlayerDataHandler;
+import fi.natroutter.natlibs.NATLibs;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -15,17 +17,14 @@ import java.util.UUID;
 
 public class FWSHandler {
 
+    protected static NamespacedKey namespacedKey = new NamespacedKey(HubCore.getInstance(), "fireworkshooter-projectile");
+
     public HashMap<UUID, FColorType> colortype = new HashMap<>();
     public HashMap<UUID, Long> cooldown = new HashMap<>();
     private static int cooldownTime = 2;
 
-    private PlayerDataHandler pdh;
-    private Utils utils;
-
-    public FWSHandler(Handler handler) {
-        this.pdh = handler.getDataHandler();
-        this.utils = handler.getUtils();
-    }
+    private PlayerDataHandler pdh = HubCore.getDataHandler();
+    private Utils utils = HubCore.getUtils();
 
     public void shoot(Player p) {
 
@@ -43,7 +42,7 @@ public class FWSHandler {
         Firework firework = p.getWorld().spawn(loc, Firework.class);
         firework.setShooter(p);
 
-        firework.setCustomName("Fireworkshooter-projectile");
+        firework.getPersistentDataContainer().set(namespacedKey, PersistentDataType.INTEGER, 1);
         firework.setCustomNameVisible(false);
         firework.setSilent(false);
 

@@ -1,26 +1,18 @@
 package fi.natroutter.hubcore.handlers;
 
-import fi.natroutter.natlibs.handlers.database.YamlDatabase;
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
-import fi.natroutter.natlibs.utilities.StringHandler;
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
 import fi.natroutter.hubcore.events.AdminModeToggleEvent;
 import fi.natroutter.hubcore.features.SelectorItems.SelectorItemHandler;
-import fi.natroutter.hubcore.files.Translations;
+import fi.natroutter.hubcore.files.Lang;
+import fi.natroutter.natlibs.handlers.database.YamlDatabase;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class AdminModeHandler {
 
-	private YamlDatabase database;
-	private LangManager lang;
-	private SelectorItemHandler selectorItemHandler;
-
-	public AdminModeHandler(Handler handler) {
-		this.database = handler.getYamlDatabase();
-		this.lang = handler.getLang();
-		this.selectorItemHandler = handler.getSelectorItemHandler();
-	}
+	private YamlDatabase database = HubCore.getYamlDatabase();
+	private SelectorItemHandler selectorItemHandler = HubCore.getSelectorItemHandler();
 	
 	public boolean isAdmin(Player p) {
 		return database.getBoolean(p, "Adminmode");
@@ -31,22 +23,22 @@ public class AdminModeHandler {
 		Bukkit.getPluginManager().callEvent(event);
 
 		if (!event.isCancelled()) {
-			StringHandler message = new StringHandler(lang.get(Translations.AdminModeToggle));
-			message.setPrefix(lang.get(Translations.Prefix));
-
 			if (state) {
 				database.save(p, "Adminmode", true);
-				message.replaceAll("{state}", lang.get(Translations.ToggleStates_on));
+				if (!silent) {
+					p.sendMessage(Lang.AdminModeToggle.prefixed(
+							Placeholder.component("state", Lang.ToggleStates_on.asComponent())
+					));
+				}
 			} else {
 				database.save(p, "Adminmode", false);
-				message.replaceAll("{state}", lang.get(Translations.ToggleStates_off));
 				selectorItemHandler.update(p);
+				if (!silent) {
+					p.sendMessage(Lang.AdminModeToggle.prefixed(
+							Placeholder.component("state", Lang.ToggleStates_off.asComponent())
+					));
+				}
 			}
-
-			if (!silent) {
-				message.send(p);
-			}
-
 		}
 	}
 

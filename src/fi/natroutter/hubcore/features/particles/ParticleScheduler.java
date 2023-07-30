@@ -1,12 +1,15 @@
 package fi.natroutter.hubcore.features.particles;
 
-import fi.natroutter.hubcore.Handler;
+import fi.natroutter.hubcore.HubCore;
+import fi.natroutter.hubcore.files.Config;
 import fi.natroutter.hubcore.handlers.Database.PlayerData;
 import fi.natroutter.hubcore.handlers.Database.PlayerDataHandler;
-import fi.natroutter.natlibs.handlers.ParticleSpawner;
+import fi.natroutter.natlibs.handlers.Particles;
 import fi.natroutter.natlibs.objects.ParticleSettings;
-import fi.natroutter.natlibs.utilities.Utilities;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -15,23 +18,11 @@ import java.util.UUID;
 
 public class ParticleScheduler {
 
-    private Handler handler;
-    private Utilities utils;
-    private PlayerDataHandler pdh;
-    private int task;
-    private ParticleSpawner spawner;
+    private PlayerDataHandler pdh = HubCore.getDataHandler();
 
     private int red = 255;
     private int green = 0;
     private int blue = 0;
-
-    public ParticleScheduler(Handler handler) {
-        this.handler = handler;
-        this.utils = handler.getUtilities();
-        this.pdh = handler.getDataHandler();
-        this.spawner = handler.getSpawner();
-        init();
-    }
 
     protected ArrayList<UUID> disableParticle = new ArrayList<>();
     public void disableParticle(Player p, boolean status) {
@@ -44,27 +35,34 @@ public class ParticleScheduler {
         }
     }
 
-    private ParticleSettings cloud(Location loc, Particle particle) {
-        return new ParticleSettings(particle, loc, 20, 0.3, 0.5, 0.3, 0);
+    private ParticleSettings cloud(Particle particle) {
+        return new ParticleSettings(particle, 15, 0.3, 0.5, 0.3, 0);
     }
 
-    private ParticleSettings tail(Location loc, Particle particle) {
-        return new ParticleSettings(particle, loc, 20, 0, 0, 0, 0);
+    private ParticleSettings tail(Particle particle) {
+        return new ParticleSettings(particle, 20, 0, 0, 0, 0);
     }
 
-    private void init() {
-        task = Bukkit.getScheduler().scheduleSyncRepeatingTask(handler.getInstance(), ()-> {
-            if(red > 0 && blue == 0){
-                red--;
-                green++;
-            }
-            if(green > 0 && red == 0){
-                green--;
-                blue++;
-            }
-            if(blue > 0 && green == 0){
-                red++;
-                blue--;
+    public ParticleScheduler() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(HubCore.getInstance(), ()-> {
+
+            int speed = Config.RainbowSpeed.asInteger();
+
+            speed = Math.min(speed, 255);
+            speed = Math.max(speed, 0);
+
+            if (red == 255 && green < 255 && blue == 0) {
+                green = Math.min(green + speed, 255);
+            } else if (red > 0 && green == 255 && blue == 0) {
+                red = Math.max(red - speed, 0);
+            } else if (red == 0 && green == 255 && blue < 255) {
+                blue = Math.min(blue + speed, 255);
+            } else if (red == 0 && green > 0 && blue == 255) {
+                green = Math.max(green - speed, 0);
+            } else if (red < 255 && green == 0 && blue == 255) {
+                red = Math.min(red + speed, 255);
+            } else if (red == 255 && green == 0 && blue > 0) {
+                blue = Math.max(blue - speed, 0);
             }
 
             for (Player p : Bukkit.getOnlinePlayers()) {
@@ -82,9 +80,9 @@ public class ParticleScheduler {
                 ParticleSettings set = null;
                 Location partLoc = p.getLocation().add(0, 0.6, 0);
                 if (mode.equals(ParticleMode.CLOUD)) {
-                    set = cloud(partLoc, type.getParticle());
+                    set = cloud(type.getParticle());
                 } else if (mode.equals(ParticleMode.TAIL)) {
-                    set = tail(partLoc, type.getParticle());
+                    set = tail(type.getParticle());
                 }
 
                 if (type.equals(ParticleTypes.LAVA)) {
@@ -92,20 +90,13 @@ public class ParticleScheduler {
                 }
 
                 if (type.equals(ParticleTypes.RAINBOWDUST)) {
-                    spawnDust(p, set);
-                } else {
-                    spawner.spawnParticleWorld(set);
+                    set.setDustOptions(new Particle.DustOptions(Color.fromRGB(red, green, blue), 1));
                 }
+
+                Particles.spawnWorld(partLoc, set);
             }
         }, 0, 2);
 
-    }
-
-    public void spawnDust(Player p, ParticleSettings set) {
-        Particle.DustOptions opt = new Particle.DustOptions(Color.fromRGB(red, green, blue), 1);
-        World world = set.getLoc().getWorld();
-        if (world == null) {return;}
-        world.spawnParticle(set.getParticle(), set.getLoc(), set.getCount(), set.getOffsetX(), set.getOffsetY(), set.getOffsetY(), set.getSpeed(), opt);
     }
 
 }

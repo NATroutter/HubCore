@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.DatabaseConnection;
 import fi.natroutter.hubcore.features.particles.ParticleMode;
 import fi.natroutter.hubcore.features.particles.ParticleTypes;
+import fi.natroutter.natlibs.handlers.guibuilder.ClickAction;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -61,6 +62,14 @@ public class PlayerDataHandler {
 
     public void remove(UUID uuid) {
         cache.remove(uuid);
+    }
+
+    public PlayerData get(ClickAction event) {
+        return get(event.getPlayer().getUniqueId());
+    }
+
+    public PlayerData get(Player p) {
+        return get(p.getUniqueId());
     }
 
     public PlayerData get(UUID uuid) {

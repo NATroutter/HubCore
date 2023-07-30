@@ -1,25 +1,42 @@
 package fi.natroutter.hubcore.features.gadgets.FireworkShooter;
 
-import fi.natroutter.hubcore.files.Translations;
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import fi.natroutter.hubcore.files.Lang;
+import fi.natroutter.hubcore.utilities.Items;
+import fi.natroutter.natlibs.objects.BaseItem;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.bukkit.entity.Item;
 
+@AllArgsConstructor
 public enum FShape {
 
-    SMALLBALL,
-    LARGEBALL,
-    STAR,
-    CREEPER,
-    BURST;
+    SMALLBALL(
+            Lang.Guis_Gadgets_Fireworks_Shapes_SmallBall,
+            Items.SmallBall()
+    ),
+    LARGEBALL(
+            Lang.Guis_Gadgets_Fireworks_Shapes_LargeBall,
+            Items.LargeBall()
+    ),
+    STAR(
+            Lang.Guis_Gadgets_Fireworks_Shapes_Star,
+            Items.Star()
+    ),
+    CREEPER(
+            Lang.Guis_Gadgets_Fireworks_Shapes_Creeper,
+            Items.Creeper()
+    ),
+    BURST(
+            Lang.Guis_Gadgets_Fireworks_Shapes_Burst,
+            Items.Burst()
+    );
 
-    public String langName(LangManager lang) {
-        return switch (this) {
-            case SMALLBALL -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_SmallBall);
-            case LARGEBALL -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_LargeBall);
-            case STAR -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_Star);
-            case CREEPER -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_Creeper);
-            case BURST -> lang.get(Translations.Guis_Gadgets_Fireworks_Shapes_Burst);
-        };
-    }
+    @Getter
+    public Lang langName;
+
+    @Getter
+    private BaseItem item;
+
 
     public static FShape fromString(String value) {
         for (FShape shape : values()) {

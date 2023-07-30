@@ -1,46 +1,39 @@
 package fi.natroutter.hubcore.features;
 
+import fi.natroutter.hubcore.HubCore;
+import fi.natroutter.hubcore.objects.SelectorItem;
 import fi.natroutter.hubcore.utilities.Items;
-import fi.natroutter.natlibs.handlers.gui.GUIItem;
-import fi.natroutter.natlibs.handlers.gui.GUIWindow;
+import fi.natroutter.natlibs.handlers.guibuilder.Button;
+import fi.natroutter.natlibs.handlers.guibuilder.GUI;
+import fi.natroutter.natlibs.handlers.guibuilder.GUIFrame;
+import fi.natroutter.natlibs.handlers.guibuilder.Rows;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import fi.natroutter.hubcore.Handler;
-import fi.natroutter.hubcore.files.Config;
-import fi.natroutter.hubcore.files.Config.SelectorItem;
 import fi.natroutter.hubcore.utilities.ServerSwitcher;
 import org.bukkit.entity.Player;
+import fi.natroutter.hubcore.files.Config;
 
-public class ServerSelector {
+import java.util.List;
 
-	private Config config;
-	private Items items;
-	private ServerSwitcher serverSwitcher;
-	public ServerSelector(Handler handler) {
-		this.config = handler.getConfig();
-		this.items = handler.getItems();
-		this.serverSwitcher = handler.getServerSwitcher();
+public class ServerSelector extends GUIFrame {
+
+	private ServerSwitcher serverSwitcher = HubCore.getServerSwitcher();
+
+	public ServerSelector() {
+		super(Config.ServerSelector_Title, Config.ServerSelector_GuiSize.asRows());
 	}
 
-	public void show(Player p) {
-		SelectorGUI(p).show(p);
-	}
+	@Override
+	protected boolean onShow(Player player, GUI gui, List<Object> args) {
 
-	LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
+		for (SelectorItem item : Config.ServerSelector_Items.asObjectList(SelectorItem.class)) {
+			//if (!item.isValid()) {continue;}
 
-	private GUIWindow SelectorGUI(Player p) {
-		GUIWindow gui = new GUIWindow(lcs.deserialize(config.serverSelector.Title), config.serverSelector.GuiSize, true);
-		for(SelectorItem item : config.serverSelector.SelectorItems) {
-			if (item.Server == null || item.Material == null || item.Name == null || item.Row == null || item.Slot == null || item.Lore == null) {
-				continue;
-			}
-			gui.setItem(new GUIItem(items.ServerIcon(item.Material, item.Name), (e)-> {
-				if (!(e.getWhoClicked() instanceof Player clicker)) {return;}
-				serverSwitcher.switchServer(clicker, item.Server);
-			}), item.Row, item.Slot);
+			gui.setButton(new Button(Items.ServerIcon(item.getMaterial(), item.getName()), (e, g)->{
+				serverSwitcher.switchServer(e.getPlayer(), item.getServer());
+			}), item.getRow(), item.getSlot());
+
 		}
-		return gui;
+
+		return true;
 	}
-
-
-
 }

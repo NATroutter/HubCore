@@ -1,0 +1,113 @@
+Language: en_us
+DisableRedstone: false
+DisablePhysics: false
+RainbowSpeed: 10
+Item:
+  ParticleSelector: BLAZE_POWDER
+  GadgetSelector: CHEST
+  ServerSelector: COMPASS
+  InfoBook: BOOK
+Gadgets:
+  Boombox:
+    Permission: hubcore.gadgets.boombox
+    Need: Premium -VIP
+  Wings:
+    Permission: hubcore.gadgets.wings
+    Need: Premium -VIP
+  Snowcannon:
+    Permission: hubcore.gadgets.snowcannon
+    Need: Premium -VIP
+  Slapper:
+    Permission: hubcore.gadgets.slapper
+    Need: Premium -VIP
+  Jumpper:
+    Permission: hubcore.gadgets.jumpper
+    Need: Premium -VIP
+  Fireworkshooter:
+    Permission: hubcore.gadgets.fireworkshooter
+    Need: Premium -VIP
+Particles:
+  Witch:
+    Permission: hubcore.particle.witch
+    Need: Premium -VIP
+  Totem:
+    Permission: hubcore.particle.totem
+    Need: Premium -VIP
+  Ink:
+    Permission: hubcore.particle.ink
+    Need: Premium -VIP
+  Soulflame:
+    Permission: hubcore.particle.soulflame
+    Need: Premium -VIP
+  Cloud:
+    Permission: hubcore.particle.cloud
+    Need: Premium -VIP
+  Soul:
+    Permission: hubcore.particle.soul
+    Need: Premium -VIP
+  Notes:
+    Permission: hubcore.particle.notes
+    Need: Premium -VIP
+  Conduit:
+    Permission: hubcore.particle.conduit
+    Need: Premium -VIP
+  Lava:
+    Permission: hubcore.particle.lava
+    Need: Premium -VIP
+  Hearts:
+    Permission: hubcore.particle.hearts
+    Need: Premium -VIP
+  Happy:
+    Permission: hubcore.particle.happy
+    Need: Premium -VIP
+  Angry:
+    Permission: hubcore.particle.angry
+    Need: Premium -VIP
+  Enchanthit:
+    Permission: hubcore.particle.enchanthit
+    Need: Premium -VIP
+  Endrod:
+    Permission: hubcore.particle.endrod
+    Need: Premium -VIP
+  Enchanting:
+    Permission: hubcore.particle.enchanting
+    Need: Premium -VIP
+  Rainbowdust:
+    Permission: hubcore.particle.rainbowdust
+    Need: Premium -VIP
+  Dragonbreath:
+    Permission: hubcore.particle.dragonbreath
+    Need: Premium -VIP
+  Critical:
+    Permission: hubcore.particle.critical
+    Need: Premium -VIP
+  Damage:
+    Permission: hubcore.particle.damage
+    Need: Premium -VIP
+  Smoke:
+    Permission: hubcore.particle.smoke
+    Need: Premium -VIP
+  Sneeze:
+    Permission: hubcore.particle.sneeze
+    Need: Premium -VIP
+ServerSelector:
+  Title: "&4&lServerSelector"
+  #Accepted values = row1, row2, row3, row4, row5, row6
+  GuiSize: row1
+  Items:
+    Survival:
+      server: Survival
+      row: row1
+      slot: 3
+      material: GRASS_BLOCK
+      name: "&c&lSurvival"
+      lore:
+        - "&7If you want to be whitelisted send message on discord!"
+    Creative:
+      server: Creative
+      row: row1
+      slot: 5
+      material: DIAMOND_BLOCK
+      name: "&c&lCreative"
+      lore:
+        - "&7If you want to be whitelisted send message on discord!"

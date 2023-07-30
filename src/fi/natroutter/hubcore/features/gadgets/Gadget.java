@@ -1,22 +1,36 @@
 package fi.natroutter.hubcore.features.gadgets;
 
-import fi.natroutter.hubcore.files.Translations;
-import fi.natroutter.natlibs.handlers.langHandler.language.LangManager;
+import fi.natroutter.hubcore.files.Config;
+import fi.natroutter.hubcore.files.Lang;
 import fi.natroutter.natlibs.objects.BaseItem;
-import fi.natroutter.natlibs.utilities.StringHandler;
+import fi.natroutter.natlibs.utilities.Utilities;
+import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import org.bukkit.Bukkit;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Gadget {
 
-	String Identifier;
-	Integer slot;
-	BaseItem GadgetItem;
-	BaseItem IconItem;
-	String need;
-	String permission;
+	@Getter
+	private String Identifier;
 
-	public Gadget(String Identifier, Integer slot, BaseItem GadgetItem, String need, String permission) {
+	@Getter
+	private Integer slot;
+
+	private BaseItem GadgetItem;
+	private BaseItem IconItem;
+
+	@Getter
+	private Config need;
+
+	@Getter
+	private Config permission;
+
+	public Gadget(String Identifier, Integer slot, BaseItem GadgetItem, Config need, Config permission) {
 		this.slot = slot;
 		this.GadgetItem = GadgetItem;
 		this.Identifier = Identifier;
@@ -24,7 +38,7 @@ public class Gadget {
 		this.permission = permission;
 	}
 	
-	public Gadget(String Identifier, Integer slot, BaseItem GadgetItem, BaseItem IconItem, String need, String permission) {
+	public Gadget(String Identifier, Integer slot, BaseItem GadgetItem, BaseItem IconItem, Config need, Config permission) {
 		this.slot = slot;
 		this.GadgetItem = GadgetItem;
 		this.IconItem = IconItem;
@@ -32,17 +46,9 @@ public class Gadget {
 		this.need = need;
 		this.permission = permission;
 	}
-	
-	public String getIdentifier() {
-		return Identifier;
-	}
 
 	public String getPermission() {
-		return permission;
-	}
-
-	public String getNeed() {
-		return need;
+		return permission.asString();
 	}
 
 	public BaseItem getIcon() {
@@ -52,19 +58,15 @@ public class Gadget {
 		return GadgetItem;
 	}
 
-	public BaseItem getIconWithNeed(LangManager lang) {
-		BaseItem item = null;
+	public BaseItem getIconWithNeed() {
+		BaseItem item = BaseItem.from(GadgetItem.clone());
 
-		if (IconItem != null) {
-			item = new BaseItem(IconItem);
-		} else {
-			item = new BaseItem(GadgetItem);
-		}
-		for (String line : lang.getList(Translations.Items_Gadgets_Unlock_Lore)) {
-			StringHandler s = new StringHandler(line);
-			s.replaceAll("{need}", need);
-			item.addLore(s.build());
-		}
+		List<Component> list = new ArrayList<>(item.lore());
+		list.addAll(Lang.Items_Gadgets_Unlock_Lore.asComponentList(
+				Placeholder.component("need", need.asComponent())
+		));
+		item.lore(list);
+
 		return item;
 	}
 	
@@ -72,7 +74,7 @@ public class Gadget {
 		return GadgetItem;
 	}
 
-	public String getName() {
-		return Objects.requireNonNull(GadgetItem.getItemMeta()).getDisplayName();
+	public Component getName() {
+		return Objects.requireNonNull(GadgetItem.displayName());
 	}
 }

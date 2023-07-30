@@ -1,243 +1,123 @@
 package fi.natroutter.hubcore.files;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import fi.natroutter.natlibs.handlers.gui.GUIRow;
-import org.bukkit.Material;
+import fi.natroutter.hubcore.HubCore;
+import fi.natroutter.natlibs.config.IConfig;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.units.qual.Prefix;
 
-public class Config {
+@AllArgsConstructor
+public enum Config implements IConfig {
 
+    Language("Language"),
+    DisableRedstone("DisableRedstone"),
+    DisablePhysics("DisablePhysics"),
+    RainbowSpeed("RainbowSpeed"),
 
-	public String language = "en_us";
-	public boolean DisableRedstone = true;
-	public boolean DisablePhysics = true;
+    Items_ParticleSelector("Item.ParticleSelector"),
+    Items_GadgetSelector("Item.GadgetSelector"),
+    Items_ServerSelector("Item.ServerSelector"),
+    Items_InfoBook("Item.InfoBook"),
 
-	public Material ParticleSelector_item = Material.BLAZE_POWDER;
-	public Material GadgetSelector_item = Material.CHEST;
-	public Material ServerSelector_item = Material.COMPASS;
-	public Material InfoBook_item = Material.BOOK;
+    Gadgets_Boombox_Perm("Gadgets.Boombox.Permission"),
+    Gadgets_Boombox_Need("Gadgets.Boombox.Need"),
 
-	public gadgets gadgets = new gadgets();
-	public class gadgets {
+    Gadgets_Wings_Perm("Gadgets.Wings.Permission"),
+    Gadgets_Wings_Need("Gadgets.Wings.Need"),
 
-		public boombox boombox = new boombox();
-		public class boombox {
-			public String permission = "hubcore.gadgets.boombox";
-			public String need = "Premium -VIP";
-		}
+    Gadgets_Snowcannon_Perm("Gadgets.Snowcannon.Permission"),
+    Gadgets_Snowcannon_Need("Gadgets.Snowcannon.Need"),
 
-		public wings wings = new wings();
-		public class wings {
-			public String permission = "hubcore.gadgets.wings";
-			public String need = "Premium -VIP";
-		}
+    Gadgets_Slapper_Perm("Gadgets.Slapper.Permission"),
+    Gadgets_Slapper_Need("Gadgets.Slapper.Need"),
 
-		public snowcannon snowcannon = new snowcannon();
-		public class snowcannon {
-			public String permission = "hubcore.gadgets.snowcannon";
-			public String need = "Premium -VIP";
-		}
+    Gadgets_Jumpper_Perm("Gadgets.Jumpper.Permission"),
+    Gadgets_Jumpper_Need("Gadgets.Jumpper.Need"),
 
-		public slapper slapper = new slapper();
-		public class slapper {
-			public String permission = "hubcore.gadgets.slapper";
-			public String need = "Premium -VIP";
-		}
+    Gadgets_Fireworkshooter_Perm("Gadgets.Fireworkshooter.Permission"),
+    Gadgets_Fireworkshooter_Need("Gadgets.Fireworkshooter.Need"),
 
-		public jumpper jumpper = new jumpper();
-		public class jumpper {
-			public String permission = "hubcore.gadgets.jumpper";
-			public String need = "Premium -VIP";
-		}
+    Particles_Witch_Perm("Particles.Witch.Permission"),
+    Particles_Witch_Need("Particles.Witch.Need"),
 
-		public fireworkshooter fireworkshooter = new fireworkshooter();
-		public class fireworkshooter {
-			public String permission = "hubcore.gadgets.fireworkshooter";
-			public String need = "Premium -VIP";
-		}
+    Particles_Totem_Perm("Particles.Totem.Permission"),
+    Particles_Totem_Need("Particles.Totem.Need"),
 
-	}
+    Particles_Ink_Perm("Particles.Ink.Permission"),
+    Particles_Ink_Need("Particles.Ink.Need"),
 
-	public particles particles = new particles();
-	public class particles {
+    Particles_Soulflame_Perm("Particles.Soulflame.Permission"),
+    Particles_Soulflame_Need("Particles.Soulflame.Need"),
 
-		public witch witch = new witch();
-		public class witch {
-			public String permission = "hubcore.particle.witch";
-			public String need = "Premium -VIP";
-		}
+    Particles_Cloud_Perm("Particles.Cloud.Permission"),
+    Particles_Cloud_Need("Particles.Cloud.Need"),
 
-		public totem totem = new totem();
-		public class totem {
-			public String permission = "hubcore.particle.totem";
-			public String need = "Premium -VIP";
-		}
+    Particles_Soul_Perm("Particles.Soul.Permission"),
+    Particles_Soul_Need("Particles.Soul.Need"),
 
-		public ink ink = new ink();
-		public class ink {
-			public String permission = "hubcore.particle.ink";
-			public String need = "Premium -VIP";
-		}
+    Particles_Notes_Perm("Particles.Notes.Permission"),
+    Particles_Notes_Need("Particles.Notes.Need"),
 
-		public soulflame soulflame = new soulflame();
-		public class soulflame {
-			public String permission = "hubcore.particle.soulflame";
-			public String need = "Premium -VIP";
-		}
+    Particles_Conduit_Perm("Particles.Conduit.Permission"),
+    Particles_Conduit_Need("Particles.Conduit.Need"),
 
-		public cloud cloud = new cloud();
-		public class cloud {
-			public String permission = "hubcore.particle.cloud";
-			public String need = "Premium -VIP";
-		}
+    Particles_Lava_Perm("Particles.Lava.Permission"),
+    Particles_Lava_Need("Particles.Lava.Need"),
 
-		public soul soul = new soul();
-		public class soul {
-			public String permission = "hubcore.particle.soul";
-			public String need = "Premium -VIP";
-		}
+    Particles_Hearts_Perm("Particles.Hearts.Permission"),
+    Particles_Hearts_Need("Particles.Hearts.Need"),
 
-		public notes notes = new notes();
-		public class notes {
-			public String permission = "hubcore.particle.notes";
-			public String need = "Premium -VIP";
-		}
+    Particles_Happy_Perm("Particles.Happy.Permission"),
+    Particles_Happy_Need("Particles.Happy.Need"),
 
-		public conduit conduit = new conduit();
-		public class conduit {
-			public String permission = "hubcore.particle.conduit";
-			public String need = "Premium -VIP";
-		}
+    Particles_Angry_Perm("Particles.Angry.Permission"),
+    Particles_Angry_Need("Particles.Angry.Need"),
 
-		public lava lava = new lava();
-		public class lava {
-			public String permission = "hubcore.particle.lava";
-			public String need = "Premium -VIP";
-		}
+    Particles_Enchanthit_Perm("Particles.Enchanthit.Permission"),
+    Particles_Enchanthit_Need("Particles.Enchanthit.Need"),
 
-		public hearts hearts = new hearts();
-		public class hearts {
-			public String permission = "hubcore.particle.hearts";
-			public String need = "Premium -VIP";
-		}
+    Particles_Endrod_Perm("Particles.Endrod.Permission"),
+    Particles_Endrod_Need("Particles.Endrod.Need"),
 
-		public happy happy = new happy();
-		public class happy {
-			public String permission = "hubcore.particle.happy";
-			public String need = "Premium -VIP";
-		}
+    Particles_Enchanting_Perm("Particles.Enchanting.Permission"),
+    Particles_Enchanting_Need("Particles.Enchanting.Need"),
 
-		public angry angry = new angry();
-		public class angry {
-			public String permission = "hubcore.particle.angry";
-			public String need = "Premium -VIP";
-		}
+    Particles_Rainbowdust_Perm("Particles.Rainbowdust.Permission"),
+    Particles_Rainbowdust_Need("Particles.Rainbowdust.Need"),
 
-		public enchanthit enchanthit = new enchanthit();
-		public class enchanthit {
-			public String permission = "hubcore.particle.enchanthit";
-			public String need = "Premium -VIP";
-		}
+    Particles_Dragonbreath_Perm("Particles.Dragonbreath.Permission"),
+    Particles_Dragonbreath_Need("Particles.Dragonbreath.Need"),
 
-		public endrod endrod = new endrod();
-		public class endrod {
-			public String permission = "hubcore.particle.endrod";
-			public String need = "Premium -VIP";
-		}
+    Particles_Critical_Perm("Particles.Critical.Permission"),
+    Particles_Critical_Need("Particles.Critical.Need"),
 
-		public enchanting enchanting = new enchanting();
-		public class enchanting {
-			public String permission = "hubcore.particle.enchanting";
-			public String need = "Premium -VIP";
-		}
+    Particles_Damage_Perm("Particles.Damage.Permission"),
+    Particles_Damage_Need("Particles.Damage.Need"),
 
-		public rainbowdust rainbowdust = new rainbowdust();
-		public class rainbowdust {
-			public String permission = "hubcore.particle.rainbowdust";
-			public String need = "Premium -VIP";
-		}
+    Particles_Smoke_Perm("Particles.Smoke.Permission"),
+    Particles_Smoke_Need("Particles.Smoke.Need"),
 
-		public dragonbreath dragonbreath = new dragonbreath();
-		public class dragonbreath {
-			public String permission = "hubcore.particle.dragonbreath";
-			public String need = "Premium -VIP";
-		}
+    Particles_Sneeze_Perm("Particles.Sneeze.Permission"),
+    Particles_Sneeze_Need("Particles.Sneeze.Need"),
 
-		public critical critical = new critical();
-		public class critical {
-			public String permission = "hubcore.particle.critical";
-			public String need = "Premium -VIP";
-		}
+    ServerSelector_Title("ServerSelector.Title"),
+    ServerSelector_GuiSize("ServerSelector.GuiSize"),
 
-		public damage damage = new damage();
-		public class damage {
-			public String permission = "hubcore.particle.damage";
-			public String need = "Premium -VIP";
-		}
+    ServerSelector_Items("ServerSelector.Items"),
 
-		public smoke smoke = new smoke();
-		public class smoke {
-			public String permission = "hubcore.particle.smoke";
-			public String need = "Premium -VIP";
-		}
+    ;
 
-		public sneeze sneeze = new sneeze();
-		public class sneeze {
-			public String permission = "hubcore.particle.sneeze";
-			public String need = "Premium -VIP";
-		}
-	}
+    public static void reload() {
+        Language.reloadFile();
+    }
 
-	public ServerSelector serverSelector = new ServerSelector();
-	public class ServerSelector {
-		public String Title = "§4§lServerSelector";
-		public GUIRow GuiSize = GUIRow.row6;
-		public List<SelectorItem> SelectorItems = new ArrayList<>() {{
-			add(new SelectorItem("Purgatory", GUIRow.row2, 1, Material.NETHERRACK, "§c§lPurgatory", null));
-			add(new SelectorItem("Survival", GUIRow.row2, 2, Material.COBBLESTONE, "§c§lSurvival", null));
-			add(new SelectorItem("SkyBlcok", GUIRow.row2, 3, Material.GRASS_BLOCK, "§c§lSkyBlock", null));
+    @Getter
+    public String path;
 
-			add(new SelectorItem("DTM", GUIRow.row2, 5, Material.WOODEN_SWORD, "§c§lDTM", null));
-			add(new SelectorItem("KitPvP", GUIRow.row2, 6, Material.STONE_SWORD, "§c§lKitPvP", null));
-			add(new SelectorItem("WaterBattle", GUIRow.row2, 7, Material.DIAMOND_SWORD, "§c§lWaterBattle", null));
-
-			add(new SelectorItem("creative", GUIRow.row3, 2, Material.DIAMOND_BLOCK, "§c§lCreative", null));
-			add(new SelectorItem("zombiesurvival", GUIRow.row3, 4, Material.ZOMBIE_HEAD, "§c§lZombieSurvival", null));
-			add(new SelectorItem("kingdoms", GUIRow.row3, 6, Material.GOLDEN_HELMET, "§c§lKingdoms", null));
-
-			add(new SelectorItem("luckywars", GUIRow.row4, 1, Material.SPONGE, "§c§lLuckywars", null));
-			add(new SelectorItem("prison", GUIRow.row4, 7, Material.IRON_BARS, "§c§lPrison", null));
-
-			add(new SelectorItem("Hub", GUIRow.row4, 3, Material.NETHER_STAR, "§c§lHub 1", null));
-			add(new SelectorItem("Hub2", GUIRow.row4, 5, Material.NETHER_STAR, "§c§lHub 2", null));
-		}};
-	}
-	
-	
-	public class SelectorItem {
-		
-		public String Server;
-		public GUIRow Row;
-		public Integer Slot;
-		public Material Material;
-		public String Name;
-		public List<String> Lore;
-		
-		public SelectorItem(String Server, GUIRow Row, Integer Slot, Material Material, String Name, List<String> Lore) {
-			this.Server = Server;
-			this.Row = Row;
-			this.Slot = Slot;
-			this.Material = Material;
-			this.Name = Name;
-			this.Lore = Lore;
-		}
-	}
-	
-	
-	
-	
-	
-	
-	
+    @Override
+    public JavaPlugin getPlugin() {
+        return HubCore.getInstance();
+    }
 }

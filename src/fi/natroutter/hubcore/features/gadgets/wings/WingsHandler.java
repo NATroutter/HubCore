@@ -1,6 +1,5 @@
 package fi.natroutter.hubcore.features.gadgets.wings;
 
-import fi.natroutter.hubcore.Handler;
 import fi.natroutter.hubcore.utilities.Items;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
@@ -8,15 +7,10 @@ import org.bukkit.util.Vector;
 
 public class WingsHandler {
 
-	private Items items;
-
-	public WingsHandler(Handler handler) {
-		this.items = handler.getItems();
-	}
 	
 	public void Active(Player p) {
 		PlayerInventory inv = p.getInventory();
-		inv.setChestplate(items.gadged_Wing());
+		inv.setChestplate(Items.gadged_Wing());
 	}
 	
 	public void boost(Player p) {
