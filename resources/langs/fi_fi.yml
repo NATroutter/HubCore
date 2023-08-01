@@ -168,6 +168,10 @@ Items:
     Jumpper: "&c&lJänis"
     Jumpper_Lore:
       - "&7Jänis roolipeli."
+    Grapler: "&c&lTarttumiskoukku"
+    Grapler_Lore:
+      - "&7Tällä voit tarttua paikkoihin"
+      - "&7Johon et edes tiennyt voivasi tarttua ;)"
   JoinItems:
     ParticleSelector: "&4&lHiukkaset"
     ParticleSelector_Lore:

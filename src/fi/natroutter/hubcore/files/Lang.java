@@ -138,6 +138,9 @@ public enum Lang implements ILang {
     Items_Gadgets_Jumpper("Items.Gadgets.Jumpper"),
     Items_Gadgets_Jumpper_Lore("Items.Gadgets.Jumpper_Lore"),
 
+    Items_Gadgets_Grapler("Items.Gadgets.Grapler"),
+    Items_Gadgets_Grapler_Lore("Items.Gadgets.Grapler_Lore"),
+
     Items_JoinItems_ParticleSelector("Items.JoinItems.ParticleSelector"),
     Items_JoinItems_ParticleSelector_Lore("Items.JoinItems.ParticleSelector_Lore"),
     Items_JoinItems_GadgetSelector("Items.JoinItems.GadgetSelector"),

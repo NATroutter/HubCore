@@ -168,6 +168,9 @@ Items:
     Jumpper: "&c&lJumpper"
     Jumpper_Lore:
       - "&7Jump like a rabbit"
+    Grapler: "&c&lGraplingHook"
+    Grapler_Lore:
+      - "&7Graple to places you never knew you could ;)"
   JoinItems:
     ParticleSelector: "&4&lParticleSelector"
     ParticleSelector_Lore:

@@ -6,7 +6,7 @@
 
     <groupId>fi.natroutter</groupId>
     <artifactId>hubcore</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>
@@ -139,7 +139,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -156,7 +156,7 @@
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.40.1.0</version>
+            <version>3.42.0.0</version>
         </dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>

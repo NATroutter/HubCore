@@ -39,6 +39,11 @@ public enum Config implements IConfig {
     Gadgets_Fireworkshooter_Perm("Gadgets.Fireworkshooter.Permission"),
     Gadgets_Fireworkshooter_Need("Gadgets.Fireworkshooter.Need"),
 
+    Gadgets_Grapler_Perm("Gadgets.Grapler.Permission"),
+    Gadgets_Grapler_Need("Gadgets.Grapler.Need"),
+
+
+
     Particles_Witch_Perm("Particles.Witch.Permission"),
     Particles_Witch_Need("Particles.Witch.Need"),
 
@@ -101,6 +106,9 @@ public enum Config implements IConfig {
 
     Particles_Sneeze_Perm("Particles.Sneeze.Permission"),
     Particles_Sneeze_Need("Particles.Sneeze.Need"),
+
+    ServerSelector_UseOverride("ServerSelector.UseOverride"),
+    ServerSelector_OverrideCommand("ServerSelector.OverrideCommand"),
 
     ServerSelector_Title("ServerSelector.Title"),
     ServerSelector_GuiSize("ServerSelector.GuiSize"),

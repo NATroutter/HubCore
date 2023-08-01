@@ -22,7 +22,8 @@ public class GadgetHandler {
 				new Gadget("SnowCannon", 12, Items.gadged_SnowCannon(), Config.Gadgets_Snowcannon_Need, Config.Gadgets_Snowcannon_Perm),
 				new Gadget("Slapper", 13, Items.gadged_Slapper(), Config.Gadgets_Slapper_Need, Config.Gadgets_Slapper_Perm),
 				new Gadget("Jumpper", 14, Items.gadged_Jumpper(), Config.Gadgets_Jumpper_Need, Config.Gadgets_Jumpper_Perm),
-				new Gadget("FWShooter", 15, Items.gadged_FireworkShooter(), Config.Gadgets_Fireworkshooter_Need, Config.Gadgets_Fireworkshooter_Perm)
+				new Gadget("FWShooter", 15, Items.gadged_FireworkShooter(), Config.Gadgets_Fireworkshooter_Need, Config.Gadgets_Fireworkshooter_Perm),
+				new Gadget("Grapler", 16, Items.gadget_graper(), Config.Gadgets_Grapler_Need, Config.Gadgets_Grapler_Perm)
 		));
 	}
 

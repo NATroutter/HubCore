@@ -15,6 +15,7 @@ import fi.natroutter.hubcore.features.gadgets.GadgetHandler;
 import fi.natroutter.hubcore.features.gadgets.GadgetListener;
 import fi.natroutter.hubcore.features.gadgets.boombox.MusicGUI;
 import fi.natroutter.hubcore.features.gadgets.boombox.MusicPlayer;
+import fi.natroutter.hubcore.features.gadgets.grapler.Grapler;
 import fi.natroutter.hubcore.features.gadgets.jumpper.JumpperHandler;
 import fi.natroutter.hubcore.features.gadgets.slapper.SlapperHandler;
 import fi.natroutter.hubcore.features.gadgets.slapper.SlapperListener;
@@ -147,6 +148,7 @@ public class HubCore extends JavaPlugin {
         pm.registerEvents(new PlayerCarryListener(), this);
         pm.registerEvents(new ProtectionListener(), this);
         pm.registerEvents(new CommonListener(), this);
+        pm.registerEvents(new Grapler(), this);
 
         if (hooks.getBetterParkour().isHooked()) {
             pm.registerEvents(new BetterParkourListener(), this);

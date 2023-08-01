@@ -26,6 +26,9 @@ Gadgets:
   Fireworkshooter:
     Permission: hubcore.gadgets.fireworkshooter
     Need: Premium -VIP
+  Grapler:
+    Permission: hubcore.gadgets.grapler
+    Need: Premium -VIP
 Particles:
   Witch:
     Permission: hubcore.particle.witch
@@ -91,6 +94,8 @@ Particles:
     Permission: hubcore.particle.sneeze
     Need: Premium -VIP
 ServerSelector:
+  UseOverride: false
+  OverrideCommand: "joinqueue <server>"
   Title: "&4&lServerSelector"
   #Accepted values = row1, row2, row3, row4, row5, row6
   GuiSize: row1

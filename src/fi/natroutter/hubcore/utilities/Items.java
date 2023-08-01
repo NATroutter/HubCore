@@ -275,6 +275,14 @@ public class Items {
 		return item;
 	}
 
+	public static BaseItem gadget_graper() {
+		BaseItem item = new BaseItem(Material.FISHING_ROD);
+		item.setUnbreakable(true);
+		item.name(Lang.Items_Gadgets_Grapler);
+		item.lore(Lang.Items_Gadgets_Grapler_Lore);
+		return item;
+	}
+
 	public static BaseItem particleSelector() {
 		BaseItem item = new BaseItem(Config.Items_ParticleSelector.asMaterial());
 		item.addItemFlags(ItemFlag.values());
