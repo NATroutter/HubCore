@@ -20,13 +20,11 @@ public class Grapler implements Listener {
     public void onFish(PlayerFishEvent e) {
         Player p = e.getPlayer();
         ItemStack item = p.getInventory().getItemInMainHand();
-        Component itemName = item.getItemMeta().displayName();
         FishHook hook = e.getHook();
         PlayerFishEvent.State state = e.getState();
 
-        if (itemName == null) return;
 
-        if (itemName.equals(Items.gadget_graper().displayName())) {
+        if (Items.gadget_graper().isSimilar(item)) {
             hook.customName(Component.text("Grapler"));
 
             if (HubCore.getHooks().getBetterParkour().isHooked()) {

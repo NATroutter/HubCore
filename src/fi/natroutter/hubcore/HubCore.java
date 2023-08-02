@@ -51,11 +51,6 @@ import java.util.Arrays;
 
 public class HubCore extends JavaPlugin {
 
-
-    @Getter private static String VERSION = "2.0.0";
-
-
-
     @Getter private static JavaPlugin instance;
     @Getter private static YamlDatabase yamlDatabase;
     @Getter private static Hooks hooks;
@@ -90,6 +85,7 @@ public class HubCore extends JavaPlugin {
         ConsoleCommandSender console = Bukkit.getConsoleSender();
         PluginDescriptionFile pdf = instance.getDescription();
 
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         console.sendMessage("§8─────────────────────────────────────────");
         console.sendMessage("§8┌[ §cHubCore §4v"+pdf.getVersion()+" §cEnabled §8]");

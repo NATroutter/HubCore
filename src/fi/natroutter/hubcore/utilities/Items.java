@@ -78,7 +78,7 @@ public class Items {
 		FColor fade = FColor.fromRGB(data.getFade_r(), data.getFade_g(), data.getFade_b());
 
 		item.lore(Lang.Guis_Gadgets_Fireworks_CurrentSetting_Lore.asComponentList(
-				Placeholder.parsed("shape", shape.getLangName().asLegacy()),
+				Placeholder.component("shape", shape.getLangName().asComponent()),
 				Placeholder.component("color", color.getLangName()),
 				Placeholder.component("fadecolor", fade.getLangName()),
 				Placeholder.parsed("twinkle", (data.getTwinkle() ? Lang.ToggleStates_on : Lang.ToggleStates_off).asLegacy()),

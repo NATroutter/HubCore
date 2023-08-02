@@ -6,7 +6,7 @@
 
     <groupId>fi.natroutter</groupId>
     <artifactId>hubcore</artifactId>
-    <version>2.0.2</version>
+    <version>2.0.3</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>
@@ -88,7 +88,7 @@
         <resources>
             <resource>
                 <directory>${project.basedir}/resources</directory>
-                <filtering>true</filtering>
+                <filtering>false</filtering>
             </resource>
         </resources>
     </build>
@@ -125,13 +125,13 @@
         <dependency>
             <groupId>fi.natroutter</groupId>
             <artifactId>natlibs</artifactId>
-            <version>4.0.5</version>
+            <version>4.0.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fi.natroutter</groupId>
             <artifactId>betterparkour</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
             <scope>provided</scope>
         </dependency>
 

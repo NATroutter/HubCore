@@ -39,7 +39,6 @@ public class SelectorItemHandler {
 
 	public void reloadItems() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			Bukkit.broadcastMessage("test: " + p.getUniqueId());
 			hubItemMap.put(p.getUniqueId(), defaultItems(p));
 			update(p);
 		}
