@@ -29,7 +29,7 @@ public class MusicPlayer implements Listener {
         if (e.hasItem() && (act.equals(Action.RIGHT_CLICK_AIR) || act.equals(Action.RIGHT_CLICK_BLOCK))) {
         	BaseItem item = BaseItem.from(e.getItem());
         	
-            if (utils.nameMatch(item, Items.gadged_BoomBox())) {
+            if (Items.gadged_BoomBox().isSimilar(item)) {
                 if (p.isSneaking()) {
                     musicGUI.show(p);
                     return;

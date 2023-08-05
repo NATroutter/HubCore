@@ -41,8 +41,6 @@ public class SnowCannonListener implements Listener {
 			if (e.getHitEntity().hasMetadata("NPC")) {return;}
 		}
 
-		if (proj.getCustomName() == null) {return;}
-
 		if (proj.getPersistentDataContainer().has(snowCannonHandler.namespacedKey, PersistentDataType.INTEGER)) {
 			Entity ent = e.getHitEntity();
 			

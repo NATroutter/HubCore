@@ -9,23 +9,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class Utils {
 
-
-	public boolean nameMatch(ItemStack item1, ItemStack item2) {
-		if (item1 == null || item2 == null) {
-			return false;
-		}
-		if (item1.getItemMeta() == null || item2.getItemMeta() == null) {
-			return false;
-		}
-		if (item1.getItemMeta().getDisplayName() == null || item2.getItemMeta().getDisplayName() == null) {
-			return false;
-		}
-		if (!item1.getItemMeta().getDisplayName().equals(item2.getItemMeta().getDisplayName())) {
-			return false;
-		}
-		return true;
-	}
-
 	public void soundInRadius(Location loc, Sound sound, int radius) {
 		if (loc.getWorld() == null) {return;}
 		for (Entity ent : loc.getWorld().getNearbyEntities(loc, radius, radius, radius)) {

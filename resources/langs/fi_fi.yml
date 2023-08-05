@@ -68,7 +68,7 @@ Guis:
       ColorUp: "&cVäri ylös"
       ColorDown: "&cVäri alas"
       Red: "&c&l<value>"
-      Green: "&4&l<value>"
+      Green: "&c&l<value>"
       Blue: "&c&l<value>"
       CurrentSetting: "&cNykyiset asetukset"
       CurrentSetting_Lore:

@@ -46,7 +46,7 @@ public class SelectorItemListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent e) {
-		e.setJoinMessage(null);
+		e.joinMessage(null);
 		Player p = e.getPlayer();
 		p.getInventory().clear();
 

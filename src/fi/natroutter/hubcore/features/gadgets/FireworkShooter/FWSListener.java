@@ -37,8 +37,6 @@ public class FWSListener implements Listener {
         PlayerData data = pdh.get(victim.getUniqueId());
         if (data.getNoEffect()) {return;}
 
-        if (firework.getCustomName() == null) {return;}
-
         if (firework.getPersistentDataContainer().has(FWSHandler.namespacedKey, PersistentDataType.INTEGER)) {
             shooter.playSound(shooter.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 100, 1);
             victim.playSound(shooter.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_DEATH, 100, 2);

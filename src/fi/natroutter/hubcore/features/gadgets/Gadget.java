@@ -27,7 +27,6 @@ public class Gadget {
 	@Getter
 	private Config need;
 
-	@Getter
 	private Config permission;
 
 	public Gadget(String Identifier, Integer slot, BaseItem GadgetItem, Config need, Config permission) {

@@ -32,26 +32,26 @@ public class Items {
 	}
 
 	public static BaseItem back() {
-		BaseItem item = new SkullCreator().Create(Lang.Guis_Gadgets_Fireworks_Back, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTQyZmRlOGI4MmU4YzFiOGMyMmIyMjY3OTk4M2ZlMzVjYjc2YTc5Nzc4NDI5YmRhZGFiYzM5N2ZkMTUwNjEifX19");
+		BaseItem item = SkullCreator.create(Lang.Guis_Gadgets_Fireworks_Back, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTQyZmRlOGI4MmU4YzFiOGMyMmIyMjY3OTk4M2ZlMzVjYjc2YTc5Nzc4NDI5YmRhZGFiYzM5N2ZkMTUwNjEifX19");
 		item.addItemFlags(ItemFlag.values());
 		return item;
 	}
 
 	public static BaseItem arrowUP() {
-		BaseItem item = new SkullCreator().Create(Lang.Guis_Gadgets_Fireworks_ColorUp, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTRhNTY2N2VmNzI4NWM5MjI1ZmMyNjdkNDUxMTdlYWI1NDc4Yzc4NmJkNWFmMGExOTljMjlhMmMxNGMxZiJ9fX0=");
+		BaseItem item = SkullCreator.create(Lang.Guis_Gadgets_Fireworks_ColorUp, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTRhNTY2N2VmNzI4NWM5MjI1ZmMyNjdkNDUxMTdlYWI1NDc4Yzc4NmJkNWFmMGExOTljMjlhMmMxNGMxZiJ9fX0=");
 		item.addItemFlags(ItemFlag.values());
 		return item;
 	}
 
 	public static BaseItem arrowDOWN() {
-		BaseItem item = new SkullCreator().Create(Lang.Guis_Gadgets_Fireworks_ColorDown, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDFiNjJkYjVjMGEzZmExZWY0NDFiZjcwNDRmNTExYmU1OGJlZGY5YjY3MzE4NTNlNTBjZTkwY2Q0NGZiNjkifX19");
+		BaseItem item = SkullCreator.create(Lang.Guis_Gadgets_Fireworks_ColorDown, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDFiNjJkYjVjMGEzZmExZWY0NDFiZjcwNDRmNTExYmU1OGJlZGY5YjY3MzE4NTNlNTBjZTkwY2Q0NGZiNjkifX19");
 		item.addItemFlags(ItemFlag.values());
 		return item;
 	}
 
 
 	public static BaseItem particle_ChangeMode(ParticleMode mode) {
-		BaseItem item = new SkullCreator().Create(Lang.Guis_Particles_ParticleMode, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGRjZDhmZThkNGQ1YzA1ODg2ZGI5ZjU5MTI3OTYxNTQ5ZTYwMmYzMGM1MTc1OTk5ODEzMWIyYWQyNWQyNjQifX19");
+		BaseItem item = SkullCreator.create(Lang.Guis_Particles_ParticleMode, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGRjZDhmZThkNGQ1YzA1ODg2ZGI5ZjU5MTI3OTYxNTQ5ZTYwMmYzMGM1MTc1OTk5ODEzMWIyYWQyNWQyNjQifX19");
 		item.addItemFlags(ItemFlag.values());
 		item.lore(Lang.Guis_Particles_ParticleMode_lore.asComponentList(
 				Placeholder.parsed("status", mode.langName())
