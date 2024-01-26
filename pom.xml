@@ -125,7 +125,7 @@
         <dependency>
             <groupId>fi.natroutter</groupId>
             <artifactId>natlibs</artifactId>
-            <version>4.0.12</version>
+            <version>4.0.13</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
